@@ -117,7 +117,7 @@ results/swe-bench-lite/file_level_combined/combined_locs.jsonl
 #### ✅ Generate Reasoning
 ```bash
 python rgfl/fl/file_reasoning.py \
-  --model gpt-4o \
+  --model o4-mini \
   --backend openai \
   --dataset princeton-nlp/SWE-bench_Lite \
   --combined_locs results/swe-bench-lite/file_level_combined/combined_locs.jsonl \
@@ -127,7 +127,7 @@ python rgfl/fl/file_reasoning.py \
 #### ✅ Rank Files
 ```bash
 python rgfl/fl/file_ranking.py \
-  --model gpt-4o \
+  --model o4-mini \
   --backend openai \
   --dataset princeton-nlp/SWE-bench_Lite \
   --reasoning_file results/swe-bench-lite/file_reasoning_results.json \
@@ -169,7 +169,7 @@ results/swe-bench-lite/related_elements/localization_logs
 #### ✅ Generate Element-Level Reasoning
 ```bash
 python rgfl/fl/element_reasoning.py \
-  --model gpt-4o \
+  --model o4-mini \
   --backend openai \
   --dataset princeton-nlp/SWE-bench_Lite \
   --input results/swe-bench-lite/file_ranking_results.json \
@@ -179,7 +179,7 @@ python rgfl/fl/element_reasoning.py \
 #### ✅ Rank Elements
 ```bash
 python rgfl/fl/element_ranking.py \
-  --model gpt-4o \
+  --model o4-mini \
   --backend openai \
   --dataset princeton-nlp/SWE-bench_Lite \
   --input results/swe-bench-lite/element_reasoning_results.json \
