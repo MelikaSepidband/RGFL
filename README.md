@@ -50,7 +50,7 @@ mkdir results
 
 ## Localization Pipeline
 
-### 1. Localize Suspicious Files (Baseline)
+### 1. Localize Suspicious Files (Agentless(baseline))
 
 #### ✅ LLM-based File Localization
 ```bash
@@ -144,7 +144,7 @@ python rgfl/fl/file_evaluation.py \
 
 ---
 
-### 3. Localize to Related Elements (Baseline)
+### 3. Localize to Related Elements (Agentless(baseline))
 ```bash
 python rgfl/fl/localize.py \
   --related_level \
