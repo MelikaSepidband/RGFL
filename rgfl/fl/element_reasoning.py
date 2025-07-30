@@ -80,7 +80,6 @@ def get_reasoning(element_code, bug_report):
         response = client.chat.completions.create(
             model=MODEL_ID,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=1024,
         )
         return response.choices[0].message.content
 
