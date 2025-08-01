@@ -132,8 +132,8 @@ for i, example in enumerate(tqdm(swebench, desc="Processing instances", total=le
             file_name, reasoning = future.result()
             data4[this1]['file_reasoning'][file_name] = reasoning
 
-# ------------------- Save Results ---------------- #
-with open(args.output, "w", encoding="utf-8") as f:
-    json.dump(data4, f, indent=2, ensure_ascii=False)
-
-print(f"\n✅ Reasoning results saved to {args.output}")
+    # ------------------- Save Results ---------------- #
+    with open(args.output, "w", encoding="utf-8") as f:
+        json.dump(data4, f, indent=2, ensure_ascii=False)
+    
+    print(f"\n✅ Reasoning results saved to {args.output}")
