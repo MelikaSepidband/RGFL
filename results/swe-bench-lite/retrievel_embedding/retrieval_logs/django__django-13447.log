@@ -1,0 +1,18 @@
+2025-07-29 20:34:00,670 - INFO - Processing bug django__django-13447
+2025-07-29 20:35:44,245 - INFO - Total number of considered files: 19
+2025-07-29 20:35:44,337 - INFO - Total number of documents: 19
+2025-07-30 14:18:25,434 - INFO - Processing bug django__django-13447
+2025-07-30 14:20:20,525 - INFO - Total number of considered files: 19
+2025-07-30 14:20:21,530 - INFO - Total number of documents: 19
+2025-07-31 22:04:55,507 - INFO - Processing bug django__django-13447
+2025-07-31 22:05:15,589 - INFO - Total number of considered files: 19
+2025-07-31 22:05:15,589 - INFO - Total number of documents: 0
+2025-07-31 22:05:15,594 - INFO - Retrieving with query:
+Added model class to app_list context
+Description
+	 
+		(last modified by Raffaele Salmaso)
+	 
+I need to manipulate the app_list in my custom admin view, and the easiest way to get the result is to have access to the model class (currently the dictionary is a serialized model).
+In addition I would make the _build_app_dict method public, as it is used by the two views index and app_index.
+

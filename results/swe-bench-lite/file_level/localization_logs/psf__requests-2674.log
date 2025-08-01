@@ -1,0 +1,172 @@
+2025-07-29 16:53:54,580 - INFO - Processing bug psf__requests-2674
+2025-07-29 16:53:58,037 - INFO - ================ localize psf__requests-2674 ================
+2025-07-29 16:53:58,099 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.
+
+### GitHub Problem Description ###
+urllib3 exceptions passing through requests API
+I don't know if it's a design goal of requests to hide urllib3's exceptions and wrap them around requests.exceptions types.
+
+(If it's not IMHO it should be, but that's another discussion)
+
+If it is, I have at least two of them passing through that I have to catch in addition to requests' exceptions. They are requests.packages.urllib3.exceptions.DecodeError and requests.packages.urllib3.exceptions.TimeoutError (this one I get when a proxy timeouts)
+
+Thanks!
+
+
+
+###
+
+### Repository Structure ###
+requests/
+    setup.py
+    compat.py
+    status_codes.py
+    sessions.py
+    certs.py
+    __init__.py
+    hooks.py
+    exceptions.py
+    models.py
+    adapters.py
+    auth.py
+    utils.py
+    structures.py
+    api.py
+    cookies.py
+    packages/
+        __init__.py
+        chardet/
+            chardetect.py
+            big5freq.py
+            compat.py
+            mbcsgroupprober.py
+            gb2312prober.py
+            constants.py
+            universaldetector.py
+            chardistribution.py
+            latin1prober.py
+            eucjpprober.py
+            cp949prober.py
+            euckrfreq.py
+            gb2312freq.py
+            mbcharsetprober.py
+            __init__.py
+            jisfreq.py
+            sbcsgroupprober.py
+            langhebrewmodel.py
+            hebrewprober.py
+            euckrprober.py
+            euctwfreq.py
+            euctwprober.py
+            langcyrillicmodel.py
+            big5prober.py
+            escprober.py
+            langbulgarianmodel.py
+            langhungarianmodel.py
+            langthaimodel.py
+            mbcssm.py
+            charsetgroupprober.py
+            sjisprober.py
+            langgreekmodel.py
+            jpcntx.py
+            utf8prober.py
+            escsm.py
+            codingstatemachine.py
+            sbcharsetprober.py
+            charsetprober.py
+        urllib3/
+            fields.py
+            __init__.py
+            _collections.py
+            connection.py
+            exceptions.py
+            poolmanager.py
+            connectionpool.py
+            request.py
+            response.py
+            filepost.py
+            util/
+                timeout.py
+                url.py
+                __init__.py
+                connection.py
+                ssl_.py
+                request.py
+                response.py
+                retry.py
+            packages/
+                __init__.py
+                ordered_dict.py
+                six.py
+                ssl_match_hostname/
+                    _implementation.py
+                    __init__.py
+            contrib/
+                pyopenssl.py
+                __init__.py
+                ntlmpool.py
+docs/
+    conf.py
+    _themes/
+        flask_theme_support.py
+
+###
+
+Please only provide the full path and return at most 5 files.
+The returned files should be separated by new lines ordered by most to least important and wrapped with ```
+For example:
+```
+file1.py
+file2.py
+```
+2025-07-29 16:53:58,102 - INFO - ================================================================================
+2025-07-29 16:53:58,102 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 16:53:58,102 - INFO - {'model': 'gemini-2.5-pro', 'contents': "Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.\n\n### GitHub Problem Description ###\nurllib3 exceptions passing through requests API\nI don't know if it's a design goal of requests to hide urllib3's exceptions and wrap them around requests.exceptions types.\n\n(If it's not IMHO it should be, but that's another discussion)\n\nIf it is, I have at least two of them passing through that I have to catch in addition to requests' exceptions. They are requests.packages.urllib3.exceptions.DecodeError and requests.packages.urllib3.exceptions.TimeoutError (this one I get when a proxy timeouts)\n\nThanks!\n\n\n\n###\n\n### Repository Structure ###\nrequests/\n    setup.py\n    compat.py\n    status_codes.py\n    sessions.py\n    certs.py\n    __init__.py\n    hooks.py\n    exceptions.py\n    models.py\n    adapters.py\n    auth.py\n    utils.py\n    structures.py\n    api.py\n    cookies.py\n    packages/\n        __init__.py\n        chardet/\n            chardetect.py\n            big5freq.py\n            compat.py\n            mbcsgroupprober.py\n            gb2312prober.py\n            constants.py\n            universaldetector.py\n            chardistribution.py\n            latin1prober.py\n            eucjpprober.py\n            cp949prober.py\n            euckrfreq.py\n            gb2312freq.py\n            mbcharsetprober.py\n            __init__.py\n            jisfreq.py\n            sbcsgroupprober.py\n            langhebrewmodel.py\n            hebrewprober.py\n            euckrprober.py\n            euctwfreq.py\n            euctwprober.py\n            langcyrillicmodel.py\n            big5prober.py\n            escprober.py\n            langbulgarianmodel.py\n            langhungarianmodel.py\n            langthaimodel.py\n            mbcssm.py\n            charsetgroupprober.py\n            sjisprober.py\n            langgreekmodel.py\n            jpcntx.py\n            utf8prober.py\n            escsm.py\n            codingstatemachine.py\n            sbcharsetprober.py\n            charsetprober.py\n        urllib3/\n            fields.py\n            __init__.py\n            _collections.py\n            connection.py\n            exceptions.py\n            poolmanager.py\n            connectionpool.py\n            request.py\n            response.py\n            filepost.py\n            util/\n                timeout.py\n                url.py\n                __init__.py\n                connection.py\n                ssl_.py\n                request.py\n                response.py\n                retry.py\n            packages/\n                __init__.py\n                ordered_dict.py\n                six.py\n                ssl_match_hostname/\n                    _implementation.py\n                    __init__.py\n            contrib/\n                pyopenssl.py\n                __init__.py\n                ntlmpool.py\ndocs/\n    conf.py\n    _themes/\n        flask_theme_support.py\n\n###\n\nPlease only provide the full path and return at most 5 files.\nThe returned files should be separated by new lines ordered by most to least important and wrapped with ```\nFor example:\n```\nfile1.py\nfile2.py\n```"}
+2025-07-29 16:53:58,103 - INFO - project_id=None, location=us-central1
+2025-07-29 16:53:58,298 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 16:54:27,214 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-7.889968292622626,
+  content=Content(
+    parts=[
+      Part(
+        text="""Based on the problem description, the goal is to catch exceptions from the underlying `urllib3` library and wrap them in `requests`-specific exception types. This prevents implementation details from leaking through the API. Here are the files that would need to be edited to implement this fix:
+
+```
+requests/adapters.py
+requests/models.py
+requests/exceptions.py
+```"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 20, 53, 58, 670755, tzinfo=TzInfo(UTC)) response_id='5jSJaKP4KP6cnvgPtKmf0AQ' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=79,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=79
+    ),
+  ],
+  prompt_token_count=802,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=802
+    ),
+  ],
+  thoughts_token_count=2703,
+  total_token_count=3584,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 16:54:27,227 - INFO - Based on the problem description, the goal is to catch exceptions from the underlying `urllib3` library and wrap them in `requests`-specific exception types. This prevents implementation details from leaking through the API. Here are the files that would need to be edited to implement this fix:
+
+```
+requests/adapters.py
+requests/models.py
+requests/exceptions.py
+```

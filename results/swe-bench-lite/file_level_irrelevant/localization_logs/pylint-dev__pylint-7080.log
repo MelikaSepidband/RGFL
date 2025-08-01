@@ -1,0 +1,1611 @@
+2025-07-29 18:56:52,527 - INFO - Processing bug pylint-dev__pylint-7080
+2025-07-29 18:56:52,527 - INFO - ================ localize pylint-dev__pylint-7080 ================
+2025-07-29 18:57:06,763 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of folders that are irrelevant to fixing the problem.
+Note that irrelevant folders are those that do not need to be modified and are safe to ignored when trying to solve this problem.
+
+### GitHub Problem Description ###
+`--recursive=y` ignores `ignore-paths`
+### Bug description
+
+When running recursively, it seems `ignore-paths` in my settings in pyproject.toml is completely ignored
+
+### Configuration
+
+```ini
+[tool.pylint.MASTER]
+ignore-paths = [
+  # Auto generated
+  "^src/gen/.*$",
+]
+```
+
+
+### Command used
+
+```shell
+pylint --recursive=y src/
+```
+
+
+### Pylint output
+
+```shell
+************* Module region_selection
+src\region_selection.py:170:0: R0914: Too many local variables (17/15) (too-many-locals)
+************* Module about
+src\gen\about.py:2:0: R2044: Line with empty comment (empty-comment)
+src\gen\about.py:4:0: R2044: Line with empty comment (empty-comment)
+src\gen\about.py:57:0: C0301: Line too long (504/120) (line-too-long)
+src\gen\about.py:12:0: C0103: Class name "Ui_AboutAutoSplitWidget" doesn't conform to '_?_?[a-zA-Z]+?$' pattern (invalid-name)
+src\gen\about.py:12:0: R0205: Class 'Ui_AboutAutoSplitWidget' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)
+src\gen\about.py:13:4: C0103: Method name "setupUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\about.py:13:22: C0103: Argument name "AboutAutoSplitWidget" doesn't conform to snake_case naming style (invalid-name)
+src\gen\about.py:53:4: C0103: Method name "retranslateUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\about.py:53:28: C0103: Argument name "AboutAutoSplitWidget" doesn't conform to snake_case naming style (invalid-name)
+src\gen\about.py:24:8: W0201: Attribute 'ok_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\about.py:27:8: W0201: Attribute 'created_by_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\about.py:30:8: W0201: Attribute 'version_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\about.py:33:8: W0201: Attribute 'donate_text_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\about.py:37:8: W0201: Attribute 'donate_button_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\about.py:43:8: W0201: Attribute 'icon_label' defined outside __init__ (attribute-defined-outside-init)
+************* Module design
+src\gen\design.py:2:0: R2044: Line with empty comment (empty-comment)
+src\gen\design.py:4:0: R2044: Line with empty comment (empty-comment)
+src\gen\design.py:328:0: C0301: Line too long (123/120) (line-too-long)
+src\gen\design.py:363:0: C0301: Line too long (125/120) (line-too-long)
+src\gen\design.py:373:0: C0301: Line too long (121/120) (line-too-long)
+src\gen\design.py:412:0: C0301: Line too long (131/120) (line-too-long)
+src\gen\design.py:12:0: C0103: Class name "Ui_MainWindow" doesn't conform to '_?_?[a-zA-Z]+?$' pattern (invalid-name)
+src\gen\design.py:308:8: C0103: Attribute name "actionSplit_Settings" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:318:8: C0103: Attribute name "actionCheck_for_Updates_on_Open" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:323:8: C0103: Attribute name "actionLoop_Last_Split_Image_To_First_Image" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:325:8: C0103: Attribute name "actionAuto_Start_On_Reset" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:327:8: C0103: Attribute name "actionGroup_dummy_splits_when_undoing_skipping" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:12:0: R0205: Class 'Ui_MainWindow' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)
+src\gen\design.py:12:0: R0902: Too many instance attributes (69/15) (too-many-instance-attributes)
+src\gen\design.py:13:4: C0103: Method name "setupUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:13:22: C0103: Argument name "MainWindow" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:16:8: C0103: Variable name "sizePolicy" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:13:4: R0915: Too many statements (339/50) (too-many-statements)
+src\gen\design.py:354:4: C0103: Method name "retranslateUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:354:28: C0103: Argument name "MainWindow" doesn't conform to snake_case naming style (invalid-name)
+src\gen\design.py:354:4: R0915: Too many statements (61/50) (too-many-statements)
+src\gen\design.py:31:8: W0201: Attribute 'central_widget' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:33:8: W0201: Attribute 'x_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:36:8: W0201: Attribute 'select_region_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:40:8: W0201: Attribute 'start_auto_splitter_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:44:8: W0201: Attribute 'reset_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:49:8: W0201: Attribute 'undo_split_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:54:8: W0201: Attribute 'skip_split_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:59:8: W0201: Attribute 'check_fps_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:63:8: W0201: Attribute 'fps_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:66:8: W0201: Attribute 'live_image' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:75:8: W0201: Attribute 'current_split_image' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:81:8: W0201: Attribute 'current_image_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:85:8: W0201: Attribute 'width_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:88:8: W0201: Attribute 'height_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:91:8: W0201: Attribute 'fps_value_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:95:8: W0201: Attribute 'width_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:101:8: W0201: Attribute 'height_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:107:8: W0201: Attribute 'capture_region_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:111:8: W0201: Attribute 'current_image_file_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:115:8: W0201: Attribute 'take_screenshot_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:119:8: W0201: Attribute 'x_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:128:8: W0201: Attribute 'y_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:136:8: W0201: Attribute 'y_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:139:8: W0201: Attribute 'align_region_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:143:8: W0201: Attribute 'select_window_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:147:8: W0201: Attribute 'browse_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:151:8: W0201: Attribute 'split_image_folder_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:154:8: W0201: Attribute 'split_image_folder_input' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:158:8: W0201: Attribute 'capture_region_window_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:162:8: W0201: Attribute 'image_loop_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:165:8: W0201: Attribute 'similarity_viewer_groupbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:169:8: W0201: Attribute 'table_live_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:173:8: W0201: Attribute 'table_highest_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:177:8: W0201: Attribute 'table_threshold_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:181:8: W0201: Attribute 'line_1' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:186:8: W0201: Attribute 'table_current_image_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:189:8: W0201: Attribute 'table_reset_image_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:192:8: W0201: Attribute 'line_2' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:197:8: W0201: Attribute 'line_3' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:202:8: W0201: Attribute 'line_4' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:207:8: W0201: Attribute 'line_5' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:212:8: W0201: Attribute 'table_current_image_live_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:216:8: W0201: Attribute 'table_current_image_highest_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:220:8: W0201: Attribute 'table_current_image_threshold_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:224:8: W0201: Attribute 'table_reset_image_live_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:228:8: W0201: Attribute 'table_reset_image_highest_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:232:8: W0201: Attribute 'table_reset_image_threshold_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:236:8: W0201: Attribute 'reload_start_image_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:240:8: W0201: Attribute 'start_image_status_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:243:8: W0201: Attribute 'start_image_status_value_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:246:8: W0201: Attribute 'image_loop_value_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:249:8: W0201: Attribute 'previous_image_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:254:8: W0201: Attribute 'next_image_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:296:8: W0201: Attribute 'menu_bar' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:299:8: W0201: Attribute 'menu_help' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:301:8: W0201: Attribute 'menu_file' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:304:8: W0201: Attribute 'action_view_help' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:306:8: W0201: Attribute 'action_about' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:308:8: W0201: Attribute 'actionSplit_Settings' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:310:8: W0201: Attribute 'action_save_profile' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:312:8: W0201: Attribute 'action_load_profile' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:314:8: W0201: Attribute 'action_save_profile_as' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:316:8: W0201: Attribute 'action_check_for_updates' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:318:8: W0201: Attribute 'actionCheck_for_Updates_on_Open' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:323:8: W0201: Attribute 'actionLoop_Last_Split_Image_To_First_Image' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:325:8: W0201: Attribute 'actionAuto_Start_On_Reset' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:327:8: W0201: Attribute 'actionGroup_dummy_splits_when_undoing_skipping' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:329:8: W0201: Attribute 'action_settings' defined outside __init__ (attribute-defined-outside-init)
+src\gen\design.py:331:8: W0201: Attribute 'action_check_for_updates_on_open' defined outside __init__ (attribute-defined-outside-init)
+************* Module resources_rc
+src\gen\resources_rc.py:1:0: C0302: Too many lines in module (2311/1000) (too-many-lines)
+src\gen\resources_rc.py:8:0: C0103: Constant name "qt_resource_data" doesn't conform to UPPER_CASE naming style (invalid-name)
+src\gen\resources_rc.py:2278:0: C0103: Constant name "qt_resource_name" doesn't conform to UPPER_CASE naming style (invalid-name)
+src\gen\resources_rc.py:2294:0: C0103: Constant name "qt_resource_struct" doesn't conform to UPPER_CASE naming style (invalid-name)
+src\gen\resources_rc.py:2305:0: C0103: Function name "qInitResources" doesn't conform to snake_case naming style (invalid-name)
+src\gen\resources_rc.py:2308:0: C0103: Function name "qCleanupResources" doesn't conform to snake_case naming style (invalid-name)
+************* Module settings
+src\gen\settings.py:2:0: R2044: Line with empty comment (empty-comment)
+src\gen\settings.py:4:0: R2044: Line with empty comment (empty-comment)
+src\gen\settings.py:61:0: C0301: Line too long (158/120) (line-too-long)
+src\gen\settings.py:123:0: C0301: Line too long (151/120) (line-too-long)
+src\gen\settings.py:209:0: C0301: Line too long (162/120) (line-too-long)
+src\gen\settings.py:214:0: C0301: Line too long (121/120) (line-too-long)
+src\gen\settings.py:221:0: C0301: Line too long (177/120) (line-too-long)
+src\gen\settings.py:223:0: C0301: Line too long (181/120) (line-too-long)
+src\gen\settings.py:226:0: C0301: Line too long (461/120) (line-too-long)
+src\gen\settings.py:228:0: C0301: Line too long (192/120) (line-too-long)
+src\gen\settings.py:12:0: C0103: Class name "Ui_DialogSettings" doesn't conform to '_?_?[a-zA-Z]+?$' pattern (invalid-name)
+src\gen\settings.py:12:0: R0205: Class 'Ui_DialogSettings' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)
+src\gen\settings.py:12:0: R0902: Too many instance attributes (35/15) (too-many-instance-attributes)
+src\gen\settings.py:13:4: C0103: Method name "setupUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\settings.py:13:22: C0103: Argument name "DialogSettings" doesn't conform to snake_case naming style (invalid-name)
+src\gen\settings.py:16:8: C0103: Variable name "sizePolicy" doesn't conform to snake_case naming style (invalid-name)
+src\gen\settings.py:13:4: R0915: Too many statements (190/50) (too-many-statements)
+src\gen\settings.py:205:4: C0103: Method name "retranslateUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\settings.py:205:28: C0103: Argument name "DialogSettings" doesn't conform to snake_case naming style (invalid-name)
+src\gen\settings.py:26:8: W0201: Attribute 'capture_settings_groupbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:29:8: W0201: Attribute 'fps_limit_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:36:8: W0201: Attribute 'fps_limit_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:40:8: W0201: Attribute 'live_capture_region_checkbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:46:8: W0201: Attribute 'capture_method_combobox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:49:8: W0201: Attribute 'capture_method_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:52:8: W0201: Attribute 'capture_device_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:55:8: W0201: Attribute 'capture_device_combobox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:59:8: W0201: Attribute 'image_settings_groupbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:65:8: W0201: Attribute 'default_comparison_method' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:73:8: W0201: Attribute 'default_comparison_method_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:76:8: W0201: Attribute 'default_pause_time_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:80:8: W0201: Attribute 'default_pause_time_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:87:8: W0201: Attribute 'default_similarity_threshold_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:92:8: W0201: Attribute 'default_similarity_threshold_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:98:8: W0201: Attribute 'loop_splits_checkbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:104:8: W0201: Attribute 'custom_image_settings_info_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:111:8: W0201: Attribute 'default_delay_time_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:116:8: W0201: Attribute 'default_delay_time_spinbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:121:8: W0201: Attribute 'hotkeys_groupbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:127:8: W0201: Attribute 'set_pause_hotkey_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:131:8: W0201: Attribute 'split_input' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:137:8: W0201: Attribute 'undo_split_input' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:143:8: W0201: Attribute 'split_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:146:8: W0201: Attribute 'reset_input' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:152:8: W0201: Attribute 'set_undo_split_hotkey_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:156:8: W0201: Attribute 'reset_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:159:8: W0201: Attribute 'set_reset_hotkey_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:163:8: W0201: Attribute 'set_split_hotkey_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:167:8: W0201: Attribute 'pause_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:170:8: W0201: Attribute 'pause_input' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:176:8: W0201: Attribute 'undo_split_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:179:8: W0201: Attribute 'set_skip_split_hotkey_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:183:8: W0201: Attribute 'skip_split_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\settings.py:186:8: W0201: Attribute 'skip_split_input' defined outside __init__ (attribute-defined-outside-init)
+************* Module update_checker
+src\gen\update_checker.py:2:0: R2044: Line with empty comment (empty-comment)
+src\gen\update_checker.py:4:0: R2044: Line with empty comment (empty-comment)
+src\gen\update_checker.py:12:0: C0103: Class name "Ui_UpdateChecker" doesn't conform to '_?_?[a-zA-Z]+?$' pattern (invalid-name)
+src\gen\update_checker.py:12:0: R0205: Class 'Ui_UpdateChecker' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)
+src\gen\update_checker.py:13:4: C0103: Method name "setupUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:13:22: C0103: Argument name "UpdateChecker" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:17:8: C0103: Variable name "sizePolicy" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:33:8: C0103: Variable name "sizePolicy" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:13:4: R0915: Too many statements (56/50) (too-many-statements)
+src\gen\update_checker.py:71:4: C0103: Method name "retranslateUi" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:71:28: C0103: Argument name "UpdateChecker" doesn't conform to snake_case naming style (invalid-name)
+src\gen\update_checker.py:31:8: W0201: Attribute 'update_status_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:39:8: W0201: Attribute 'current_version_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:42:8: W0201: Attribute 'latest_version_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:45:8: W0201: Attribute 'go_to_download_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:48:8: W0201: Attribute 'left_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:52:8: W0201: Attribute 'right_button' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:55:8: W0201: Attribute 'current_version_number_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:59:8: W0201: Attribute 'latest_version_number_label' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:63:8: W0201: Attribute 'do_not_ask_again_checkbox' defined outside __init__ (attribute-defined-outside-init)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (region_capture -> region_selection) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile -> region_capture -> region_selection) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> split_parser) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoControlledWorker -> error_messages -> AutoSplit) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> user_profile -> region_capture -> region_selection -> error_messages) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> error_messages -> user_profile) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> user_profile -> region_capture -> region_selection -> error_messages) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> region_selection -> error_messages) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> error_messages) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile -> region_selection) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> split_parser -> error_messages -> user_profile) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> region_selection -> error_messages) (cyclic-import)
+src\gen\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> error_messages) (cyclic-import)
+
+--------------------------------------------------------------------------
+Your code has been rated at -158.32/10 (previous run: -285.20/10, +126.88)
+```
+
+
+### Expected behavior
+
+src\gen\* should not be checked
+
+### Pylint version
+
+```shell
+pylint 2.14.1
+astroid 2.11.5
+Python 3.9.6 (tags/v3.9.6:db3ff76, Jun 28 2021, 15:26:21) [MSC v.1929 64 bit (AMD64)]
+```
+
+
+### OS / Environment
+
+Windows 10.0.19044
+
+
+### Additional dependencies
+
+_No response_
+
+
+###
+
+### Repository Structure ###
+pylint/
+    setup.py
+    epylint.py
+    constants.py
+    __init__.py
+    typing.py
+    exceptions.py
+    __pkginfo__.py
+    __main__.py
+    graph.py
+    interfaces.py
+    message/
+        message_definition.py
+        message.py
+        __init__.py
+        message_id_store.py
+        _deleted_message_ids.py
+        message_definition_store.py
+    pyreverse/
+        mermaidjs_printer.py
+        diadefslib.py
+        printer_factory.py
+        dot_printer.py
+        printer.py
+        vcg_printer.py
+        diagrams.py
+        __init__.py
+        plantuml_printer.py
+        main.py
+        writer.py
+        utils.py
+        inspector.py
+    reporters/
+        reports_handler_mix_in.py
+        base_reporter.py
+        text.py
+        multi_reporter.py
+        collecting_reporter.py
+        json_reporter.py
+        __init__.py
+        ureports/
+            text_writer.py
+            base_writer.py
+            __init__.py
+            nodes.py
+    extensions/
+        mccabe.py
+        for_any_all.py
+        _check_docs_utils.py
+        confusing_elif.py
+        comparison_placement.py
+        set_membership.py
+        __init__.py
+        consider_ternary_expression.py
+        empty_comment.py
+        code_style.py
+        docstyle.py
+        eq_without_hash.py
+        private_import.py
+        while_used.py
+        typing.py
+        docparams.py
+        bad_builtin.py
+        check_elif.py
+        no_self_use.py
+        redefined_loop_name.py
+        broad_try_clause.py
+        overlapping_exceptions.py
+        emptystring.py
+        comparetozero.py
+        redefined_variable_type.py
+    utils/
+        ast_walker.py
+        __init__.py
+        linterstats.py
+        pragma_parser.py
+        file_state.py
+        utils.py
+        docs.py
+    lint/
+        __init__.py
+        report_functions.py
+        base_options.py
+        run.py
+        caching.py
+        parallel.py
+        expand_modules.py
+        message_state_handler.py
+        utils.py
+        pylinter.py
+    config/
+        find_default_config_files.py
+        option_manager_mixin.py
+        deprecation_actions.py
+        help_formatter.py
+        config_file_parser.py
+        callback_actions.py
+        argument.py
+        option.py
+        __init__.py
+        arguments_manager.py
+        config_initialization.py
+        exceptions.py
+        arguments_provider.py
+        configuration_mixin.py
+        option_parser.py
+        utils.py
+        environment_variable.py
+        options_provider_mixin.py
+        _pylint_config/
+            help_message.py
+            setup.py
+            generate_command.py
+            __init__.py
+            main.py
+            utils.py
+    checkers/
+examples/
+    custom.py
+    deprecation_checker.py
+    custom_raw.py
+script/
+    bump_changelog.py
+    create_contributor_list.py
+    fix_documentation.py
+    __init__.py
+    get_unused_message_id_category.py
+doc/
+    conf.py
+    data/
+        messages/
+            p/
+                protected-access/
+                    bad.py
+                    good.py
+                property-with-parameters/
+                    bad.py
+                    good.py
+                parse-error/
+                    good.py
+                pointless-statement/
+                    bad.py
+                    good.py
+                preferred-module/
+                    good.py
+                pointless-string-statement/
+                    bad.py
+                    good.py
+                potential-index-error/
+                    bad.py
+                    good.py
+                possibly-unused-variable/
+                    good.py
+            s/
+                shallow-copy-environ/
+                    bad.py
+                    good.py
+                super-init-not-called/
+                    bad.py
+                    good.py
+                simplifiable-condition/
+                    good.py
+                suppressed-message/
+                    good.py
+                superfluous-parens/
+                    bad.py
+                    good.py
+                singleton-comparison/
+                    bad.py
+                    good.py
+                simplify-boolean-expression/
+                    good.py
+                subclassed-final-class/
+                    bad.py
+                    good.py
+                single-string-used-for-slots/
+                    bad.py
+                    good.py
+                super-with-arguments/
+                    bad.py
+                    good.py
+                simplifiable-if-expression/
+                    bad.py
+                    good.py
+                star-needs-assignment-target/
+                    bad.py
+                    good.py
+                simplifiable-if-statement/
+                    bad.py
+                    good.py
+                self-cls-assignment/
+                    good.py
+                stop-iteration-return/
+                    bad.py
+                    good.py
+                super-without-brackets/
+                    bad.py
+                    good.py
+                subprocess-popen-preexec-fn/
+                    good.py
+                self-assigning-variable/
+                    bad.py
+                    good.py
+                subprocess-run-check/
+                    bad.py
+                    good.py
+                signature-differs/
+                    bad.py
+                    good.py
+            e/
+                expression-not-assigned/
+                    bad.py
+                    good.py
+                empty-comment/
+                    bad.py
+                    good.py
+                exec-used/
+                    bad.py
+                    good.py
+                eval-used/
+                    bad.py
+                    good.py
+                eq-without-hash/
+                    good.py
+                else-if-used/
+                    good.py
+                empty-docstring/
+                    bad.py
+                    good.py
+            u/
+                unnecessary-dunder-call/
+                    bad.py
+                    good.py
+                unnecessary-pass/
+                    bad.py
+                    good.py
+                used-prior-global-declaration/
+                    bad.py
+                    good.py
+                using-final-decorator-in-unsupported-version/
+                    bad.py
+                    good.py
+                use-dict-literal/
+                    bad.py
+                    good.py
+                unsubscriptable-object/
+                    good.py
+                useless-parent-delegation/
+                    bad.py
+                    good.py
+                unexpected-line-ending-format/
+                    good.py
+                use-implicit-booleaness-not-comparison/
+                    good.py
+                unnecessary-lambda/
+                    bad.py
+                    good.py
+                unrecognized-inline-option/
+                    good.py
+                ungrouped-imports/
+                    bad.py
+                    good.py
+                unnecessary-lambda-assignment/
+                    bad.py
+                    good.py
+                unused-variable/
+                    bad.py
+                    good.py
+                undefined-variable/
+                    bad.py
+                    good.py
+                useless-param-doc/
+                    good.py
+                unsupported-delete-operation/
+                    good.py
+                unhashable-dict-key/
+                    bad.py
+                    good.py
+                unused-format-string-key/
+                    good.py
+                useless-with-lock/
+                    good.py
+                unexpected-keyword-arg/
+                    bad.py
+                    good.py
+                unrecognized-option/
+                    good.py
+                unused-import/
+                    bad.py
+                    good.py
+                unused-wildcard-import/
+                    bad.py
+                    good.py
+                useless-import-alias/
+                    bad.py
+                    good.py
+                use-symbolic-message-instead/
+                    good.py
+                useless-object-inheritance/
+                    bad.py
+                    good.py
+                undefined-loop-variable/
+                    bad.py
+                    good.py
+                used-before-assignment/
+                    bad.py
+                    good.py
+                unreachable/
+                    bad.py
+                    good.py
+                using-f-string-in-unsupported-version/
+                    good.py
+                use-list-literal/
+                    bad.py
+                    good.py
+                unbalanced-tuple-unpacking/
+                    bad.py
+                    good.py
+                unsupported-membership-test/
+                    good.py
+                unnecessary-comprehension/
+                    bad.py
+                    good.py
+                unneeded-not/
+                    bad.py
+                    good.py
+                unnecessary-semicolon/
+                    bad.py
+                    good.py
+                unidiomatic-typecheck/
+                    bad.py
+                    good.py
+                unspecified-encoding/
+                    bad.py
+                    good.py
+                useless-suppression/
+                    good.py
+                unknown-option-value/
+                    bad.py
+                    good.py
+                unnecessary-list-index-lookup/
+                    bad.py
+                    good.py
+                use-a-generator/
+                    bad.py
+                    good.py
+                unnecessary-ellipsis/
+                    bad.py
+                    good.py
+                unnecessary-direct-lambda-call/
+                    bad.py
+                    good.py
+                useless-type-doc/
+                    good.py
+                using-constant-test/
+                    bad.py
+                    good.py
+                useless-option-value/
+                    bad.py
+                    good.py
+                useless-else-on-loop/
+                    bad.py
+                    good.py
+                unused-format-string-argument/
+                    bad.py
+                    good.py
+                unused-argument/
+                    bad.py
+                    good.py
+                unpacking-non-sequence/
+                    bad.py
+                    good.py
+                unused-private-member/
+                    good.py
+                use-maxsplit-arg/
+                    bad.py
+                    good.py
+                unsupported-assignment-operation/
+                    good.py
+                use-implicit-booleaness-not-len/
+                    bad.py
+                    good.py
+                unexpected-special-method-signature/
+                    bad.py
+                    good.py
+                unsupported-binary-operation/
+                    good.py
+                unnecessary-dict-index-lookup/
+                    good.py
+                use-set-for-membership/
+                    bad.py
+                    good.py
+                useless-return/
+                    bad.py
+                    good.py
+                use-sequence-for-iteration/
+                    good.py
+                undefined-all-variable/
+                    bad.py
+                    good.py
+            n/
+                no-value-for-parameter/
+                    bad.py
+                    good.py
+                nonlocal-without-binding/
+                    good.py
+                not-callable/
+                    bad.py
+                    good.py
+                no-else-break/
+                    bad.py
+                    good.py
+                nan-comparison/
+                    good.py
+                not-an-iterable/
+                    bad.py
+                    good.py
+                not-async-context-manager/
+                    bad.py
+                    good.py
+                not-a-mapping/
+                    good.py
+                nonlocal-and-global/
+                    bad.py
+                    good.py
+                not-context-manager/
+                    bad.py
+                    good.py
+                no-else-continue/
+                    bad.py
+                    good.py
+                non-ascii-module-import/
+                    good.py
+                no-staticmethod-decorator/
+                    bad.py
+                    good.py
+                no-else-return/
+                    bad.py
+                    good.py
+                notimplemented-raised/
+                    bad.py
+                    good.py
+                no-else-raise/
+                    bad.py
+                    good.py
+                non-str-assignment-to-dunder-name/
+                    good.py
+                non-parent-init-called/
+                    bad.py
+                    good.py
+                no-self-argument/
+                    bad.py
+                    good.py
+                non-iterator-returned/
+                    bad.py
+                    good.py
+                non-ascii-file-name/
+                    good.py
+                no-name-in-module/
+                    bad.py
+                    good.py
+                not-in-loop/
+                    bad.py
+                    good.py
+                no-classmethod-decorator/
+                    good.py
+                no-self-use/
+                    bad.py
+                    good.py
+                non-ascii-name/
+                    good.py
+                nonexistent-operator/
+                    good.py
+                no-member/
+                    bad.py
+                    good.py
+                no-method-argument/
+                    bad.py
+                    good.py
+            l/
+                literal-comparison/
+                    bad.py
+                    good.py
+                logging-unsupported-format/
+                    good.py
+                logging-format-interpolation/
+                    bad.py
+                    good.py
+                logging-not-lazy/
+                    bad.py
+                    good.py
+                logging-too-few-args/
+                    bad.py
+                    good.py
+                locally-disabled/
+                    good.py
+                logging-format-truncated/
+                    bad.py
+                    good.py
+                lost-exception/
+                    bad.py
+                    good.py
+                logging-too-many-args/
+                    bad.py
+                    good.py
+                logging-fstring-interpolation/
+                    bad.py
+                    good.py
+                line-too-long/
+                    bad.py
+                    good.py
+            y/
+                yield-inside-async-function/
+                    bad.py
+                    good.py
+                yield-outside-function/
+                    bad.py
+                    good.py
+            m/
+                method-hidden/
+                    bad.py
+                    good.py
+                missing-raises-doc/
+                    bad.py
+                    good.py
+                misplaced-bare-raise/
+                    bad.py
+                    good.py
+                method-check-failed/
+                    good.py
+                missing-any-param-doc/
+                    good.py
+                missing-kwoa/
+                    good.py
+                missing-class-docstring/
+                    bad.py
+                    good.py
+                missing-format-argument-key/
+                    bad.py
+                    good.py
+                mixed-line-endings/
+                    good.py
+                missing-type-doc/
+                    bad.py
+                    good.py
+                method-cache-max-size-none/
+                    bad.py
+                    good.py
+                missing-yield-doc/
+                    bad.py
+                    good.py
+                mixed-format-string/
+                    bad.py
+                    good.py
+                misplaced-comparison-constant/
+                    good.py
+                modified-iterating-set/
+                    good.py
+                modified-iterating-list/
+                    good.py
+                missing-yield-type-doc/
+                    bad.py
+                    good.py
+                misplaced-format-function/
+                    bad.py
+                    good.py
+                missing-return-type-doc/
+                    bad.py
+                    good.py
+                missing-module-docstring/
+                    bad.py
+                    good.py
+                missing-function-docstring/
+                    bad.py
+                    good.py
+                multiple-constructor-doc/
+                    bad.py
+                    good.py
+                multiple-imports/
+                    bad.py
+                    good.py
+                missing-format-string-key/
+                    good.py
+                missing-timeout/
+                    bad.py
+                    good.py
+                modified-iterating-dict/
+                    good.py
+                missing-final-newline/
+                    good.py
+                missing-format-attribute/
+                    bad.py
+                    good.py
+                missing-return-doc/
+                    bad.py
+                    good.py
+                missing-param-doc/
+                    bad.py
+                    good.py
+                misplaced-future/
+                    bad.py
+                    good.py
+                missing-parentheses-for-call-in-test/
+                    good.py
+                multiple-statements/
+                    good.py
+            b/
+                bad-docstring-quotes/
+                    bad.py
+                    good.py
+                bad-except-order/
+                    bad.py
+                    good.py
+                broken-noreturn/
+                    good.py
+                bad-indentation/
+                    bad.py
+                    good.py
+                bare-except/
+                    bad.py
+                    good.py
+                bidirectional-unicode/
+                    good.py
+                bad-thread-instantiation/
+                    good.py
+                bad-format-string/
+                    bad.py
+                    good.py
+                bad-plugin-value/
+                    good.py
+                bad-super-call/
+                    bad.py
+                    good.py
+                bad-mcs-method-argument/
+                    good.py
+                binary-op-exception/
+                    bad.py
+                    good.py
+                bad-format-character/
+                    bad.py
+                    good.py
+                broken-collections-callable/
+                    bad.py
+                    good.py
+                bad-file-encoding/
+                    good.py
+                bad-inline-option/
+                    bad.py
+                    good.py
+                bad-configuration-section/
+                    good.py
+                bad-reversed-sequence/
+                    bad.py
+                    good.py
+                bad-format-string-key/
+                    good.py
+                bad-open-mode/
+                    bad.py
+                    good.py
+                bad-classmethod-argument/
+                    bad.py
+                    good.py
+                broad-except/
+                    bad.py
+                    good.py
+                bad-string-format-type/
+                    bad.py
+                    good.py
+                bad-str-strip-call/
+                    bad.py
+                    good.py
+                bad-exception-context/
+                    bad.py
+                    good.py
+                bad-staticmethod-argument/
+                    bad.py
+                    good.py
+                bad-builtin/
+                    bad.py
+                    good.py
+                boolean-datetime/
+                    good.py
+                bad-mcs-classmethod-argument/
+                    good.py
+            i/
+                invalid-characters-in-docstring/
+                    good.py
+                invalid-getnewargs-returned/
+                    good.py
+                invalid-length-hint-returned/
+                    good.py
+                invalid-format-index/
+                    bad.py
+                    good.py
+                import-private-name/
+                    good.py
+                invalid-unary-operand-type/
+                    bad.py
+                    good.py
+                invalid-slots/
+                    good.py
+                invalid-envvar-default/
+                    bad.py
+                    good.py
+                invalid-all-object/
+                    bad.py
+                    good.py
+                invalid-envvar-value/
+                    bad.py
+                    good.py
+                invalid-hash-returned/
+                    good.py
+                invalid-length-returned/
+                    bad.py
+                    good.py
+                invalid-slice-index/
+                    bad.py
+                    good.py
+                invalid-character-zero-width-space/
+                    good.py
+                invalid-sequence-index/
+                    bad.py
+                    good.py
+                invalid-overridden-method/
+                    bad.py
+                    good.py
+                invalid-metaclass/
+                    good.py
+                invalid-character-esc/
+                    good.py
+                import-self/
+                    good.py
+                inherit-non-class/
+                    bad.py
+                    good.py
+                invalid-character-carriage-return/
+                    good.py
+                inconsistent-return-statements/
+                    bad.py
+                    good.py
+                invalid-all-format/
+                    bad.py
+                    good.py
+                invalid-unicode-codec/
+                    good.py
+                invalid-bytes-returned/
+                    good.py
+                invalid-bool-returned/
+                    good.py
+                invalid-character-backspace/
+                    good.py
+                invalid-enum-extension/
+                    bad.py
+                    good.py
+                invalid-index-returned/
+                    good.py
+                invalid-slots-object/
+                    bad.py
+                    good.py
+                implicit-str-concat/
+                    bad.py
+                    good.py
+                init-is-generator/
+                    bad.py
+                    good.py
+                invalid-class-object/
+                    good.py
+                invalid-format-returned/
+                    good.py
+                import-outside-toplevel/
+                    bad.py
+                    good.py
+                invalid-getnewargs-ex-returned/
+                    good.py
+                inconsistent-quotes/
+                    good.py
+                invalid-str-returned/
+                    good.py
+                invalid-character-sub/
+                    good.py
+                invalid-name/
+                    bad.py
+                    good.py
+                import-error/
+                    good.py
+                invalid-character-nul/
+                    good.py
+                isinstance-second-argument-not-valid-type/
+                    good.py
+                invalid-repr-returned/
+                    good.py
+                inconsistent-mro/
+                    good.py
+                invalid-star-assignment-target/
+                    bad.py
+                    good.py
+            a/
+                astroid-error/
+                    good.py
+                access-member-before-definition/
+                    bad.py
+                    good.py
+                arguments-out-of-order/
+                    bad.py
+                    good.py
+                anomalous-unicode-escape-in-string/
+                    bad.py
+                    good.py
+                arguments-differ/
+                    bad.py
+                    good.py
+                abstract-class-instantiated/
+                    bad.py
+                    good.py
+                abstract-method/
+                    bad.py
+                    good.py
+                attribute-defined-outside-init/
+                    bad.py
+                    good.py
+                assigning-non-slot/
+                    bad.py
+                    good.py
+                anomalous-backslash-in-string/
+                    bad.py
+                    good.py
+                assignment-from-no-return/
+                    bad.py
+                    good.py
+                assert-on-tuple/
+                    bad.py
+                    good.py
+                assignment-from-none/
+                    bad.py
+                    good.py
+                arguments-renamed/
+                    bad.py
+                    good.py
+                assert-on-string-literal/
+                    bad.py
+                    good.py
+                await-outside-async/
+                    bad.py
+                    good.py
+            d/
+                duplicate-argument-name/
+                    bad.py
+                    good.py
+                dict-iter-missing-items/
+                    bad.py
+                    good.py
+                differing-type-doc/
+                    good.py
+                duplicate-string-formatting-argument/
+                    good.py
+                duplicate-bases/
+                    bad.py
+                    good.py
+                deprecated-decorator/
+                    good.py
+                dangerous-default-value/
+                    bad.py
+                    good.py
+                deprecated-typing-alias/
+                    good.py
+                duplicate-key/
+                    bad.py
+                    good.py
+                deprecated-argument/
+                    good.py
+                duplicate-code/
+                    good.py
+                duplicate-except/
+                    bad.py
+                    good.py
+                deprecated-module/
+                    good.py
+                deprecated-pragma/
+                    good.py
+                deprecated-class/
+                    good.py
+                docstring-first-line-empty/
+                    good.py
+                differing-param-doc/
+                    good.py
+                disallowed-name/
+                    good.py
+                deprecated-method/
+                    good.py
+                duplicate-value/
+                    bad.py
+                    good.py
+            w/
+                wrong-exception-operation/
+                    good.py
+                wrong-spelling-in-docstring/
+                    good.py
+                wildcard-import/
+                    bad.py
+                    good.py
+                wrong-import-position/
+                    bad.py
+                    good.py
+                while-used/
+                    bad.py
+                    good.py
+                wrong-import-order/
+                    bad.py
+                    good.py
+                wrong-spelling-in-comment/
+                    good.py
+            f/
+                function-redefined/
+                    bad.py
+                    good.py
+                fixme/
+                    good.py
+                f-string-without-interpolation/
+                    bad.py
+                    good.py
+                fatal/
+                    good.py
+                format-combined-specification/
+                    bad.py
+                    good.py
+                forgotten-debug-statement/
+                    good.py
+                format-needs-mapping/
+                    bad.py
+                    good.py
+                format-string-without-interpolation/
+                    bad.py
+                    good.py
+                file-ignored/
+                    good.py
+            r/
+                redefined-slots-in-subclass/
+                    bad.py
+                    good.py
+                redundant-u-string-prefix/
+                    good.py
+                redundant-keyword-arg/
+                    bad.py
+                    good.py
+                return-outside-function/
+                    bad.py
+                    good.py
+                redefined-builtin/
+                    bad.py
+                    good.py
+                reimported/
+                    bad.py
+                    good.py
+                redeclared-assigned-name/
+                    bad.py
+                    good.py
+                redefined-outer-name/
+                    good.py
+                return-in-init/
+                    bad.py
+                    good.py
+                repeated-keyword/
+                    bad.py
+                    good.py
+                relative-beyond-top-level/
+                    good.py
+                raw-checker-failed/
+                    good.py
+                redefined-argument-from-local/
+                    bad.py
+                    good.py
+                raise-missing-from/
+                    bad.py
+                    good.py
+                raising-non-exception/
+                    bad.py
+                    good.py
+                redundant-unittest-assert/
+                    bad.py
+                    good.py
+                raising-format-tuple/
+                    bad.py
+                    good.py
+                redefined-variable-type/
+                    bad.py
+                    good.py
+                return-arg-in-generator/
+                    good.py
+                redundant-returns-doc/
+                    good.py
+                redefined-loop-name/
+                    bad.py
+                    good.py
+                raising-bad-type/
+                    bad.py
+                    good.py
+                redundant-yields-doc/
+                    good.py
+            k/
+                keyword-arg-before-vararg/
+                    bad.py
+                    good.py
+            g/
+                global-at-module-level/
+                    bad.py
+                    good.py
+                global-variable-not-assigned/
+                    bad.py
+                    good.py
+                global-statement/
+                    bad.py
+                    good.py
+                global-variable-undefined/
+                    bad.py
+                    good.py
+            o/
+                overlapping-except/
+                    bad.py
+                    good.py
+                overridden-final-method/
+                    bad.py
+                    good.py
+            t/
+                too-many-instance-attributes/
+                    good.py
+                too-many-nested-blocks/
+                    good.py
+                typevar-name-mismatch/
+                    bad.py
+                    good.py
+                truncated-format-string/
+                    good.py
+                too-few-format-args/
+                    bad.py
+                    good.py
+                trailing-whitespace/
+                    bad.py
+                    good.py
+                too-many-branches/
+                    bad.py
+                    good.py
+                too-many-return-statements/
+                    good.py
+                try-except-raise/
+                    bad.py
+                    good.py
+                typevar-double-variance/
+                    bad.py
+                    good.py
+                too-many-star-expressions/
+                    bad.py
+                    good.py
+                too-many-statements/
+                    good.py
+                too-complex/
+                    good.py
+                too-many-lines/
+                    good.py
+                trailing-newlines/
+                    bad.py
+                    good.py
+                trailing-comma-tuple/
+                    bad.py
+                    good.py
+                too-many-format-args/
+                    bad.py
+                    good.py
+                too-many-ancestors/
+                    bad.py
+                    good.py
+                too-many-try-statements/
+                    good.py
+                too-many-public-methods/
+                    good.py
+                too-many-function-args/
+                    good.py
+                too-many-boolean-expressions/
+                    bad.py
+                    good.py
+                too-many-locals/
+                    good.py
+                typevar-name-incorrect-variance/
+                    good.py
+                too-many-arguments/
+                    bad.py
+                    good.py
+                too-few-public-methods/
+                    bad.py
+                    good.py
+            c/
+                consider-swap-variables/
+                    bad.py
+                    good.py
+                consider-using-generator/
+                    bad.py
+                    good.py
+                cyclic-import/
+                    good.py
+                c-extension-no-member/
+                    good.py
+                compare-to-zero/
+                    bad.py
+                    good.py
+                consider-using-max-builtin/
+                    bad.py
+                    good.py
+                consider-using-tuple/
+                    bad.py
+                    good.py
+                comparison-with-callable/
+                    bad.py
+                    good.py
+                consider-using-ternary/
+                    good.py
+                continue-in-finally/
+                    bad.py
+                    good.py
+                consider-using-alias/
+                    good.py
+                consider-using-f-string/
+                    bad.py
+                    good.py
+                consider-using-join/
+                    bad.py
+                    good.py
+                consider-merging-isinstance/
+                    bad.py
+                    good.py
+                consider-using-any-or-all/
+                    good.py
+                confusing-with-statement/
+                    good.py
+                consider-using-get/
+                    bad.py
+                    good.py
+                config-parse-error/
+                    good.py
+                comparison-of-constants/
+                    bad.py
+                    good.py
+                class-variable-slots-conflict/
+                    good.py
+                condition-evals-to-constant/
+                    good.py
+                consider-using-min-builtin/
+                    bad.py
+                    good.py
+                cell-var-from-loop/
+                    bad.py
+                    good.py
+                consider-using-assignment-expr/
+                    good.py
+                consider-ternary-expression/
+                    good.py
+                comparison-with-itself/
+                    bad.py
+                    good.py
+                catching-non-exception/
+                    bad.py
+                    good.py
+                consider-using-namedtuple-or-dataclass/
+                    good.py
+                consider-using-dict-items/
+                    bad.py
+                    good.py
+                consider-iterating-dictionary/
+                    bad.py
+                    good.py
+                chained-comparison/
+                    bad.py
+                    good.py
+                consider-using-with/
+                    bad.py
+                    good.py
+                consider-using-set-comprehension/
+                    bad.py
+                    good.py
+                consider-using-dict-comprehension/
+                    bad.py
+                    good.py
+                confusing-consecutive-elif/
+                    bad.py
+                    good.py
+                compare-to-empty-string/
+                    bad.py
+                    good.py
+                consider-using-enumerate/
+                    bad.py
+                    good.py
+                consider-alternative-union-syntax/
+                    good.py
+                consider-using-sys-exit/
+                    bad.py
+                    good.py
+                consider-using-in/
+                    bad.py
+                    good.py
+                consider-using-from-import/
+                    bad.py
+                    good.py
+    exts/
+        pylint_messages.py
+        pylint_extensions.py
+        pylint_features.py
+        pylint_options.py
+
+###
+
+Please only provide the full path.
+Remember that any subfolders will be considered as irrelevant if you provide the parent folder.
+Please ensure that the provided irrelevant folders do not include any important files needed to fix the problem
+The returned folders should be separated by new lines and wrapped with ```
+For example:
+```
+folder1/
+folder2/folder3/
+folder4/folder5/
+```
+2025-07-29 18:57:06,765 - INFO - ================================================================================
+2025-07-29 18:57:06,765 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 18:57:06,765 - INFO - {'model': 'gemini-2.5-pro', 'contents': 'Please look through the following GitHub problem description and Repository structure and provide a list of folders that are irrelevant to fixing the problem.\nNote that irrelevant folders are those that do not need to be modified and are safe to ignored when trying to solve this problem.\n\n### GitHub Problem Description ###\n`--recursive=y` ignores `ignore-paths`\n### Bug description\r\n\r\nWhen running recursively, it seems `ignore-paths` in my settings in pyproject.toml is completely ignored\r\n\r\n### Configuration\r\n\r\n```ini\r\n[tool.pylint.MASTER]\r\nignore-paths = [\r\n  # Auto generated\r\n  "^src/gen/.*$",\r\n]\r\n```\r\n\r\n\r\n### Command used\r\n\r\n```shell\r\npylint --recursive=y src/\r\n```\r\n\r\n\r\n### Pylint output\r\n\r\n```shell\r\n************* Module region_selection\r\nsrc\\region_selection.py:170:0: R0914: Too many local variables (17/15) (too-many-locals)\r\n************* Module about\r\nsrc\\gen\\about.py:2:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\about.py:4:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\about.py:57:0: C0301: Line too long (504/120) (line-too-long)\r\nsrc\\gen\\about.py:12:0: C0103: Class name "Ui_AboutAutoSplitWidget" doesn\'t conform to \'_?_?[a-zA-Z]+?$\' pattern (invalid-name)\r\nsrc\\gen\\about.py:12:0: R0205: Class \'Ui_AboutAutoSplitWidget\' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)\r\nsrc\\gen\\about.py:13:4: C0103: Method name "setupUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\about.py:13:22: C0103: Argument name "AboutAutoSplitWidget" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\about.py:53:4: C0103: Method name "retranslateUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\about.py:53:28: C0103: Argument name "AboutAutoSplitWidget" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\about.py:24:8: W0201: Attribute \'ok_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\about.py:27:8: W0201: Attribute \'created_by_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\about.py:30:8: W0201: Attribute \'version_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\about.py:33:8: W0201: Attribute \'donate_text_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\about.py:37:8: W0201: Attribute \'donate_button_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\about.py:43:8: W0201: Attribute \'icon_label\' defined outside __init__ (attribute-defined-outside-init)\r\n************* Module design\r\nsrc\\gen\\design.py:2:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\design.py:4:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\design.py:328:0: C0301: Line too long (123/120) (line-too-long)\r\nsrc\\gen\\design.py:363:0: C0301: Line too long (125/120) (line-too-long)\r\nsrc\\gen\\design.py:373:0: C0301: Line too long (121/120) (line-too-long)\r\nsrc\\gen\\design.py:412:0: C0301: Line too long (131/120) (line-too-long)\r\nsrc\\gen\\design.py:12:0: C0103: Class name "Ui_MainWindow" doesn\'t conform to \'_?_?[a-zA-Z]+?$\' pattern (invalid-name)\r\nsrc\\gen\\design.py:308:8: C0103: Attribute name "actionSplit_Settings" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:318:8: C0103: Attribute name "actionCheck_for_Updates_on_Open" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:323:8: C0103: Attribute name "actionLoop_Last_Split_Image_To_First_Image" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:325:8: C0103: Attribute name "actionAuto_Start_On_Reset" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:327:8: C0103: Attribute name "actionGroup_dummy_splits_when_undoing_skipping" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:12:0: R0205: Class \'Ui_MainWindow\' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)\r\nsrc\\gen\\design.py:12:0: R0902: Too many instance attributes (69/15) (too-many-instance-attributes)\r\nsrc\\gen\\design.py:13:4: C0103: Method name "setupUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:13:22: C0103: Argument name "MainWindow" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:16:8: C0103: Variable name "sizePolicy" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:13:4: R0915: Too many statements (339/50) (too-many-statements)\r\nsrc\\gen\\design.py:354:4: C0103: Method name "retranslateUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:354:28: C0103: Argument name "MainWindow" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\design.py:354:4: R0915: Too many statements (61/50) (too-many-statements)\r\nsrc\\gen\\design.py:31:8: W0201: Attribute \'central_widget\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:33:8: W0201: Attribute \'x_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:36:8: W0201: Attribute \'select_region_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:40:8: W0201: Attribute \'start_auto_splitter_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:44:8: W0201: Attribute \'reset_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:49:8: W0201: Attribute \'undo_split_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:54:8: W0201: Attribute \'skip_split_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:59:8: W0201: Attribute \'check_fps_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:63:8: W0201: Attribute \'fps_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:66:8: W0201: Attribute \'live_image\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:75:8: W0201: Attribute \'current_split_image\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:81:8: W0201: Attribute \'current_image_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:85:8: W0201: Attribute \'width_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:88:8: W0201: Attribute \'height_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:91:8: W0201: Attribute \'fps_value_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:95:8: W0201: Attribute \'width_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:101:8: W0201: Attribute \'height_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:107:8: W0201: Attribute \'capture_region_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:111:8: W0201: Attribute \'current_image_file_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:115:8: W0201: Attribute \'take_screenshot_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:119:8: W0201: Attribute \'x_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:128:8: W0201: Attribute \'y_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:136:8: W0201: Attribute \'y_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:139:8: W0201: Attribute \'align_region_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:143:8: W0201: Attribute \'select_window_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:147:8: W0201: Attribute \'browse_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:151:8: W0201: Attribute \'split_image_folder_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:154:8: W0201: Attribute \'split_image_folder_input\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:158:8: W0201: Attribute \'capture_region_window_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:162:8: W0201: Attribute \'image_loop_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:165:8: W0201: Attribute \'similarity_viewer_groupbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:169:8: W0201: Attribute \'table_live_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:173:8: W0201: Attribute \'table_highest_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:177:8: W0201: Attribute \'table_threshold_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:181:8: W0201: Attribute \'line_1\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:186:8: W0201: Attribute \'table_current_image_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:189:8: W0201: Attribute \'table_reset_image_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:192:8: W0201: Attribute \'line_2\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:197:8: W0201: Attribute \'line_3\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:202:8: W0201: Attribute \'line_4\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:207:8: W0201: Attribute \'line_5\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:212:8: W0201: Attribute \'table_current_image_live_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:216:8: W0201: Attribute \'table_current_image_highest_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:220:8: W0201: Attribute \'table_current_image_threshold_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:224:8: W0201: Attribute \'table_reset_image_live_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:228:8: W0201: Attribute \'table_reset_image_highest_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:232:8: W0201: Attribute \'table_reset_image_threshold_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:236:8: W0201: Attribute \'reload_start_image_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:240:8: W0201: Attribute \'start_image_status_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:243:8: W0201: Attribute \'start_image_status_value_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:246:8: W0201: Attribute \'image_loop_value_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:249:8: W0201: Attribute \'previous_image_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:254:8: W0201: Attribute \'next_image_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:296:8: W0201: Attribute \'menu_bar\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:299:8: W0201: Attribute \'menu_help\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:301:8: W0201: Attribute \'menu_file\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:304:8: W0201: Attribute \'action_view_help\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:306:8: W0201: Attribute \'action_about\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:308:8: W0201: Attribute \'actionSplit_Settings\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:310:8: W0201: Attribute \'action_save_profile\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:312:8: W0201: Attribute \'action_load_profile\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:314:8: W0201: Attribute \'action_save_profile_as\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:316:8: W0201: Attribute \'action_check_for_updates\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:318:8: W0201: Attribute \'actionCheck_for_Updates_on_Open\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:323:8: W0201: Attribute \'actionLoop_Last_Split_Image_To_First_Image\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:325:8: W0201: Attribute \'actionAuto_Start_On_Reset\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:327:8: W0201: Attribute \'actionGroup_dummy_splits_when_undoing_skipping\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:329:8: W0201: Attribute \'action_settings\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\design.py:331:8: W0201: Attribute \'action_check_for_updates_on_open\' defined outside __init__ (attribute-defined-outside-init)\r\n************* Module resources_rc\r\nsrc\\gen\\resources_rc.py:1:0: C0302: Too many lines in module (2311/1000) (too-many-lines)\r\nsrc\\gen\\resources_rc.py:8:0: C0103: Constant name "qt_resource_data" doesn\'t conform to UPPER_CASE naming style (invalid-name)\r\nsrc\\gen\\resources_rc.py:2278:0: C0103: Constant name "qt_resource_name" doesn\'t conform to UPPER_CASE naming style (invalid-name)\r\nsrc\\gen\\resources_rc.py:2294:0: C0103: Constant name "qt_resource_struct" doesn\'t conform to UPPER_CASE naming style (invalid-name)\r\nsrc\\gen\\resources_rc.py:2305:0: C0103: Function name "qInitResources" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\resources_rc.py:2308:0: C0103: Function name "qCleanupResources" doesn\'t conform to snake_case naming style (invalid-name)\r\n************* Module settings\r\nsrc\\gen\\settings.py:2:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\settings.py:4:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\settings.py:61:0: C0301: Line too long (158/120) (line-too-long)\r\nsrc\\gen\\settings.py:123:0: C0301: Line too long (151/120) (line-too-long)\r\nsrc\\gen\\settings.py:209:0: C0301: Line too long (162/120) (line-too-long)\r\nsrc\\gen\\settings.py:214:0: C0301: Line too long (121/120) (line-too-long)\r\nsrc\\gen\\settings.py:221:0: C0301: Line too long (177/120) (line-too-long)\r\nsrc\\gen\\settings.py:223:0: C0301: Line too long (181/120) (line-too-long)\r\nsrc\\gen\\settings.py:226:0: C0301: Line too long (461/120) (line-too-long)\r\nsrc\\gen\\settings.py:228:0: C0301: Line too long (192/120) (line-too-long)\r\nsrc\\gen\\settings.py:12:0: C0103: Class name "Ui_DialogSettings" doesn\'t conform to \'_?_?[a-zA-Z]+?$\' pattern (invalid-name)\r\nsrc\\gen\\settings.py:12:0: R0205: Class \'Ui_DialogSettings\' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)\r\nsrc\\gen\\settings.py:12:0: R0902: Too many instance attributes (35/15) (too-many-instance-attributes)\r\nsrc\\gen\\settings.py:13:4: C0103: Method name "setupUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\settings.py:13:22: C0103: Argument name "DialogSettings" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\settings.py:16:8: C0103: Variable name "sizePolicy" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\settings.py:13:4: R0915: Too many statements (190/50) (too-many-statements)\r\nsrc\\gen\\settings.py:205:4: C0103: Method name "retranslateUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\settings.py:205:28: C0103: Argument name "DialogSettings" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\settings.py:26:8: W0201: Attribute \'capture_settings_groupbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:29:8: W0201: Attribute \'fps_limit_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:36:8: W0201: Attribute \'fps_limit_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:40:8: W0201: Attribute \'live_capture_region_checkbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:46:8: W0201: Attribute \'capture_method_combobox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:49:8: W0201: Attribute \'capture_method_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:52:8: W0201: Attribute \'capture_device_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:55:8: W0201: Attribute \'capture_device_combobox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:59:8: W0201: Attribute \'image_settings_groupbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:65:8: W0201: Attribute \'default_comparison_method\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:73:8: W0201: Attribute \'default_comparison_method_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:76:8: W0201: Attribute \'default_pause_time_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:80:8: W0201: Attribute \'default_pause_time_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:87:8: W0201: Attribute \'default_similarity_threshold_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:92:8: W0201: Attribute \'default_similarity_threshold_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:98:8: W0201: Attribute \'loop_splits_checkbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:104:8: W0201: Attribute \'custom_image_settings_info_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:111:8: W0201: Attribute \'default_delay_time_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:116:8: W0201: Attribute \'default_delay_time_spinbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:121:8: W0201: Attribute \'hotkeys_groupbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:127:8: W0201: Attribute \'set_pause_hotkey_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:131:8: W0201: Attribute \'split_input\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:137:8: W0201: Attribute \'undo_split_input\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:143:8: W0201: Attribute \'split_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:146:8: W0201: Attribute \'reset_input\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:152:8: W0201: Attribute \'set_undo_split_hotkey_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:156:8: W0201: Attribute \'reset_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:159:8: W0201: Attribute \'set_reset_hotkey_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:163:8: W0201: Attribute \'set_split_hotkey_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:167:8: W0201: Attribute \'pause_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:170:8: W0201: Attribute \'pause_input\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:176:8: W0201: Attribute \'undo_split_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:179:8: W0201: Attribute \'set_skip_split_hotkey_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:183:8: W0201: Attribute \'skip_split_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\settings.py:186:8: W0201: Attribute \'skip_split_input\' defined outside __init__ (attribute-defined-outside-init)\r\n************* Module update_checker\r\nsrc\\gen\\update_checker.py:2:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\update_checker.py:4:0: R2044: Line with empty comment (empty-comment)\r\nsrc\\gen\\update_checker.py:12:0: C0103: Class name "Ui_UpdateChecker" doesn\'t conform to \'_?_?[a-zA-Z]+?$\' pattern (invalid-name)\r\nsrc\\gen\\update_checker.py:12:0: R0205: Class \'Ui_UpdateChecker\' inherits from object, can be safely removed from bases in python3 (useless-object-inheritance)\r\nsrc\\gen\\update_checker.py:13:4: C0103: Method name "setupUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:13:22: C0103: Argument name "UpdateChecker" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:17:8: C0103: Variable name "sizePolicy" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:33:8: C0103: Variable name "sizePolicy" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:13:4: R0915: Too many statements (56/50) (too-many-statements)\r\nsrc\\gen\\update_checker.py:71:4: C0103: Method name "retranslateUi" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:71:28: C0103: Argument name "UpdateChecker" doesn\'t conform to snake_case naming style (invalid-name)\r\nsrc\\gen\\update_checker.py:31:8: W0201: Attribute \'update_status_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:39:8: W0201: Attribute \'current_version_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:42:8: W0201: Attribute \'latest_version_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:45:8: W0201: Attribute \'go_to_download_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:48:8: W0201: Attribute \'left_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:52:8: W0201: Attribute \'right_button\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:55:8: W0201: Attribute \'current_version_number_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:59:8: W0201: Attribute \'latest_version_number_label\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:63:8: W0201: Attribute \'do_not_ask_again_checkbox\' defined outside __init__ (attribute-defined-outside-init)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (region_capture -> region_selection) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile -> region_capture -> region_selection) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> split_parser) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoControlledWorker -> error_messages -> AutoSplit) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> user_profile -> region_capture -> region_selection -> error_messages) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> error_messages -> user_profile) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> user_profile -> region_capture -> region_selection -> error_messages) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> region_selection -> error_messages) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> error_messages) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile -> region_selection) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (error_messages -> user_profile) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplitImage -> split_parser -> error_messages -> user_profile) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> region_selection -> error_messages) (cyclic-import)\r\nsrc\\gen\\update_checker.py:1:0: R0401: Cyclic import (AutoSplit -> menu_bar -> error_messages) (cyclic-import)\r\n\r\n--------------------------------------------------------------------------\r\nYour code has been rated at -158.32/10 (previous run: -285.20/10, +126.88)\r\n```\r\n\r\n\r\n### Expected behavior\r\n\r\nsrc\\gen\\* should not be checked\r\n\r\n### Pylint version\r\n\r\n```shell\r\npylint 2.14.1\r\nastroid 2.11.5\r\nPython 3.9.6 (tags/v3.9.6:db3ff76, Jun 28 2021, 15:26:21) [MSC v.1929 64 bit (AMD64)]\r\n```\r\n\r\n\r\n### OS / Environment\r\n\r\nWindows 10.0.19044\r\n\r\n\r\n### Additional dependencies\r\n\r\n_No response_\n\n\n###\n\n### Repository Structure ###\npylint/\n    setup.py\n    epylint.py\n    constants.py\n    __init__.py\n    typing.py\n    exceptions.py\n    __pkginfo__.py\n    __main__.py\n    graph.py\n    interfaces.py\n    message/\n        message_definition.py\n        message.py\n        __init__.py\n        message_id_store.py\n        _deleted_message_ids.py\n        message_definition_store.py\n    pyreverse/\n        mermaidjs_printer.py\n        diadefslib.py\n        printer_factory.py\n        dot_printer.py\n        printer.py\n        vcg_printer.py\n        diagrams.py\n        __init__.py\n        plantuml_printer.py\n        main.py\n        writer.py\n        utils.py\n        inspector.py\n    reporters/\n        reports_handler_mix_in.py\n        base_reporter.py\n        text.py\n        multi_reporter.py\n        collecting_reporter.py\n        json_reporter.py\n        __init__.py\n        ureports/\n            text_writer.py\n            base_writer.py\n            __init__.py\n            nodes.py\n    extensions/\n        mccabe.py\n        for_any_all.py\n        _check_docs_utils.py\n        confusing_elif.py\n        comparison_placement.py\n        set_membership.py\n        __init__.py\n        consider_ternary_expression.py\n        empty_comment.py\n        code_style.py\n        docstyle.py\n        eq_without_hash.py\n        private_import.py\n        while_used.py\n        typing.py\n        docparams.py\n        bad_builtin.py\n        check_elif.py\n        no_self_use.py\n        redefined_loop_name.py\n        broad_try_clause.py\n        overlapping_exceptions.py\n        emptystring.py\n        comparetozero.py\n        redefined_variable_type.py\n    utils/\n        ast_walker.py\n        __init__.py\n        linterstats.py\n        pragma_parser.py\n        file_state.py\n        utils.py\n        docs.py\n    lint/\n        __init__.py\n        report_functions.py\n        base_options.py\n        run.py\n        caching.py\n        parallel.py\n        expand_modules.py\n        message_state_handler.py\n        utils.py\n        pylinter.py\n    config/\n        find_default_config_files.py\n        option_manager_mixin.py\n        deprecation_actions.py\n        help_formatter.py\n        config_file_parser.py\n        callback_actions.py\n        argument.py\n        option.py\n        __init__.py\n        arguments_manager.py\n        config_initialization.py\n        exceptions.py\n        arguments_provider.py\n        configuration_mixin.py\n        option_parser.py\n        utils.py\n        environment_variable.py\n        options_provider_mixin.py\n        _pylint_config/\n            help_message.py\n            setup.py\n            generate_command.py\n            __init__.py\n            main.py\n            utils.py\n    checkers/\nexamples/\n    custom.py\n    deprecation_checker.py\n    custom_raw.py\nscript/\n    bump_changelog.py\n    create_contributor_list.py\n    fix_documentation.py\n    __init__.py\n    get_unused_message_id_category.py\ndoc/\n    conf.py\n    data/\n        messages/\n            p/\n                protected-access/\n                    bad.py\n                    good.py\n                property-with-parameters/\n                    bad.py\n                    good.py\n                parse-error/\n                    good.py\n                pointless-statement/\n                    bad.py\n                    good.py\n                preferred-module/\n                    good.py\n                pointless-string-statement/\n                    bad.py\n                    good.py\n                potential-index-error/\n                    bad.py\n                    good.py\n                possibly-unused-variable/\n                    good.py\n            s/\n                shallow-copy-environ/\n                    bad.py\n                    good.py\n                super-init-not-called/\n                    bad.py\n                    good.py\n                simplifiable-condition/\n                    good.py\n                suppressed-message/\n                    good.py\n                superfluous-parens/\n                    bad.py\n                    good.py\n                singleton-comparison/\n                    bad.py\n                    good.py\n                simplify-boolean-expression/\n                    good.py\n                subclassed-final-class/\n                    bad.py\n                    good.py\n                single-string-used-for-slots/\n                    bad.py\n                    good.py\n                super-with-arguments/\n                    bad.py\n                    good.py\n                simplifiable-if-expression/\n                    bad.py\n                    good.py\n                star-needs-assignment-target/\n                    bad.py\n                    good.py\n                simplifiable-if-statement/\n                    bad.py\n                    good.py\n                self-cls-assignment/\n                    good.py\n                stop-iteration-return/\n                    bad.py\n                    good.py\n                super-without-brackets/\n                    bad.py\n                    good.py\n                subprocess-popen-preexec-fn/\n                    good.py\n                self-assigning-variable/\n                    bad.py\n                    good.py\n                subprocess-run-check/\n                    bad.py\n                    good.py\n                signature-differs/\n                    bad.py\n                    good.py\n            e/\n                expression-not-assigned/\n                    bad.py\n                    good.py\n                empty-comment/\n                    bad.py\n                    good.py\n                exec-used/\n                    bad.py\n                    good.py\n                eval-used/\n                    bad.py\n                    good.py\n                eq-without-hash/\n                    good.py\n                else-if-used/\n                    good.py\n                empty-docstring/\n                    bad.py\n                    good.py\n            u/\n                unnecessary-dunder-call/\n                    bad.py\n                    good.py\n                unnecessary-pass/\n                    bad.py\n                    good.py\n                used-prior-global-declaration/\n                    bad.py\n                    good.py\n                using-final-decorator-in-unsupported-version/\n                    bad.py\n                    good.py\n                use-dict-literal/\n                    bad.py\n                    good.py\n                unsubscriptable-object/\n                    good.py\n                useless-parent-delegation/\n                    bad.py\n                    good.py\n                unexpected-line-ending-format/\n                    good.py\n                use-implicit-booleaness-not-comparison/\n                    good.py\n                unnecessary-lambda/\n                    bad.py\n                    good.py\n                unrecognized-inline-option/\n                    good.py\n                ungrouped-imports/\n                    bad.py\n                    good.py\n                unnecessary-lambda-assignment/\n                    bad.py\n                    good.py\n                unused-variable/\n                    bad.py\n                    good.py\n                undefined-variable/\n                    bad.py\n                    good.py\n                useless-param-doc/\n                    good.py\n                unsupported-delete-operation/\n                    good.py\n                unhashable-dict-key/\n                    bad.py\n                    good.py\n                unused-format-string-key/\n                    good.py\n                useless-with-lock/\n                    good.py\n                unexpected-keyword-arg/\n                    bad.py\n                    good.py\n                unrecognized-option/\n                    good.py\n                unused-import/\n                    bad.py\n                    good.py\n                unused-wildcard-import/\n                    bad.py\n                    good.py\n                useless-import-alias/\n                    bad.py\n                    good.py\n                use-symbolic-message-instead/\n                    good.py\n                useless-object-inheritance/\n                    bad.py\n                    good.py\n                undefined-loop-variable/\n                    bad.py\n                    good.py\n                used-before-assignment/\n                    bad.py\n                    good.py\n                unreachable/\n                    bad.py\n                    good.py\n                using-f-string-in-unsupported-version/\n                    good.py\n                use-list-literal/\n                    bad.py\n                    good.py\n                unbalanced-tuple-unpacking/\n                    bad.py\n                    good.py\n                unsupported-membership-test/\n                    good.py\n                unnecessary-comprehension/\n                    bad.py\n                    good.py\n                unneeded-not/\n                    bad.py\n                    good.py\n                unnecessary-semicolon/\n                    bad.py\n                    good.py\n                unidiomatic-typecheck/\n                    bad.py\n                    good.py\n                unspecified-encoding/\n                    bad.py\n                    good.py\n                useless-suppression/\n                    good.py\n                unknown-option-value/\n                    bad.py\n                    good.py\n                unnecessary-list-index-lookup/\n                    bad.py\n                    good.py\n                use-a-generator/\n                    bad.py\n                    good.py\n                unnecessary-ellipsis/\n                    bad.py\n                    good.py\n                unnecessary-direct-lambda-call/\n                    bad.py\n                    good.py\n                useless-type-doc/\n                    good.py\n                using-constant-test/\n                    bad.py\n                    good.py\n                useless-option-value/\n                    bad.py\n                    good.py\n                useless-else-on-loop/\n                    bad.py\n                    good.py\n                unused-format-string-argument/\n                    bad.py\n                    good.py\n                unused-argument/\n                    bad.py\n                    good.py\n                unpacking-non-sequence/\n                    bad.py\n                    good.py\n                unused-private-member/\n                    good.py\n                use-maxsplit-arg/\n                    bad.py\n                    good.py\n                unsupported-assignment-operation/\n                    good.py\n                use-implicit-booleaness-not-len/\n                    bad.py\n                    good.py\n                unexpected-special-method-signature/\n                    bad.py\n                    good.py\n                unsupported-binary-operation/\n                    good.py\n                unnecessary-dict-index-lookup/\n                    good.py\n                use-set-for-membership/\n                    bad.py\n                    good.py\n                useless-return/\n                    bad.py\n                    good.py\n                use-sequence-for-iteration/\n                    good.py\n                undefined-all-variable/\n                    bad.py\n                    good.py\n            n/\n                no-value-for-parameter/\n                    bad.py\n                    good.py\n                nonlocal-without-binding/\n                    good.py\n                not-callable/\n                    bad.py\n                    good.py\n                no-else-break/\n                    bad.py\n                    good.py\n                nan-comparison/\n                    good.py\n                not-an-iterable/\n                    bad.py\n                    good.py\n                not-async-context-manager/\n                    bad.py\n                    good.py\n                not-a-mapping/\n                    good.py\n                nonlocal-and-global/\n                    bad.py\n                    good.py\n                not-context-manager/\n                    bad.py\n                    good.py\n                no-else-continue/\n                    bad.py\n                    good.py\n                non-ascii-module-import/\n                    good.py\n                no-staticmethod-decorator/\n                    bad.py\n                    good.py\n                no-else-return/\n                    bad.py\n                    good.py\n                notimplemented-raised/\n                    bad.py\n                    good.py\n                no-else-raise/\n                    bad.py\n                    good.py\n                non-str-assignment-to-dunder-name/\n                    good.py\n                non-parent-init-called/\n                    bad.py\n                    good.py\n                no-self-argument/\n                    bad.py\n                    good.py\n                non-iterator-returned/\n                    bad.py\n                    good.py\n                non-ascii-file-name/\n                    good.py\n                no-name-in-module/\n                    bad.py\n                    good.py\n                not-in-loop/\n                    bad.py\n                    good.py\n                no-classmethod-decorator/\n                    good.py\n                no-self-use/\n                    bad.py\n                    good.py\n                non-ascii-name/\n                    good.py\n                nonexistent-operator/\n                    good.py\n                no-member/\n                    bad.py\n                    good.py\n                no-method-argument/\n                    bad.py\n                    good.py\n            l/\n                literal-comparison/\n                    bad.py\n                    good.py\n                logging-unsupported-format/\n                    good.py\n                logging-format-interpolation/\n                    bad.py\n                    good.py\n                logging-not-lazy/\n                    bad.py\n                    good.py\n                logging-too-few-args/\n                    bad.py\n                    good.py\n                locally-disabled/\n                    good.py\n                logging-format-truncated/\n                    bad.py\n                    good.py\n                lost-exception/\n                    bad.py\n                    good.py\n                logging-too-many-args/\n                    bad.py\n                    good.py\n                logging-fstring-interpolation/\n                    bad.py\n                    good.py\n                line-too-long/\n                    bad.py\n                    good.py\n            y/\n                yield-inside-async-function/\n                    bad.py\n                    good.py\n                yield-outside-function/\n                    bad.py\n                    good.py\n            m/\n                method-hidden/\n                    bad.py\n                    good.py\n                missing-raises-doc/\n                    bad.py\n                    good.py\n                misplaced-bare-raise/\n                    bad.py\n                    good.py\n                method-check-failed/\n                    good.py\n                missing-any-param-doc/\n                    good.py\n                missing-kwoa/\n                    good.py\n                missing-class-docstring/\n                    bad.py\n                    good.py\n                missing-format-argument-key/\n                    bad.py\n                    good.py\n                mixed-line-endings/\n                    good.py\n                missing-type-doc/\n                    bad.py\n                    good.py\n                method-cache-max-size-none/\n                    bad.py\n                    good.py\n                missing-yield-doc/\n                    bad.py\n                    good.py\n                mixed-format-string/\n                    bad.py\n                    good.py\n                misplaced-comparison-constant/\n                    good.py\n                modified-iterating-set/\n                    good.py\n                modified-iterating-list/\n                    good.py\n                missing-yield-type-doc/\n                    bad.py\n                    good.py\n                misplaced-format-function/\n                    bad.py\n                    good.py\n                missing-return-type-doc/\n                    bad.py\n                    good.py\n                missing-module-docstring/\n                    bad.py\n                    good.py\n                missing-function-docstring/\n                    bad.py\n                    good.py\n                multiple-constructor-doc/\n                    bad.py\n                    good.py\n                multiple-imports/\n                    bad.py\n                    good.py\n                missing-format-string-key/\n                    good.py\n                missing-timeout/\n                    bad.py\n                    good.py\n                modified-iterating-dict/\n                    good.py\n                missing-final-newline/\n                    good.py\n                missing-format-attribute/\n                    bad.py\n                    good.py\n                missing-return-doc/\n                    bad.py\n                    good.py\n                missing-param-doc/\n                    bad.py\n                    good.py\n                misplaced-future/\n                    bad.py\n                    good.py\n                missing-parentheses-for-call-in-test/\n                    good.py\n                multiple-statements/\n                    good.py\n            b/\n                bad-docstring-quotes/\n                    bad.py\n                    good.py\n                bad-except-order/\n                    bad.py\n                    good.py\n                broken-noreturn/\n                    good.py\n                bad-indentation/\n                    bad.py\n                    good.py\n                bare-except/\n                    bad.py\n                    good.py\n                bidirectional-unicode/\n                    good.py\n                bad-thread-instantiation/\n                    good.py\n                bad-format-string/\n                    bad.py\n                    good.py\n                bad-plugin-value/\n                    good.py\n                bad-super-call/\n                    bad.py\n                    good.py\n                bad-mcs-method-argument/\n                    good.py\n                binary-op-exception/\n                    bad.py\n                    good.py\n                bad-format-character/\n                    bad.py\n                    good.py\n                broken-collections-callable/\n                    bad.py\n                    good.py\n                bad-file-encoding/\n                    good.py\n                bad-inline-option/\n                    bad.py\n                    good.py\n                bad-configuration-section/\n                    good.py\n                bad-reversed-sequence/\n                    bad.py\n                    good.py\n                bad-format-string-key/\n                    good.py\n                bad-open-mode/\n                    bad.py\n                    good.py\n                bad-classmethod-argument/\n                    bad.py\n                    good.py\n                broad-except/\n                    bad.py\n                    good.py\n                bad-string-format-type/\n                    bad.py\n                    good.py\n                bad-str-strip-call/\n                    bad.py\n                    good.py\n                bad-exception-context/\n                    bad.py\n                    good.py\n                bad-staticmethod-argument/\n                    bad.py\n                    good.py\n                bad-builtin/\n                    bad.py\n                    good.py\n                boolean-datetime/\n                    good.py\n                bad-mcs-classmethod-argument/\n                    good.py\n            i/\n                invalid-characters-in-docstring/\n                    good.py\n                invalid-getnewargs-returned/\n                    good.py\n                invalid-length-hint-returned/\n                    good.py\n                invalid-format-index/\n                    bad.py\n                    good.py\n                import-private-name/\n                    good.py\n                invalid-unary-operand-type/\n                    bad.py\n                    good.py\n                invalid-slots/\n                    good.py\n                invalid-envvar-default/\n                    bad.py\n                    good.py\n                invalid-all-object/\n                    bad.py\n                    good.py\n                invalid-envvar-value/\n                    bad.py\n                    good.py\n                invalid-hash-returned/\n                    good.py\n                invalid-length-returned/\n                    bad.py\n                    good.py\n                invalid-slice-index/\n                    bad.py\n                    good.py\n                invalid-character-zero-width-space/\n                    good.py\n                invalid-sequence-index/\n                    bad.py\n                    good.py\n                invalid-overridden-method/\n                    bad.py\n                    good.py\n                invalid-metaclass/\n                    good.py\n                invalid-character-esc/\n                    good.py\n                import-self/\n                    good.py\n                inherit-non-class/\n                    bad.py\n                    good.py\n                invalid-character-carriage-return/\n                    good.py\n                inconsistent-return-statements/\n                    bad.py\n                    good.py\n                invalid-all-format/\n                    bad.py\n                    good.py\n                invalid-unicode-codec/\n                    good.py\n                invalid-bytes-returned/\n                    good.py\n                invalid-bool-returned/\n                    good.py\n                invalid-character-backspace/\n                    good.py\n                invalid-enum-extension/\n                    bad.py\n                    good.py\n                invalid-index-returned/\n                    good.py\n                invalid-slots-object/\n                    bad.py\n                    good.py\n                implicit-str-concat/\n                    bad.py\n                    good.py\n                init-is-generator/\n                    bad.py\n                    good.py\n                invalid-class-object/\n                    good.py\n                invalid-format-returned/\n                    good.py\n                import-outside-toplevel/\n                    bad.py\n                    good.py\n                invalid-getnewargs-ex-returned/\n                    good.py\n                inconsistent-quotes/\n                    good.py\n                invalid-str-returned/\n                    good.py\n                invalid-character-sub/\n                    good.py\n                invalid-name/\n                    bad.py\n                    good.py\n                import-error/\n                    good.py\n                invalid-character-nul/\n                    good.py\n                isinstance-second-argument-not-valid-type/\n                    good.py\n                invalid-repr-returned/\n                    good.py\n                inconsistent-mro/\n                    good.py\n                invalid-star-assignment-target/\n                    bad.py\n                    good.py\n            a/\n                astroid-error/\n                    good.py\n                access-member-before-definition/\n                    bad.py\n                    good.py\n                arguments-out-of-order/\n                    bad.py\n                    good.py\n                anomalous-unicode-escape-in-string/\n                    bad.py\n                    good.py\n                arguments-differ/\n                    bad.py\n                    good.py\n                abstract-class-instantiated/\n                    bad.py\n                    good.py\n                abstract-method/\n                    bad.py\n                    good.py\n                attribute-defined-outside-init/\n                    bad.py\n                    good.py\n                assigning-non-slot/\n                    bad.py\n                    good.py\n                anomalous-backslash-in-string/\n                    bad.py\n                    good.py\n                assignment-from-no-return/\n                    bad.py\n                    good.py\n                assert-on-tuple/\n                    bad.py\n                    good.py\n                assignment-from-none/\n                    bad.py\n                    good.py\n                arguments-renamed/\n                    bad.py\n                    good.py\n                assert-on-string-literal/\n                    bad.py\n                    good.py\n                await-outside-async/\n                    bad.py\n                    good.py\n            d/\n                duplicate-argument-name/\n                    bad.py\n                    good.py\n                dict-iter-missing-items/\n                    bad.py\n                    good.py\n                differing-type-doc/\n                    good.py\n                duplicate-string-formatting-argument/\n                    good.py\n                duplicate-bases/\n                    bad.py\n                    good.py\n                deprecated-decorator/\n                    good.py\n                dangerous-default-value/\n                    bad.py\n                    good.py\n                deprecated-typing-alias/\n                    good.py\n                duplicate-key/\n                    bad.py\n                    good.py\n                deprecated-argument/\n                    good.py\n                duplicate-code/\n                    good.py\n                duplicate-except/\n                    bad.py\n                    good.py\n                deprecated-module/\n                    good.py\n                deprecated-pragma/\n                    good.py\n                deprecated-class/\n                    good.py\n                docstring-first-line-empty/\n                    good.py\n                differing-param-doc/\n                    good.py\n                disallowed-name/\n                    good.py\n                deprecated-method/\n                    good.py\n                duplicate-value/\n                    bad.py\n                    good.py\n            w/\n                wrong-exception-operation/\n                    good.py\n                wrong-spelling-in-docstring/\n                    good.py\n                wildcard-import/\n                    bad.py\n                    good.py\n                wrong-import-position/\n                    bad.py\n                    good.py\n                while-used/\n                    bad.py\n                    good.py\n                wrong-import-order/\n                    bad.py\n                    good.py\n                wrong-spelling-in-comment/\n                    good.py\n            f/\n                function-redefined/\n                    bad.py\n                    good.py\n                fixme/\n                    good.py\n                f-string-without-interpolation/\n                    bad.py\n                    good.py\n                fatal/\n                    good.py\n                format-combined-specification/\n                    bad.py\n                    good.py\n                forgotten-debug-statement/\n                    good.py\n                format-needs-mapping/\n                    bad.py\n                    good.py\n                format-string-without-interpolation/\n                    bad.py\n                    good.py\n                file-ignored/\n                    good.py\n            r/\n                redefined-slots-in-subclass/\n                    bad.py\n                    good.py\n                redundant-u-string-prefix/\n                    good.py\n                redundant-keyword-arg/\n                    bad.py\n                    good.py\n                return-outside-function/\n                    bad.py\n                    good.py\n                redefined-builtin/\n                    bad.py\n                    good.py\n                reimported/\n                    bad.py\n                    good.py\n                redeclared-assigned-name/\n                    bad.py\n                    good.py\n                redefined-outer-name/\n                    good.py\n                return-in-init/\n                    bad.py\n                    good.py\n                repeated-keyword/\n                    bad.py\n                    good.py\n                relative-beyond-top-level/\n                    good.py\n                raw-checker-failed/\n                    good.py\n                redefined-argument-from-local/\n                    bad.py\n                    good.py\n                raise-missing-from/\n                    bad.py\n                    good.py\n                raising-non-exception/\n                    bad.py\n                    good.py\n                redundant-unittest-assert/\n                    bad.py\n                    good.py\n                raising-format-tuple/\n                    bad.py\n                    good.py\n                redefined-variable-type/\n                    bad.py\n                    good.py\n                return-arg-in-generator/\n                    good.py\n                redundant-returns-doc/\n                    good.py\n                redefined-loop-name/\n                    bad.py\n                    good.py\n                raising-bad-type/\n                    bad.py\n                    good.py\n                redundant-yields-doc/\n                    good.py\n            k/\n                keyword-arg-before-vararg/\n                    bad.py\n                    good.py\n            g/\n                global-at-module-level/\n                    bad.py\n                    good.py\n                global-variable-not-assigned/\n                    bad.py\n                    good.py\n                global-statement/\n                    bad.py\n                    good.py\n                global-variable-undefined/\n                    bad.py\n                    good.py\n            o/\n                overlapping-except/\n                    bad.py\n                    good.py\n                overridden-final-method/\n                    bad.py\n                    good.py\n            t/\n                too-many-instance-attributes/\n                    good.py\n                too-many-nested-blocks/\n                    good.py\n                typevar-name-mismatch/\n                    bad.py\n                    good.py\n                truncated-format-string/\n                    good.py\n                too-few-format-args/\n                    bad.py\n                    good.py\n                trailing-whitespace/\n                    bad.py\n                    good.py\n                too-many-branches/\n                    bad.py\n                    good.py\n                too-many-return-statements/\n                    good.py\n                try-except-raise/\n                    bad.py\n                    good.py\n                typevar-double-variance/\n                    bad.py\n                    good.py\n                too-many-star-expressions/\n                    bad.py\n                    good.py\n                too-many-statements/\n                    good.py\n                too-complex/\n                    good.py\n                too-many-lines/\n                    good.py\n                trailing-newlines/\n                    bad.py\n                    good.py\n                trailing-comma-tuple/\n                    bad.py\n                    good.py\n                too-many-format-args/\n                    bad.py\n                    good.py\n                too-many-ancestors/\n                    bad.py\n                    good.py\n                too-many-try-statements/\n                    good.py\n                too-many-public-methods/\n                    good.py\n                too-many-function-args/\n                    good.py\n                too-many-boolean-expressions/\n                    bad.py\n                    good.py\n                too-many-locals/\n                    good.py\n                typevar-name-incorrect-variance/\n                    good.py\n                too-many-arguments/\n                    bad.py\n                    good.py\n                too-few-public-methods/\n                    bad.py\n                    good.py\n            c/\n                consider-swap-variables/\n                    bad.py\n                    good.py\n                consider-using-generator/\n                    bad.py\n                    good.py\n                cyclic-import/\n                    good.py\n                c-extension-no-member/\n                    good.py\n                compare-to-zero/\n                    bad.py\n                    good.py\n                consider-using-max-builtin/\n                    bad.py\n                    good.py\n                consider-using-tuple/\n                    bad.py\n                    good.py\n                comparison-with-callable/\n                    bad.py\n                    good.py\n                consider-using-ternary/\n                    good.py\n                continue-in-finally/\n                    bad.py\n                    good.py\n                consider-using-alias/\n                    good.py\n                consider-using-f-string/\n                    bad.py\n                    good.py\n                consider-using-join/\n                    bad.py\n                    good.py\n                consider-merging-isinstance/\n                    bad.py\n                    good.py\n                consider-using-any-or-all/\n                    good.py\n                confusing-with-statement/\n                    good.py\n                consider-using-get/\n                    bad.py\n                    good.py\n                config-parse-error/\n                    good.py\n                comparison-of-constants/\n                    bad.py\n                    good.py\n                class-variable-slots-conflict/\n                    good.py\n                condition-evals-to-constant/\n                    good.py\n                consider-using-min-builtin/\n                    bad.py\n                    good.py\n                cell-var-from-loop/\n                    bad.py\n                    good.py\n                consider-using-assignment-expr/\n                    good.py\n                consider-ternary-expression/\n                    good.py\n                comparison-with-itself/\n                    bad.py\n                    good.py\n                catching-non-exception/\n                    bad.py\n                    good.py\n                consider-using-namedtuple-or-dataclass/\n                    good.py\n                consider-using-dict-items/\n                    bad.py\n                    good.py\n                consider-iterating-dictionary/\n                    bad.py\n                    good.py\n                chained-comparison/\n                    bad.py\n                    good.py\n                consider-using-with/\n                    bad.py\n                    good.py\n                consider-using-set-comprehension/\n                    bad.py\n                    good.py\n                consider-using-dict-comprehension/\n                    bad.py\n                    good.py\n                confusing-consecutive-elif/\n                    bad.py\n                    good.py\n                compare-to-empty-string/\n                    bad.py\n                    good.py\n                consider-using-enumerate/\n                    bad.py\n                    good.py\n                consider-alternative-union-syntax/\n                    good.py\n                consider-using-sys-exit/\n                    bad.py\n                    good.py\n                consider-using-in/\n                    bad.py\n                    good.py\n                consider-using-from-import/\n                    bad.py\n                    good.py\n    exts/\n        pylint_messages.py\n        pylint_extensions.py\n        pylint_features.py\n        pylint_options.py\n\n###\n\nPlease only provide the full path.\nRemember that any subfolders will be considered as irrelevant if you provide the parent folder.\nPlease ensure that the provided irrelevant folders do not include any important files needed to fix the problem\nThe returned folders should be separated by new lines and wrapped with ```\nFor example:\n```\nfolder1/\nfolder2/folder3/\nfolder4/folder5/\n```'}
+2025-07-29 18:57:06,766 - INFO - project_id=None, location=us-central1
+2025-07-29 18:57:06,944 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 18:57:32,572 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-0.4521209716796875,
+  content=Content(
+    parts=[
+      Part(
+        text="""The user wants a list of folders that are irrelevant to fixing a bug in `pylint`.
+
+### Analysis of the Bug
+
+1.  **Core Problem:** When `pylint` is run with `--recursive=y`, it ignores the `ignore-paths` setting from the `pyproject.toml` configuration file.
+2.  **Expected Behavior:** Pylint should find all Python files recursively but then filter out any paths that match the patterns in `ignore-paths`.
+3.  **Symptom:** Files inside `src/gen/` are being linted, even though the configuration specifies `^src/gen/.*$` should be ignored.
+4.  **Key Areas of Code:**
+    *   **Configuration Parsing:** Code responsible for reading `pyproject.toml` and loading the `ignore-paths` option. This is likely in `pylint/config/`.
+    *   **File Discovery/Expansion:** Code that finds modules to lint, especially the recursive logic. This is likely in `pylint/lint/`, with `expand_modules.py` being a strong candidate.
+    *   **Filtering Logic:** The code that applies the `ignore-paths` patterns to the discovered list of files. This would be closely tied to the file discovery logic, likely within `pylint/lint/pylinter.py` or related modules.
+
+### Evaluating Folder Relevance
+
+*   `pylint/`: The main source code folder. The fix is almost certainly here.
+    *   `pylint/config/`: **Relevant**. This folder manages loading and processing configuration options like `ignore-paths`.
+    *   `pylint/lint/`: **Relevant**. This is the core of the linter. It handles the run process (`run.py`), file discovery (`expand_modules.py`), and the main linter object (`pylinter.py`) which orchestrates the process.
+    *   `pylint/utils/`: Potentially **Relevant**. It may contain utility functions for path matching or file system interaction used by the core linting logic. It's safer to not ignore it.
+    *   `pylint/checkers/`: **Irrelevant**. These are the individual rule implementations (e.g., for checking line length, variable names). They run on files *after* the files have already been selected for linting. The bug occurs before this stage.
+    *   `pylint/reporters/`: **Irrelevant**. This code is responsible for formatting and printing the output (e.g., text, JSON). It simply reports on the results it's given and is not involved in deciding which files to analyze.
+    *   `pylint/pyreverse/`: **Irrelevant**. This is a separate tool for generating UML diagrams from code and is not part of the core linting process.
+    *   `pylint/extensions/`: **Irrelevant**. These are optional checkers that a user can enable. The bug is in the core file discovery mechanism, not an extension.
+    *   `pylint/message/`: **Irrelevant**. This folder manages the definitions and properties of the messages that pylint can emit. It's not involved in file processing.
+*   `doc/`: **Irrelevant**. This contains documentation, not application code.
+*   `examples/`: **Irrelevant**. These are example files for users, not part of the pylint tool itself.
+*   `script/`: **Irrelevant**. These are helper scripts for repository maintenance (like generating changelogs), not part of the installed pylint package.
+
+Based on this analysis, the following folders are not involved in configuration, file discovery, or filtering, and can be safely ignored.
+
+```
+doc/
+examples/
+script/
+pylint/checkers/
+pylint/extensions/
+pylint/message/
+pylint/pyreverse/
+pylint/reporters/
+```"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 22, 57, 7, 614356, tzinfo=TzInfo(UTC)) response_id='w1GJaNS_JYKu3NoP1_qUmQE' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=830,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=830
+    ),
+  ],
+  prompt_token_count=16654,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=16654
+    ),
+  ],
+  thoughts_token_count=1572,
+  total_token_count=19056,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 18:57:32,580 - INFO - The user wants a list of folders that are irrelevant to fixing a bug in `pylint`.
+
+### Analysis of the Bug
+
+1.  **Core Problem:** When `pylint` is run with `--recursive=y`, it ignores the `ignore-paths` setting from the `pyproject.toml` configuration file.
+2.  **Expected Behavior:** Pylint should find all Python files recursively but then filter out any paths that match the patterns in `ignore-paths`.
+3.  **Symptom:** Files inside `src/gen/` are being linted, even though the configuration specifies `^src/gen/.*$` should be ignored.
+4.  **Key Areas of Code:**
+    *   **Configuration Parsing:** Code responsible for reading `pyproject.toml` and loading the `ignore-paths` option. This is likely in `pylint/config/`.
+    *   **File Discovery/Expansion:** Code that finds modules to lint, especially the recursive logic. This is likely in `pylint/lint/`, with `expand_modules.py` being a strong candidate.
+    *   **Filtering Logic:** The code that applies the `ignore-paths` patterns to the discovered list of files. This would be closely tied to the file discovery logic, likely within `pylint/lint/pylinter.py` or related modules.
+
+### Evaluating Folder Relevance
+
+*   `pylint/`: The main source code folder. The fix is almost certainly here.
+    *   `pylint/config/`: **Relevant**. This folder manages loading and processing configuration options like `ignore-paths`.
+    *   `pylint/lint/`: **Relevant**. This is the core of the linter. It handles the run process (`run.py`), file discovery (`expand_modules.py`), and the main linter object (`pylinter.py`) which orchestrates the process.
+    *   `pylint/utils/`: Potentially **Relevant**. It may contain utility functions for path matching or file system interaction used by the core linting logic. It's safer to not ignore it.
+    *   `pylint/checkers/`: **Irrelevant**. These are the individual rule implementations (e.g., for checking line length, variable names). They run on files *after* the files have already been selected for linting. The bug occurs before this stage.
+    *   `pylint/reporters/`: **Irrelevant**. This code is responsible for formatting and printing the output (e.g., text, JSON). It simply reports on the results it's given and is not involved in deciding which files to analyze.
+    *   `pylint/pyreverse/`: **Irrelevant**. This is a separate tool for generating UML diagrams from code and is not part of the core linting process.
+    *   `pylint/extensions/`: **Irrelevant**. These are optional checkers that a user can enable. The bug is in the core file discovery mechanism, not an extension.
+    *   `pylint/message/`: **Irrelevant**. This folder manages the definitions and properties of the messages that pylint can emit. It's not involved in file processing.
+*   `doc/`: **Irrelevant**. This contains documentation, not application code.
+*   `examples/`: **Irrelevant**. These are example files for users, not part of the pylint tool itself.
+*   `script/`: **Irrelevant**. These are helper scripts for repository maintenance (like generating changelogs), not part of the installed pylint package.
+
+Based on this analysis, the following folders are not involved in configuration, file discovery, or filtering, and can be safely ignored.
+
+```
+doc/
+examples/
+script/
+pylint/checkers/
+pylint/extensions/
+pylint/message/
+pylint/pyreverse/
+pylint/reporters/
+```
+2025-07-31 16:30:25,028 - INFO - Processing bug pylint-dev__pylint-7080
+2025-07-31 16:30:25,028 - INFO - Skipping existing instance_id: pylint-dev__pylint-7080
+2025-07-31 16:30:28,434 - INFO - Processing bug pylint-dev__pylint-7080
+2025-07-31 16:30:28,436 - INFO - Skipping existing instance_id: pylint-dev__pylint-7080
+2025-07-31 21:24:06,065 - INFO - Processing bug pylint-dev__pylint-7080
+2025-07-31 21:24:06,066 - INFO - Skipping existing instance_id: pylint-dev__pylint-7080
+2025-07-31 21:24:08,870 - INFO - Processing bug pylint-dev__pylint-7080
+2025-07-31 21:24:08,871 - INFO - Skipping existing instance_id: pylint-dev__pylint-7080

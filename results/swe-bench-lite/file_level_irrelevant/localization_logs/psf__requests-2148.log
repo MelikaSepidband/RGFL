@@ -1,0 +1,230 @@
+2025-07-29 18:55:34,067 - INFO - Processing bug psf__requests-2148
+2025-07-29 18:55:34,067 - INFO - ================ localize psf__requests-2148 ================
+2025-07-29 18:55:36,942 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of folders that are irrelevant to fixing the problem.
+Note that irrelevant folders are those that do not need to be modified and are safe to ignored when trying to solve this problem.
+
+### GitHub Problem Description ###
+socket.error exception not caught/wrapped in a requests exception (ConnectionError perhaps?)
+I just noticed a case where I had a socket reset on me, and was raised to me as a raw socket error as opposed to something like a requests.exceptions.ConnectionError:
+
+```
+  File "/home/rtdean/***/***/***/***/***/***.py", line 67, in dir_parse
+    root = ElementTree.fromstring(response.text)
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 721, in text
+    if not self.content:
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 694, in content
+    self._content = bytes().join(self.iter_content(CONTENT_CHUNK_SIZE)) or bytes()
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 627, in generate
+    for chunk in self.raw.stream(chunk_size, decode_content=True):
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/packages/urllib3/response.py", line 240, in stream
+    data = self.read(amt=amt, decode_content=decode_content)
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/packages/urllib3/response.py", line 187, in read
+    data = self._fp.read(amt)
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 543, in read
+    return self._read_chunked(amt)
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 612, in _read_chunked
+    value.append(self._safe_read(chunk_left))
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 658, in _safe_read
+    chunk = self.fp.read(min(amt, MAXAMOUNT))
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/socket.py", line 380, in read
+    data = self._sock.recv(left)
+  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/gevent-1.0.1-py2.7-linux-x86_64.egg/gevent/socket.py", line 385, in recv
+    return sock.recv(*args)
+socket.error: [Errno 104] Connection reset by peer
+```
+
+Not sure if this is by accident or design... in general, I guess I'd expect a requests exception when using requests, but I can start looking for socket errors and the like as well.
+
+
+
+###
+
+### Repository Structure ###
+requests/
+    setup.py
+    compat.py
+    status_codes.py
+    sessions.py
+    certs.py
+    __init__.py
+    hooks.py
+    exceptions.py
+    models.py
+    adapters.py
+    auth.py
+    utils.py
+    structures.py
+    api.py
+    cookies.py
+    packages/
+        __init__.py
+        chardet/
+            chardetect.py
+            big5freq.py
+            compat.py
+            mbcsgroupprober.py
+            gb2312prober.py
+            constants.py
+            universaldetector.py
+            chardistribution.py
+            latin1prober.py
+            eucjpprober.py
+            cp949prober.py
+            euckrfreq.py
+            gb2312freq.py
+            mbcharsetprober.py
+            __init__.py
+            jisfreq.py
+            sbcsgroupprober.py
+            langhebrewmodel.py
+            hebrewprober.py
+            euckrprober.py
+            euctwfreq.py
+            euctwprober.py
+            langcyrillicmodel.py
+            big5prober.py
+            escprober.py
+            langbulgarianmodel.py
+            langhungarianmodel.py
+            langthaimodel.py
+            mbcssm.py
+            charsetgroupprober.py
+            sjisprober.py
+            langgreekmodel.py
+            jpcntx.py
+            utf8prober.py
+            escsm.py
+            codingstatemachine.py
+            sbcharsetprober.py
+            charsetprober.py
+        urllib3/
+            fields.py
+            __init__.py
+            _collections.py
+            connection.py
+            exceptions.py
+            poolmanager.py
+            connectionpool.py
+            request.py
+            response.py
+            filepost.py
+            util/
+                timeout.py
+                url.py
+                __init__.py
+                connection.py
+                ssl_.py
+                request.py
+                response.py
+                retry.py
+            packages/
+                __init__.py
+                ordered_dict.py
+                six.py
+                ssl_match_hostname/
+                    _implementation.py
+                    __init__.py
+            contrib/
+                pyopenssl.py
+                __init__.py
+                ntlmpool.py
+docs/
+    conf.py
+    _themes/
+        flask_theme_support.py
+
+###
+
+Please only provide the full path.
+Remember that any subfolders will be considered as irrelevant if you provide the parent folder.
+Please ensure that the provided irrelevant folders do not include any important files needed to fix the problem
+The returned folders should be separated by new lines and wrapped with ```
+For example:
+```
+folder1/
+folder2/folder3/
+folder4/folder5/
+```
+2025-07-29 18:55:36,942 - INFO - ================================================================================
+2025-07-29 18:55:36,942 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 18:55:36,942 - INFO - {'model': 'gemini-2.5-pro', 'contents': 'Please look through the following GitHub problem description and Repository structure and provide a list of folders that are irrelevant to fixing the problem.\nNote that irrelevant folders are those that do not need to be modified and are safe to ignored when trying to solve this problem.\n\n### GitHub Problem Description ###\nsocket.error exception not caught/wrapped in a requests exception (ConnectionError perhaps?)\nI just noticed a case where I had a socket reset on me, and was raised to me as a raw socket error as opposed to something like a requests.exceptions.ConnectionError:\n\n```\n  File "/home/rtdean/***/***/***/***/***/***.py", line 67, in dir_parse\n    root = ElementTree.fromstring(response.text)\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 721, in text\n    if not self.content:\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 694, in content\n    self._content = bytes().join(self.iter_content(CONTENT_CHUNK_SIZE)) or bytes()\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/models.py", line 627, in generate\n    for chunk in self.raw.stream(chunk_size, decode_content=True):\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/packages/urllib3/response.py", line 240, in stream\n    data = self.read(amt=amt, decode_content=decode_content)\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/requests-2.3.0-py2.7.egg/requests/packages/urllib3/response.py", line 187, in read\n    data = self._fp.read(amt)\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 543, in read\n    return self._read_chunked(amt)\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 612, in _read_chunked\n    value.append(self._safe_read(chunk_left))\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/httplib.py", line 658, in _safe_read\n    chunk = self.fp.read(min(amt, MAXAMOUNT))\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/socket.py", line 380, in read\n    data = self._sock.recv(left)\n  File "/home/rtdean/.pyenv/versions/2.7.6/lib/python2.7/site-packages/gevent-1.0.1-py2.7-linux-x86_64.egg/gevent/socket.py", line 385, in recv\n    return sock.recv(*args)\nsocket.error: [Errno 104] Connection reset by peer\n```\n\nNot sure if this is by accident or design... in general, I guess I\'d expect a requests exception when using requests, but I can start looking for socket errors and the like as well.\n\n\n\n###\n\n### Repository Structure ###\nrequests/\n    setup.py\n    compat.py\n    status_codes.py\n    sessions.py\n    certs.py\n    __init__.py\n    hooks.py\n    exceptions.py\n    models.py\n    adapters.py\n    auth.py\n    utils.py\n    structures.py\n    api.py\n    cookies.py\n    packages/\n        __init__.py\n        chardet/\n            chardetect.py\n            big5freq.py\n            compat.py\n            mbcsgroupprober.py\n            gb2312prober.py\n            constants.py\n            universaldetector.py\n            chardistribution.py\n            latin1prober.py\n            eucjpprober.py\n            cp949prober.py\n            euckrfreq.py\n            gb2312freq.py\n            mbcharsetprober.py\n            __init__.py\n            jisfreq.py\n            sbcsgroupprober.py\n            langhebrewmodel.py\n            hebrewprober.py\n            euckrprober.py\n            euctwfreq.py\n            euctwprober.py\n            langcyrillicmodel.py\n            big5prober.py\n            escprober.py\n            langbulgarianmodel.py\n            langhungarianmodel.py\n            langthaimodel.py\n            mbcssm.py\n            charsetgroupprober.py\n            sjisprober.py\n            langgreekmodel.py\n            jpcntx.py\n            utf8prober.py\n            escsm.py\n            codingstatemachine.py\n            sbcharsetprober.py\n            charsetprober.py\n        urllib3/\n            fields.py\n            __init__.py\n            _collections.py\n            connection.py\n            exceptions.py\n            poolmanager.py\n            connectionpool.py\n            request.py\n            response.py\n            filepost.py\n            util/\n                timeout.py\n                url.py\n                __init__.py\n                connection.py\n                ssl_.py\n                request.py\n                response.py\n                retry.py\n            packages/\n                __init__.py\n                ordered_dict.py\n                six.py\n                ssl_match_hostname/\n                    _implementation.py\n                    __init__.py\n            contrib/\n                pyopenssl.py\n                __init__.py\n                ntlmpool.py\ndocs/\n    conf.py\n    _themes/\n        flask_theme_support.py\n\n###\n\nPlease only provide the full path.\nRemember that any subfolders will be considered as irrelevant if you provide the parent folder.\nPlease ensure that the provided irrelevant folders do not include any important files needed to fix the problem\nThe returned folders should be separated by new lines and wrapped with ```\nFor example:\n```\nfolder1/\nfolder2/folder3/\nfolder4/folder5/\n```'}
+2025-07-29 18:55:36,942 - INFO - project_id=None, location=us-central1
+2025-07-29 18:55:37,008 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 18:56:07,960 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-1.8822109851772937,
+  content=Content(
+    parts=[
+      Part(
+        text="""Based on the problem description and the provided file structure, the goal is to catch a `socket.error` that occurs during a response read and wrap it in a `requests` specific exception like `ConnectionError`.
+
+The traceback clearly indicates the error happens deep in the stack, during the process of reading the response body, originating from `socket.recv`. The fix will likely involve adding a `try...except socket.error` block in either `requests` or its bundled `urllib3` library, where the low-level read operations are handled.
+
+The relevant files for this fix are likely to be:
+*   `requests/models.py`: Where `iter_content` consumes the raw response stream.
+*   `requests/adapters.py`: The bridge between `requests` and `urllib3`, where the raw response is first handled.
+*   `requests/packages/urllib3/response.py`: Where the reading from the socket stream (`_fp.read`) happens. This is a very strong candidate for the fix.
+*   `requests/packages/urllib3/connectionpool.py`: Manages the underlying connection.
+
+Based on this, the following folders are irrelevant to solving the problem:
+
+```
+docs/
+requests/packages/chardet/
+requests/packages/urllib3/contrib/
+requests/packages/urllib3/packages/
+requests/packages/urllib3/util/
+```"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 22, 55, 37, 339943, tzinfo=TzInfo(UTC)) response_id='aVGJaOffFJqbnvgP_eT7-Ao' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=297,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=297
+    ),
+  ],
+  prompt_token_count=1591,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1591
+    ),
+  ],
+  thoughts_token_count=2658,
+  total_token_count=4546,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 18:56:07,964 - INFO - Based on the problem description and the provided file structure, the goal is to catch a `socket.error` that occurs during a response read and wrap it in a `requests` specific exception like `ConnectionError`.
+
+The traceback clearly indicates the error happens deep in the stack, during the process of reading the response body, originating from `socket.recv`. The fix will likely involve adding a `try...except socket.error` block in either `requests` or its bundled `urllib3` library, where the low-level read operations are handled.
+
+The relevant files for this fix are likely to be:
+*   `requests/models.py`: Where `iter_content` consumes the raw response stream.
+*   `requests/adapters.py`: The bridge between `requests` and `urllib3`, where the raw response is first handled.
+*   `requests/packages/urllib3/response.py`: Where the reading from the socket stream (`_fp.read`) happens. This is a very strong candidate for the fix.
+*   `requests/packages/urllib3/connectionpool.py`: Manages the underlying connection.
+
+Based on this, the following folders are irrelevant to solving the problem:
+
+```
+docs/
+requests/packages/chardet/
+requests/packages/urllib3/contrib/
+requests/packages/urllib3/packages/
+requests/packages/urllib3/util/
+```
+2025-07-31 16:30:25,025 - INFO - Processing bug psf__requests-2148
+2025-07-31 16:30:25,026 - INFO - Skipping existing instance_id: psf__requests-2148
+2025-07-31 16:30:28,433 - INFO - Processing bug psf__requests-2148
+2025-07-31 16:30:28,434 - INFO - Skipping existing instance_id: psf__requests-2148
+2025-07-31 21:24:06,063 - INFO - Processing bug psf__requests-2148
+2025-07-31 21:24:06,063 - INFO - Skipping existing instance_id: psf__requests-2148
+2025-07-31 21:24:08,869 - INFO - Processing bug psf__requests-2148
+2025-07-31 21:24:08,869 - INFO - Skipping existing instance_id: psf__requests-2148

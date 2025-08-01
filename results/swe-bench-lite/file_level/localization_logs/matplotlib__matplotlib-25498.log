@@ -1,0 +1,959 @@
+2025-07-29 16:50:24,008 - INFO - Processing bug matplotlib__matplotlib-25498
+2025-07-29 16:52:40,407 - INFO - ================ localize matplotlib__matplotlib-25498 ================
+2025-07-29 16:52:40,467 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.
+
+### GitHub Problem Description ###
+Update colorbar after changing mappable.norm
+How can I update a colorbar, after I changed the norm instance of the colorbar?
+
+`colorbar.update_normal(mappable)` has now effect and `colorbar.update_bruteforce(mappable)` throws a `ZeroDivsionError`-Exception.
+
+Consider this example:
+
+``` python
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+import numpy as np
+
+img = 10**np.random.normal(1, 1, size=(50, 50))
+
+fig, ax = plt.subplots(1, 1)
+plot = ax.imshow(img, cmap='gray')
+cb = fig.colorbar(plot, ax=ax)
+plot.norm = LogNorm()
+cb.update_normal(plot)  # no effect
+cb.update_bruteforce(plot)  # throws ZeroDivisionError
+plt.show()
+```
+
+Output for `cb.update_bruteforce(plot)`:
+
+```
+Traceback (most recent call last):
+  File "test_norm.py", line 12, in <module>
+    cb.update_bruteforce(plot)
+  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 967, in update_bruteforce
+    self.draw_all()
+  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 342, in draw_all
+    self._process_values()
+  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 664, in _process_values
+    b = self.norm.inverse(self._uniform_y(self.cmap.N + 1))
+  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colors.py", line 1011, in inverse
+    return vmin * ma.power((vmax / vmin), val)
+ZeroDivisionError: division by zero
+```
+
+
+
+###
+
+### Repository Structure ###
+matplotlib/
+    setup.py
+    setupext.py
+ci/
+    check_version_number.py
+    check_wheel_licenses.py
+galleries/
+    plot_types/
+        unstructured/
+            tripcolor.py
+            triplot.py
+            tricontourf.py
+            tricontour.py
+        basic/
+            step.py
+            stem.py
+            scatter_plot.py
+            stackplot.py
+            plot.py
+            bar.py
+            fill_between.py
+        arrays/
+            pcolormesh.py
+            imshow.py
+            quiver.py
+            contour.py
+            streamplot.py
+            barbs.py
+            contourf.py
+        stats/
+            violin.py
+            errorbar_plot.py
+            eventplot.py
+            pie.py
+            hist_plot.py
+            hexbin.py
+            boxplot_plot.py
+            hist2d.py
+        3D/
+            surface3d_simple.py
+            trisurf3d_simple.py
+            wire3d_simple.py
+            scatter3d_simple.py
+            voxels_simple.py
+    examples/
+        event_handling/
+            close_event.py
+            cursor_demo.py
+            viewlims.py
+            pick_event_demo.py
+            lasso_demo.py
+            pong_sgskip.py
+            path_editor.py
+            figure_axes_enter_leave.py
+            looking_glass.py
+            keypress_demo.py
+            zoom_window.py
+            coords_demo.py
+            poly_editor.py
+            data_browser.py
+            timers.py
+            resample.py
+            image_slices_viewer.py
+            trifinder_event_demo.py
+            pick_event_demo2.py
+            legend_picking.py
+            ginput_manual_clabel_sgskip.py
+        images_contours_and_fields/
+            tricontour_smooth_user.py
+            pcolor_demo.py
+            multi_image.py
+            colormap_normalizations.py
+            demo_bboximage.py
+            contour_label_demo.py
+            image_transparency_blend.py
+            trigradient_demo.py
+            barb_demo.py
+            pcolormesh_grids.py
+            quiver_simple_demo.py
+            triinterp_demo.py
+            quiver_demo.py
+            layer_images.py
+            tricontour_demo.py
+            tripcolor_demo.py
+            contourf_demo.py
+            plot_streamplot.py
+            contour_corner_mask.py
+            contours_in_optimization_demo.py
+            pcolormesh_levels.py
+            affine_image.py
+            interpolation_methods.py
+            image_antialiasing.py
+            tricontour_smooth_delaunay.py
+            triplot_demo.py
+            image_demo.py
+            barcode_demo.py
+            colormap_normalizations_symlognorm.py
+            image_zcoord.py
+            image_masked.py
+            matshow.py
+            image_nonuniform.py
+            figimage_demo.py
+            spy_demos.py
+            specgram_demo.py
+            image_clip_path.py
+            colormap_interactive_adjustment.py
+            contour_image.py
+            quadmesh_demo.py
+            contourf_hatching.py
+            shading_example.py
+            contour_demo.py
+            contourf_log.py
+            watermark_image.py
+            image_annotated_heatmap.py
+            irregulardatagrid.py
+        units/
+            bar_unit_demo.py
+            ellipse_with_units.py
+            radian_demo.py
+            bar_demo2.py
+            annotate_with_units.py
+            units_scatter.py
+            basic_units.py
+            artist_tests.py
+            units_sample.py
+            evans_test.py
+        axisartist/
+            demo_floating_axes.py
+            simple_axisline.py
+            simple_axisline3.py
+            demo_ticklabel_alignment.py
+            demo_parasite_axes.py
+            demo_curvelinear_grid.py
+            demo_axisline_style.py
+            demo_ticklabel_direction.py
+            axis_direction.py
+            demo_floating_axis.py
+            demo_parasite_axes2.py
+            demo_curvelinear_grid2.py
+            demo_axis_direction.py
+            simple_axis_pad.py
+            simple_axisartist1.py
+            simple_axis_direction01.py
+            simple_axis_direction03.py
+        shapes_and_collections/
+            fancybox_demo.py
+            path_patch.py
+            dolphin.py
+            scatter.py
+            ellipse_demo.py
+            line_collection.py
+            collections.py
+            donut.py
+            patch_collection.py
+            quad_bezier.py
+            ellipse_collection.py
+            hatch_demo.py
+            hatch_style_reference.py
+            compound_path.py
+            arrow_guide.py
+            artist_reference.py
+        specialty_plots/
+            topographic_hillshading.py
+            skewt.py
+            mri_with_eeg.py
+            mri_demo.py
+            sankey_rankine.py
+            hinton_demo.py
+            advanced_hillshading.py
+            sankey_basics.py
+            leftventricle_bullseye.py
+            radar_chart.py
+            sankey_links.py
+            anscombe.py
+        color/
+            color_by_yvalue.py
+            colorbar_basics.py
+            named_colors.py
+            color_demo.py
+            colormap_reference.py
+            color_cycle_default.py
+            custom_cmap.py
+        statistics/
+            boxplot_vs_violin.py
+            boxplot_color.py
+            time_series_histogram.py
+            histogram_cumulative.py
+            histogram_histtypes.py
+            errorbar_features.py
+            confidence_ellipse.py
+            barchart_demo.py
+            hexbin_demo.py
+            hist.py
+            multiple_histograms_side_by_side.py
+            violinplot.py
+            histogram_features.py
+            errorbar_limits.py
+            customized_violin.py
+            boxplot.py
+            errorbars_and_boxes.py
+            boxplot_demo.py
+            bxp.py
+            histogram_multihist.py
+            errorbar.py
+        widgets/
+            polygon_selector_simple.py
+            textbox.py
+            check_buttons.py
+            menu.py
+            range_slider.py
+            slider_snap_demo.py
+            radio_buttons.py
+            lasso_selector_demo_sgskip.py
+            cursor.py
+            multicursor.py
+            rectangle_selector.py
+            span_selector.py
+            annotated_cursor.py
+            slider_demo.py
+            buttons.py
+            mouse_cursor.py
+            polygon_selector_demo.py
+        text_labels_and_annotations/
+            placing_text_boxes.py
+            legend.py
+            unicode_minus.py
+            fonts_demo.py
+            angle_annotation.py
+            autowrap.py
+            annotate_transform.py
+            date.py
+            dfrac_demo.py
+            mathtext_demo.py
+            multiline.py
+            mathtext_asarray.py
+            text_commands.py
+            tex_demo.py
+            angles_on_bracket_arrows.py
+            usetex_fonteffects.py
+            annotation_demo.py
+            label_subplots.py
+            text_fontdict.py
+            titles_demo.py
+            font_family_rc.py
+            annotation_polar.py
+            figlegend_demo.py
+            demo_text_path.py
+            accented_text.py
+            text_rotation_relative_to_line.py
+            usetex_baseline_test.py
+            legend_demo.py
+            mathtext_fontfamily_example.py
+            text_alignment.py
+            arrow_demo.py
+            font_table.py
+            custom_legends.py
+            annotation_basic.py
+            font_file.py
+            fancytextbox_demo.py
+            rainbow_text.py
+            demo_text_rotation_mode.py
+            fancyarrow_demo.py
+            fonts_demo_kw.py
+            stix_fonts_demo.py
+            demo_annotation_box.py
+            engineering_formatter.py
+            line_with_text.py
+            watermark_text.py
+            mathtext_examples.py
+            align_ylabels.py
+        showcase/
+            xkcd.py
+            integral.py
+            anatomy.py
+            firefox.py
+            mandelbrot.py
+            stock_prices.py
+        ticks/
+            centered_ticklabels.py
+            date_demo_convert.py
+            tick-locators.py
+            auto_ticks.py
+            date_concise_formatter.py
+            dollar_ticks.py
+            fig_axes_customize_simple.py
+            date_demo_rrule.py
+            date_index_formatter.py
+            scalarformatter.py
+            colorbar_tick_labelling_demo.py
+            tick-formatters.py
+            date_precision_and_epochs.py
+            ticks_too_many.py
+            custom_ticker1.py
+            tick_label_right.py
+            tick_labels_from_values.py
+            tick_xlabel_top.py
+            ticklabels_rotation.py
+            major_minor_demo.py
+            date_formatters_locators.py
+        lines_bars_and_markers/
+            stairs_demo.py
+            broken_barh.py
+            capstyle.py
+            bar_stacked.py
+            stackplot_demo.py
+            errorbar_subsample.py
+            simple_plot.py
+            multicolored_line.py
+            bar_label_demo.py
+            masked_demo.py
+            marker_reference.py
+            fill.py
+            csd_demo.py
+            scatter_masked.py
+            linestyles.py
+            spectrum_demo.py
+            categorical_variables.py
+            scatter_demo2.py
+            errorbar_limits_simple.py
+            bar_colors.py
+            hat_graph.py
+            fill_between_alpha.py
+            multivariate_marker_plot.py
+            lines_with_ticks_demo.py
+            stem_plot.py
+            gradient_bar.py
+            psd_demo.py
+            line_demo_dash_control.py
+            markevery_demo.py
+            span_regions.py
+            horizontal_barchart_distribution.py
+            cohere.py
+            eventcollection_demo.py
+            curve_error_band.py
+            step_demo.py
+            eventplot_demo.py
+            barchart.py
+            scatter_custom_symbol.py
+            xcorr_acorr_demo.py
+            timeline.py
+            joinstyle.py
+            fill_betweenx_demo.py
+            fill_between_demo.py
+            filled_step.py
+            vline_hline_demo.py
+            barh.py
+            scatter_with_legend.py
+            scatter_star_poly.py
+            scatter_hist.py
+        style_sheets/
+            fivethirtyeight.py
+            grayscale.py
+            plot_solarizedlight2.py
+            dark_background.py
+            style_sheets_reference.py
+            ggplot.py
+            bmh.py
+        animation/
+            bayes_update.py
+            pause_resume.py
+            animated_histogram.py
+            multiple_axes.py
+            strip_chart.py
+            dynamic_image.py
+            unchained.py
+            rain.py
+            animation_demo.py
+            random_walk.py
+            animate_decay.py
+            frame_grabbing_sgskip.py
+            double_pendulum.py
+            simple_scatter.py
+            simple_anim.py
+        pyplots/
+            pyplot_three.py
+            pyplot_text.py
+            pyplot_two_subplots.py
+            axline.py
+            pyplot_simple.py
+        scales/
+            log_bar.py
+            aspect_loglog.py
+            logit_demo.py
+            asinh_demo.py
+            semilogx_demo.py
+            scales.py
+            custom_scale.py
+            log_demo.py
+            power_norm.py
+            symlog_demo.py
+        subplots_axes_and_figures/
+            axhspan_demo.py
+            align_labels_demo.py
+            fahrenheit_celsius_scales.py
+            auto_subplots_adjust.py
+            subplots_adjust.py
+            axes_props.py
+            gridspec_nested.py
+            secondary_axis.py
+            ganged_plots.py
+            two_scales.py
+            custom_figure_class.py
+            subfigures.py
+            subplots_demo.py
+            axes_box_aspect.py
+            subplot.py
+            shared_axis_demo.py
+            demo_constrained_layout.py
+            axes_zoom_effect.py
+            zoom_inset_axes.py
+            multiple_figs_demo.py
+            share_axis_lims_views.py
+            gridspec_multicolumn.py
+            figure_title.py
+            broken_axis.py
+            invert_axes.py
+            figure_size_units.py
+            demo_tight_layout.py
+            axes_demo.py
+            geo_demo.py
+            axis_labels_demo.py
+            gridspec_and_subplots.py
+            axes_margins.py
+            axis_equal_demo.py
+        misc/
+            bbox_intersect.py
+            fill_spiral.py
+            hyperlinks_sgskip.py
+            multipage_pdf.py
+            coords_report.py
+            contour_manual.py
+            customize_rc.py
+            ftface_props.py
+            svg_filter_line.py
+            image_thumbnail_sgskip.py
+            font_indexing.py
+            fig_x.py
+            rasterization_demo.py
+            multiprocess_sgskip.py
+            print_stdout_sgskip.py
+            table_demo.py
+            set_and_get.py
+            tickedstroke_demo.py
+            zorder_demo.py
+            findobj_demo.py
+            patheffect_demo.py
+            demo_ribbon_box.py
+            logos2.py
+            demo_agg_filter.py
+            histogram_path.py
+            transoffset.py
+            svg_filter_pie.py
+            custom_projection.py
+            anchored_artists.py
+            packed_bubbles.py
+            keyword_plotting.py
+        mplot3d/
+            offset.py
+            tricontour3d.py
+            voxels_torus.py
+            view_planes_3d.py
+            pathpatch3d.py
+            voxels_numpy_logo.py
+            projections.py
+            contour3d_3.py
+            voxels.py
+            lorenz_attractor.py
+            errorbar3d.py
+            subplot3d.py
+            2dcollections3d.py
+            lines3d.py
+            contour3d_2.py
+            polys3d.py
+            mixed_subplots.py
+            quiver3d.py
+            contourf3d_2.py
+            surface3d_2.py
+            rotate_axes3d_sgskip.py
+            3d_bars.py
+            wire3d.py
+            wire3d_animation_sgskip.py
+            trisurf3d.py
+            surface3d_radial.py
+            contourf3d.py
+            text3d.py
+            voxels_rgb.py
+            box3d.py
+            custom_shaded_3d_surface.py
+            wire3d_zero_stride.py
+            tricontourf3d.py
+            surface3d_3.py
+            scatter3d.py
+            contour3d.py
+            trisurf3d_2.py
+            hist3d.py
+            surface3d.py
+            stem3d_demo.py
+            bars3d.py
+        pie_and_polar_charts/
+            polar_bar.py
+            polar_demo.py
+            polar_legend.py
+            polar_scatter.py
+            bar_of_pie.py
+            nested_pie.py
+            polar_error_caps.py
+            pie_features.py
+            pie_and_donut_labels.py
+            pie_demo2.py
+        spines/
+            centered_spines_with_arrows.py
+            spine_placement_demo.py
+            multiple_yaxis_with_spines.py
+            spines.py
+            spines_dropped.py
+        user_interfaces/
+            embedding_in_wx3_sgskip.py
+            embedding_in_gtk4_sgskip.py
+            pylab_with_gtk3_sgskip.py
+            toolmanager_sgskip.py
+            embedding_in_wx5_sgskip.py
+            web_application_server_sgskip.py
+            embedding_in_gtk3_sgskip.py
+            gtk3_spreadsheet_sgskip.py
+            canvasagg.py
+            embedding_in_gtk3_panzoom_sgskip.py
+            embedding_in_wx2_sgskip.py
+            mpl_with_glade3_sgskip.py
+            mplcvd.py
+            fourier_demo_wx_sgskip.py
+            embedding_webagg_sgskip.py
+            embedding_in_tk_sgskip.py
+            svg_tooltip_sgskip.py
+            embedding_in_wx4_sgskip.py
+            embedding_in_qt_sgskip.py
+            wxcursor_demo_sgskip.py
+            svg_histogram_sgskip.py
+            embedding_in_gtk4_panzoom_sgskip.py
+            gtk4_spreadsheet_sgskip.py
+            mathtext_wx_sgskip.py
+            pylab_with_gtk4_sgskip.py
+        userdemo/
+            connect_simple01.py
+            pgf_preamble_sgskip.py
+            annotate_simple_coord02.py
+            simple_annotate01.py
+            simple_legend01.py
+            annotate_text_arrow.py
+            demo_gridspec06.py
+            pgf_texsystem.py
+            annotate_explain.py
+            demo_gridspec03.py
+            connectionstyle_demo.py
+            simple_legend02.py
+            pgf_fonts.py
+            custom_boxstyle01.py
+            demo_gridspec01.py
+        axes_grid1/
+            demo_axes_grid.py
+            simple_colorbar.py
+            demo_anchored_direction_arrows.py
+            demo_colorbar_with_inset_locator.py
+            simple_axesgrid2.py
+            demo_imagegrid_aspect.py
+            inset_locator_demo2.py
+            simple_axes_divider1.py
+            simple_axesgrid.py
+            scatter_hist_locatable_axes.py
+            demo_colorbar_with_axes_divider.py
+            demo_axes_divider.py
+            demo_fixed_size_axes.py
+            simple_anchored_artists.py
+            demo_edge_colorbar.py
+            demo_colorbar_of_inset_axes.py
+            demo_axes_grid2.py
+            demo_axes_hbox_divider.py
+            demo_axes_rgb.py
+            parasite_simple2.py
+            simple_axes_divider3.py
+            inset_locator_demo.py
+            parasite_simple.py
+            make_room_for_ylabel_using_axesgrid.py
+            simple_axisline4.py
+    users_explain/
+        customizing.py
+        quick_start.py
+        text/
+            usetex.py
+            text_intro.py
+            text_props.py
+            mathtext.py
+            fonts.py
+            pgf.py
+            annotations.py
+        colors/
+            colormapnorms.py
+            colors.py
+            colormaps.py
+            colorbar_only.py
+            colormap-manipulation.py
+        axes/
+            mosaic.py
+            colorbar_placement.py
+            constrainedlayout_guide.py
+            arranging_axes.py
+            tight_layout_guide.py
+            legend_guide.py
+            autoscale.py
+        toolkits/
+            axisartist.py
+            axes_grid.py
+            mplot3d.py
+        animations/
+            blitting.py
+            animations.py
+        artists/
+            paths.py
+            imshow_extent.py
+            transforms_tutorial.py
+            color_cycle.py
+            patheffects_guide.py
+    tutorials/
+        artists.py
+        images.py
+        pyplot.py
+        lifecycle.py
+tools/
+    gh_api.py
+    triage_tests.py
+    embed_js.py
+    run_examples.py
+    github_stats.py
+    boilerplate.py
+    make_icons.py
+    subset.py
+    cache_zenodo_svg.py
+    memleak.py
+    visualize_tests.py
+lib/
+    pylab.py
+    mpl_toolkits/
+        __init__.py
+        axisartist/
+            grid_finder.py
+            floating_axes.py
+            __init__.py
+            axisline_style.py
+            grid_helper_curvelinear.py
+            axes_rgb.py
+            axis_artist.py
+            axes_grid.py
+            axes_divider.py
+            parasite_axes.py
+            angle_helper.py
+            axislines.py
+        mplot3d/
+            axis3d.py
+            proj3d.py
+            axes3d.py
+            __init__.py
+            art3d.py
+        axes_grid1/
+            axes_size.py
+            __init__.py
+            inset_locator.py
+            axes_rgb.py
+            mpl_axes.py
+            axes_grid.py
+            axes_divider.py
+            parasite_axes.py
+            anchored_artists.py
+    matplotlib/
+        _layoutgrid.py
+        legend.py
+        artist.py
+        _color_data.py
+        container.py
+        dates.py
+        widgets.py
+        _docstring.py
+        scale.py
+        path.py
+        layout_engine.py
+        animation.py
+        _mathtext.py
+        colorbar.py
+        axis.py
+        font_manager.py
+        backend_tools.py
+        text.py
+        _constrained_layout.py
+        quiver.py
+        _enums.py
+        contour.py
+        cbook.py
+        _blocking_input.py
+        _tight_layout.py
+        stackplot.py
+        mlab.py
+        _fontconfig_pattern.py
+        spines.py
+        table.py
+        bezier.py
+        patheffects.py
+        __init__.py
+        colors.py
+        _internal_utils.py
+        sankey.py
+        pylab.py
+        _cm_listed.py
+        _mathtext_data.py
+        pyplot.py
+        backend_managers.py
+        _pylab_helpers.py
+        offsetbox.py
+        streamplot.py
+        _animation_data.py
+        backend_bases.py
+        figure.py
+        mathtext.py
+        hatch.py
+        cm.py
+        _tight_bbox.py
+        gridspec.py
+        collections.py
+        textpath.py
+        _type1font.py
+        _afm.py
+        ticker.py
+        _cm.py
+        dviread.py
+        units.py
+        category.py
+        markers.py
+        legend_handler.py
+        _text_helpers.py
+        image.py
+        rcsetup.py
+        texmanager.py
+        lines.py
+        transforms.py
+        patches.py
+        style/
+            core.py
+            __init__.py
+        sphinxext/
+            __init__.py
+            mathmpl.py
+            plot_directive.py
+        backends/
+            backend_tkcairo.py
+            backend_tkagg.py
+            qt_compat.py
+            backend_gtk3cairo.py
+            backend_ps.py
+            backend_gtk4.py
+            backend_nbagg.py
+            backend_cairo.py
+            backend_template.py
+            backend_gtk3.py
+            backend_gtk3agg.py
+            __init__.py
+            backend_mixed.py
+            backend_qtagg.py
+            _backend_pdf_ps.py
+            _backend_tk.py
+            backend_qt5agg.py
+            backend_pgf.py
+            backend_qt5.py
+            backend_pdf.py
+            backend_qt5cairo.py
+            backend_webagg_core.py
+            backend_gtk4agg.py
+            backend_gtk4cairo.py
+            backend_svg.py
+            backend_wxcairo.py
+            backend_wx.py
+            backend_agg.py
+            backend_qtcairo.py
+            backend_qt.py
+            backend_macosx.py
+            _backend_gtk.py
+            backend_wxagg.py
+            backend_webagg.py
+            qt_editor/
+                __init__.py
+                figureoptions.py
+                _formlayout.py
+        projections/
+            __init__.py
+            polar.py
+            geo.py
+        tri/
+            _triplot.py
+            _triinterpolate.py
+            trifinder.py
+            tripcolor.py
+            triplot.py
+            __init__.py
+            trirefine.py
+            tritools.py
+            _trirefine.py
+            triinterpolate.py
+            _tricontour.py
+            _tritools.py
+            _triangulation.py
+            _trifinder.py
+            triangulation.py
+            tricontour.py
+            _tripcolor.py
+        axes/
+            _secondary_axes.py
+            __init__.py
+            _base.py
+            _axes.py
+        _api/
+            deprecation.py
+            __init__.py
+doc/
+    conf.py
+    sphinxext/
+        skip_deprecated.py
+        redirect_from.py
+        math_symbol_table.py
+        custom_roles.py
+        gallery_order.py
+        __init__.py
+        missing_references.py
+        mock_gui_toolkits.py
+        github.py
+    users/
+        generate_credits.py
+
+###
+
+Please only provide the full path and return at most 5 files.
+The returned files should be separated by new lines ordered by most to least important and wrapped with ```
+For example:
+```
+file1.py
+file2.py
+```
+2025-07-29 16:52:40,467 - INFO - ================================================================================
+2025-07-29 16:52:40,467 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 16:52:40,467 - INFO - {'model': 'gemini-2.5-pro', 'contents': 'Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.\n\n### GitHub Problem Description ###\nUpdate colorbar after changing mappable.norm\nHow can I update a colorbar, after I changed the norm instance of the colorbar?\n\n`colorbar.update_normal(mappable)` has now effect and `colorbar.update_bruteforce(mappable)` throws a `ZeroDivsionError`-Exception.\n\nConsider this example:\n\n``` python\nimport matplotlib.pyplot as plt\nfrom matplotlib.colors import LogNorm\nimport numpy as np\n\nimg = 10**np.random.normal(1, 1, size=(50, 50))\n\nfig, ax = plt.subplots(1, 1)\nplot = ax.imshow(img, cmap=\'gray\')\ncb = fig.colorbar(plot, ax=ax)\nplot.norm = LogNorm()\ncb.update_normal(plot)  # no effect\ncb.update_bruteforce(plot)  # throws ZeroDivisionError\nplt.show()\n```\n\nOutput for `cb.update_bruteforce(plot)`:\n\n```\nTraceback (most recent call last):\n  File "test_norm.py", line 12, in <module>\n    cb.update_bruteforce(plot)\n  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 967, in update_bruteforce\n    self.draw_all()\n  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 342, in draw_all\n    self._process_values()\n  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colorbar.py", line 664, in _process_values\n    b = self.norm.inverse(self._uniform_y(self.cmap.N + 1))\n  File "/home/maxnoe/.local/anaconda3/lib/python3.4/site-packages/matplotlib/colors.py", line 1011, in inverse\n    return vmin * ma.power((vmax / vmin), val)\nZeroDivisionError: division by zero\n```\n\n\n\n###\n\n### Repository Structure ###\nmatplotlib/\n    setup.py\n    setupext.py\nci/\n    check_version_number.py\n    check_wheel_licenses.py\ngalleries/\n    plot_types/\n        unstructured/\n            tripcolor.py\n            triplot.py\n            tricontourf.py\n            tricontour.py\n        basic/\n            step.py\n            stem.py\n            scatter_plot.py\n            stackplot.py\n            plot.py\n            bar.py\n            fill_between.py\n        arrays/\n            pcolormesh.py\n            imshow.py\n            quiver.py\n            contour.py\n            streamplot.py\n            barbs.py\n            contourf.py\n        stats/\n            violin.py\n            errorbar_plot.py\n            eventplot.py\n            pie.py\n            hist_plot.py\n            hexbin.py\n            boxplot_plot.py\n            hist2d.py\n        3D/\n            surface3d_simple.py\n            trisurf3d_simple.py\n            wire3d_simple.py\n            scatter3d_simple.py\n            voxels_simple.py\n    examples/\n        event_handling/\n            close_event.py\n            cursor_demo.py\n            viewlims.py\n            pick_event_demo.py\n            lasso_demo.py\n            pong_sgskip.py\n            path_editor.py\n            figure_axes_enter_leave.py\n            looking_glass.py\n            keypress_demo.py\n            zoom_window.py\n            coords_demo.py\n            poly_editor.py\n            data_browser.py\n            timers.py\n            resample.py\n            image_slices_viewer.py\n            trifinder_event_demo.py\n            pick_event_demo2.py\n            legend_picking.py\n            ginput_manual_clabel_sgskip.py\n        images_contours_and_fields/\n            tricontour_smooth_user.py\n            pcolor_demo.py\n            multi_image.py\n            colormap_normalizations.py\n            demo_bboximage.py\n            contour_label_demo.py\n            image_transparency_blend.py\n            trigradient_demo.py\n            barb_demo.py\n            pcolormesh_grids.py\n            quiver_simple_demo.py\n            triinterp_demo.py\n            quiver_demo.py\n            layer_images.py\n            tricontour_demo.py\n            tripcolor_demo.py\n            contourf_demo.py\n            plot_streamplot.py\n            contour_corner_mask.py\n            contours_in_optimization_demo.py\n            pcolormesh_levels.py\n            affine_image.py\n            interpolation_methods.py\n            image_antialiasing.py\n            tricontour_smooth_delaunay.py\n            triplot_demo.py\n            image_demo.py\n            barcode_demo.py\n            colormap_normalizations_symlognorm.py\n            image_zcoord.py\n            image_masked.py\n            matshow.py\n            image_nonuniform.py\n            figimage_demo.py\n            spy_demos.py\n            specgram_demo.py\n            image_clip_path.py\n            colormap_interactive_adjustment.py\n            contour_image.py\n            quadmesh_demo.py\n            contourf_hatching.py\n            shading_example.py\n            contour_demo.py\n            contourf_log.py\n            watermark_image.py\n            image_annotated_heatmap.py\n            irregulardatagrid.py\n        units/\n            bar_unit_demo.py\n            ellipse_with_units.py\n            radian_demo.py\n            bar_demo2.py\n            annotate_with_units.py\n            units_scatter.py\n            basic_units.py\n            artist_tests.py\n            units_sample.py\n            evans_test.py\n        axisartist/\n            demo_floating_axes.py\n            simple_axisline.py\n            simple_axisline3.py\n            demo_ticklabel_alignment.py\n            demo_parasite_axes.py\n            demo_curvelinear_grid.py\n            demo_axisline_style.py\n            demo_ticklabel_direction.py\n            axis_direction.py\n            demo_floating_axis.py\n            demo_parasite_axes2.py\n            demo_curvelinear_grid2.py\n            demo_axis_direction.py\n            simple_axis_pad.py\n            simple_axisartist1.py\n            simple_axis_direction01.py\n            simple_axis_direction03.py\n        shapes_and_collections/\n            fancybox_demo.py\n            path_patch.py\n            dolphin.py\n            scatter.py\n            ellipse_demo.py\n            line_collection.py\n            collections.py\n            donut.py\n            patch_collection.py\n            quad_bezier.py\n            ellipse_collection.py\n            hatch_demo.py\n            hatch_style_reference.py\n            compound_path.py\n            arrow_guide.py\n            artist_reference.py\n        specialty_plots/\n            topographic_hillshading.py\n            skewt.py\n            mri_with_eeg.py\n            mri_demo.py\n            sankey_rankine.py\n            hinton_demo.py\n            advanced_hillshading.py\n            sankey_basics.py\n            leftventricle_bullseye.py\n            radar_chart.py\n            sankey_links.py\n            anscombe.py\n        color/\n            color_by_yvalue.py\n            colorbar_basics.py\n            named_colors.py\n            color_demo.py\n            colormap_reference.py\n            color_cycle_default.py\n            custom_cmap.py\n        statistics/\n            boxplot_vs_violin.py\n            boxplot_color.py\n            time_series_histogram.py\n            histogram_cumulative.py\n            histogram_histtypes.py\n            errorbar_features.py\n            confidence_ellipse.py\n            barchart_demo.py\n            hexbin_demo.py\n            hist.py\n            multiple_histograms_side_by_side.py\n            violinplot.py\n            histogram_features.py\n            errorbar_limits.py\n            customized_violin.py\n            boxplot.py\n            errorbars_and_boxes.py\n            boxplot_demo.py\n            bxp.py\n            histogram_multihist.py\n            errorbar.py\n        widgets/\n            polygon_selector_simple.py\n            textbox.py\n            check_buttons.py\n            menu.py\n            range_slider.py\n            slider_snap_demo.py\n            radio_buttons.py\n            lasso_selector_demo_sgskip.py\n            cursor.py\n            multicursor.py\n            rectangle_selector.py\n            span_selector.py\n            annotated_cursor.py\n            slider_demo.py\n            buttons.py\n            mouse_cursor.py\n            polygon_selector_demo.py\n        text_labels_and_annotations/\n            placing_text_boxes.py\n            legend.py\n            unicode_minus.py\n            fonts_demo.py\n            angle_annotation.py\n            autowrap.py\n            annotate_transform.py\n            date.py\n            dfrac_demo.py\n            mathtext_demo.py\n            multiline.py\n            mathtext_asarray.py\n            text_commands.py\n            tex_demo.py\n            angles_on_bracket_arrows.py\n            usetex_fonteffects.py\n            annotation_demo.py\n            label_subplots.py\n            text_fontdict.py\n            titles_demo.py\n            font_family_rc.py\n            annotation_polar.py\n            figlegend_demo.py\n            demo_text_path.py\n            accented_text.py\n            text_rotation_relative_to_line.py\n            usetex_baseline_test.py\n            legend_demo.py\n            mathtext_fontfamily_example.py\n            text_alignment.py\n            arrow_demo.py\n            font_table.py\n            custom_legends.py\n            annotation_basic.py\n            font_file.py\n            fancytextbox_demo.py\n            rainbow_text.py\n            demo_text_rotation_mode.py\n            fancyarrow_demo.py\n            fonts_demo_kw.py\n            stix_fonts_demo.py\n            demo_annotation_box.py\n            engineering_formatter.py\n            line_with_text.py\n            watermark_text.py\n            mathtext_examples.py\n            align_ylabels.py\n        showcase/\n            xkcd.py\n            integral.py\n            anatomy.py\n            firefox.py\n            mandelbrot.py\n            stock_prices.py\n        ticks/\n            centered_ticklabels.py\n            date_demo_convert.py\n            tick-locators.py\n            auto_ticks.py\n            date_concise_formatter.py\n            dollar_ticks.py\n            fig_axes_customize_simple.py\n            date_demo_rrule.py\n            date_index_formatter.py\n            scalarformatter.py\n            colorbar_tick_labelling_demo.py\n            tick-formatters.py\n            date_precision_and_epochs.py\n            ticks_too_many.py\n            custom_ticker1.py\n            tick_label_right.py\n            tick_labels_from_values.py\n            tick_xlabel_top.py\n            ticklabels_rotation.py\n            major_minor_demo.py\n            date_formatters_locators.py\n        lines_bars_and_markers/\n            stairs_demo.py\n            broken_barh.py\n            capstyle.py\n            bar_stacked.py\n            stackplot_demo.py\n            errorbar_subsample.py\n            simple_plot.py\n            multicolored_line.py\n            bar_label_demo.py\n            masked_demo.py\n            marker_reference.py\n            fill.py\n            csd_demo.py\n            scatter_masked.py\n            linestyles.py\n            spectrum_demo.py\n            categorical_variables.py\n            scatter_demo2.py\n            errorbar_limits_simple.py\n            bar_colors.py\n            hat_graph.py\n            fill_between_alpha.py\n            multivariate_marker_plot.py\n            lines_with_ticks_demo.py\n            stem_plot.py\n            gradient_bar.py\n            psd_demo.py\n            line_demo_dash_control.py\n            markevery_demo.py\n            span_regions.py\n            horizontal_barchart_distribution.py\n            cohere.py\n            eventcollection_demo.py\n            curve_error_band.py\n            step_demo.py\n            eventplot_demo.py\n            barchart.py\n            scatter_custom_symbol.py\n            xcorr_acorr_demo.py\n            timeline.py\n            joinstyle.py\n            fill_betweenx_demo.py\n            fill_between_demo.py\n            filled_step.py\n            vline_hline_demo.py\n            barh.py\n            scatter_with_legend.py\n            scatter_star_poly.py\n            scatter_hist.py\n        style_sheets/\n            fivethirtyeight.py\n            grayscale.py\n            plot_solarizedlight2.py\n            dark_background.py\n            style_sheets_reference.py\n            ggplot.py\n            bmh.py\n        animation/\n            bayes_update.py\n            pause_resume.py\n            animated_histogram.py\n            multiple_axes.py\n            strip_chart.py\n            dynamic_image.py\n            unchained.py\n            rain.py\n            animation_demo.py\n            random_walk.py\n            animate_decay.py\n            frame_grabbing_sgskip.py\n            double_pendulum.py\n            simple_scatter.py\n            simple_anim.py\n        pyplots/\n            pyplot_three.py\n            pyplot_text.py\n            pyplot_two_subplots.py\n            axline.py\n            pyplot_simple.py\n        scales/\n            log_bar.py\n            aspect_loglog.py\n            logit_demo.py\n            asinh_demo.py\n            semilogx_demo.py\n            scales.py\n            custom_scale.py\n            log_demo.py\n            power_norm.py\n            symlog_demo.py\n        subplots_axes_and_figures/\n            axhspan_demo.py\n            align_labels_demo.py\n            fahrenheit_celsius_scales.py\n            auto_subplots_adjust.py\n            subplots_adjust.py\n            axes_props.py\n            gridspec_nested.py\n            secondary_axis.py\n            ganged_plots.py\n            two_scales.py\n            custom_figure_class.py\n            subfigures.py\n            subplots_demo.py\n            axes_box_aspect.py\n            subplot.py\n            shared_axis_demo.py\n            demo_constrained_layout.py\n            axes_zoom_effect.py\n            zoom_inset_axes.py\n            multiple_figs_demo.py\n            share_axis_lims_views.py\n            gridspec_multicolumn.py\n            figure_title.py\n            broken_axis.py\n            invert_axes.py\n            figure_size_units.py\n            demo_tight_layout.py\n            axes_demo.py\n            geo_demo.py\n            axis_labels_demo.py\n            gridspec_and_subplots.py\n            axes_margins.py\n            axis_equal_demo.py\n        misc/\n            bbox_intersect.py\n            fill_spiral.py\n            hyperlinks_sgskip.py\n            multipage_pdf.py\n            coords_report.py\n            contour_manual.py\n            customize_rc.py\n            ftface_props.py\n            svg_filter_line.py\n            image_thumbnail_sgskip.py\n            font_indexing.py\n            fig_x.py\n            rasterization_demo.py\n            multiprocess_sgskip.py\n            print_stdout_sgskip.py\n            table_demo.py\n            set_and_get.py\n            tickedstroke_demo.py\n            zorder_demo.py\n            findobj_demo.py\n            patheffect_demo.py\n            demo_ribbon_box.py\n            logos2.py\n            demo_agg_filter.py\n            histogram_path.py\n            transoffset.py\n            svg_filter_pie.py\n            custom_projection.py\n            anchored_artists.py\n            packed_bubbles.py\n            keyword_plotting.py\n        mplot3d/\n            offset.py\n            tricontour3d.py\n            voxels_torus.py\n            view_planes_3d.py\n            pathpatch3d.py\n            voxels_numpy_logo.py\n            projections.py\n            contour3d_3.py\n            voxels.py\n            lorenz_attractor.py\n            errorbar3d.py\n            subplot3d.py\n            2dcollections3d.py\n            lines3d.py\n            contour3d_2.py\n            polys3d.py\n            mixed_subplots.py\n            quiver3d.py\n            contourf3d_2.py\n            surface3d_2.py\n            rotate_axes3d_sgskip.py\n            3d_bars.py\n            wire3d.py\n            wire3d_animation_sgskip.py\n            trisurf3d.py\n            surface3d_radial.py\n            contourf3d.py\n            text3d.py\n            voxels_rgb.py\n            box3d.py\n            custom_shaded_3d_surface.py\n            wire3d_zero_stride.py\n            tricontourf3d.py\n            surface3d_3.py\n            scatter3d.py\n            contour3d.py\n            trisurf3d_2.py\n            hist3d.py\n            surface3d.py\n            stem3d_demo.py\n            bars3d.py\n        pie_and_polar_charts/\n            polar_bar.py\n            polar_demo.py\n            polar_legend.py\n            polar_scatter.py\n            bar_of_pie.py\n            nested_pie.py\n            polar_error_caps.py\n            pie_features.py\n            pie_and_donut_labels.py\n            pie_demo2.py\n        spines/\n            centered_spines_with_arrows.py\n            spine_placement_demo.py\n            multiple_yaxis_with_spines.py\n            spines.py\n            spines_dropped.py\n        user_interfaces/\n            embedding_in_wx3_sgskip.py\n            embedding_in_gtk4_sgskip.py\n            pylab_with_gtk3_sgskip.py\n            toolmanager_sgskip.py\n            embedding_in_wx5_sgskip.py\n            web_application_server_sgskip.py\n            embedding_in_gtk3_sgskip.py\n            gtk3_spreadsheet_sgskip.py\n            canvasagg.py\n            embedding_in_gtk3_panzoom_sgskip.py\n            embedding_in_wx2_sgskip.py\n            mpl_with_glade3_sgskip.py\n            mplcvd.py\n            fourier_demo_wx_sgskip.py\n            embedding_webagg_sgskip.py\n            embedding_in_tk_sgskip.py\n            svg_tooltip_sgskip.py\n            embedding_in_wx4_sgskip.py\n            embedding_in_qt_sgskip.py\n            wxcursor_demo_sgskip.py\n            svg_histogram_sgskip.py\n            embedding_in_gtk4_panzoom_sgskip.py\n            gtk4_spreadsheet_sgskip.py\n            mathtext_wx_sgskip.py\n            pylab_with_gtk4_sgskip.py\n        userdemo/\n            connect_simple01.py\n            pgf_preamble_sgskip.py\n            annotate_simple_coord02.py\n            simple_annotate01.py\n            simple_legend01.py\n            annotate_text_arrow.py\n            demo_gridspec06.py\n            pgf_texsystem.py\n            annotate_explain.py\n            demo_gridspec03.py\n            connectionstyle_demo.py\n            simple_legend02.py\n            pgf_fonts.py\n            custom_boxstyle01.py\n            demo_gridspec01.py\n        axes_grid1/\n            demo_axes_grid.py\n            simple_colorbar.py\n            demo_anchored_direction_arrows.py\n            demo_colorbar_with_inset_locator.py\n            simple_axesgrid2.py\n            demo_imagegrid_aspect.py\n            inset_locator_demo2.py\n            simple_axes_divider1.py\n            simple_axesgrid.py\n            scatter_hist_locatable_axes.py\n            demo_colorbar_with_axes_divider.py\n            demo_axes_divider.py\n            demo_fixed_size_axes.py\n            simple_anchored_artists.py\n            demo_edge_colorbar.py\n            demo_colorbar_of_inset_axes.py\n            demo_axes_grid2.py\n            demo_axes_hbox_divider.py\n            demo_axes_rgb.py\n            parasite_simple2.py\n            simple_axes_divider3.py\n            inset_locator_demo.py\n            parasite_simple.py\n            make_room_for_ylabel_using_axesgrid.py\n            simple_axisline4.py\n    users_explain/\n        customizing.py\n        quick_start.py\n        text/\n            usetex.py\n            text_intro.py\n            text_props.py\n            mathtext.py\n            fonts.py\n            pgf.py\n            annotations.py\n        colors/\n            colormapnorms.py\n            colors.py\n            colormaps.py\n            colorbar_only.py\n            colormap-manipulation.py\n        axes/\n            mosaic.py\n            colorbar_placement.py\n            constrainedlayout_guide.py\n            arranging_axes.py\n            tight_layout_guide.py\n            legend_guide.py\n            autoscale.py\n        toolkits/\n            axisartist.py\n            axes_grid.py\n            mplot3d.py\n        animations/\n            blitting.py\n            animations.py\n        artists/\n            paths.py\n            imshow_extent.py\n            transforms_tutorial.py\n            color_cycle.py\n            patheffects_guide.py\n    tutorials/\n        artists.py\n        images.py\n        pyplot.py\n        lifecycle.py\ntools/\n    gh_api.py\n    triage_tests.py\n    embed_js.py\n    run_examples.py\n    github_stats.py\n    boilerplate.py\n    make_icons.py\n    subset.py\n    cache_zenodo_svg.py\n    memleak.py\n    visualize_tests.py\nlib/\n    pylab.py\n    mpl_toolkits/\n        __init__.py\n        axisartist/\n            grid_finder.py\n            floating_axes.py\n            __init__.py\n            axisline_style.py\n            grid_helper_curvelinear.py\n            axes_rgb.py\n            axis_artist.py\n            axes_grid.py\n            axes_divider.py\n            parasite_axes.py\n            angle_helper.py\n            axislines.py\n        mplot3d/\n            axis3d.py\n            proj3d.py\n            axes3d.py\n            __init__.py\n            art3d.py\n        axes_grid1/\n            axes_size.py\n            __init__.py\n            inset_locator.py\n            axes_rgb.py\n            mpl_axes.py\n            axes_grid.py\n            axes_divider.py\n            parasite_axes.py\n            anchored_artists.py\n    matplotlib/\n        _layoutgrid.py\n        legend.py\n        artist.py\n        _color_data.py\n        container.py\n        dates.py\n        widgets.py\n        _docstring.py\n        scale.py\n        path.py\n        layout_engine.py\n        animation.py\n        _mathtext.py\n        colorbar.py\n        axis.py\n        font_manager.py\n        backend_tools.py\n        text.py\n        _constrained_layout.py\n        quiver.py\n        _enums.py\n        contour.py\n        cbook.py\n        _blocking_input.py\n        _tight_layout.py\n        stackplot.py\n        mlab.py\n        _fontconfig_pattern.py\n        spines.py\n        table.py\n        bezier.py\n        patheffects.py\n        __init__.py\n        colors.py\n        _internal_utils.py\n        sankey.py\n        pylab.py\n        _cm_listed.py\n        _mathtext_data.py\n        pyplot.py\n        backend_managers.py\n        _pylab_helpers.py\n        offsetbox.py\n        streamplot.py\n        _animation_data.py\n        backend_bases.py\n        figure.py\n        mathtext.py\n        hatch.py\n        cm.py\n        _tight_bbox.py\n        gridspec.py\n        collections.py\n        textpath.py\n        _type1font.py\n        _afm.py\n        ticker.py\n        _cm.py\n        dviread.py\n        units.py\n        category.py\n        markers.py\n        legend_handler.py\n        _text_helpers.py\n        image.py\n        rcsetup.py\n        texmanager.py\n        lines.py\n        transforms.py\n        patches.py\n        style/\n            core.py\n            __init__.py\n        sphinxext/\n            __init__.py\n            mathmpl.py\n            plot_directive.py\n        backends/\n            backend_tkcairo.py\n            backend_tkagg.py\n            qt_compat.py\n            backend_gtk3cairo.py\n            backend_ps.py\n            backend_gtk4.py\n            backend_nbagg.py\n            backend_cairo.py\n            backend_template.py\n            backend_gtk3.py\n            backend_gtk3agg.py\n            __init__.py\n            backend_mixed.py\n            backend_qtagg.py\n            _backend_pdf_ps.py\n            _backend_tk.py\n            backend_qt5agg.py\n            backend_pgf.py\n            backend_qt5.py\n            backend_pdf.py\n            backend_qt5cairo.py\n            backend_webagg_core.py\n            backend_gtk4agg.py\n            backend_gtk4cairo.py\n            backend_svg.py\n            backend_wxcairo.py\n            backend_wx.py\n            backend_agg.py\n            backend_qtcairo.py\n            backend_qt.py\n            backend_macosx.py\n            _backend_gtk.py\n            backend_wxagg.py\n            backend_webagg.py\n            qt_editor/\n                __init__.py\n                figureoptions.py\n                _formlayout.py\n        projections/\n            __init__.py\n            polar.py\n            geo.py\n        tri/\n            _triplot.py\n            _triinterpolate.py\n            trifinder.py\n            tripcolor.py\n            triplot.py\n            __init__.py\n            trirefine.py\n            tritools.py\n            _trirefine.py\n            triinterpolate.py\n            _tricontour.py\n            _tritools.py\n            _triangulation.py\n            _trifinder.py\n            triangulation.py\n            tricontour.py\n            _tripcolor.py\n        axes/\n            _secondary_axes.py\n            __init__.py\n            _base.py\n            _axes.py\n        _api/\n            deprecation.py\n            __init__.py\ndoc/\n    conf.py\n    sphinxext/\n        skip_deprecated.py\n        redirect_from.py\n        math_symbol_table.py\n        custom_roles.py\n        gallery_order.py\n        __init__.py\n        missing_references.py\n        mock_gui_toolkits.py\n        github.py\n    users/\n        generate_credits.py\n\n###\n\nPlease only provide the full path and return at most 5 files.\nThe returned files should be separated by new lines ordered by most to least important and wrapped with ```\nFor example:\n```\nfile1.py\nfile2.py\n```'}
+2025-07-29 16:52:40,467 - INFO - project_id=None, location=us-central1
+2025-07-29 16:52:40,597 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 16:54:00,304 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-4.471762891085643,
+  content=Content(
+    parts=[
+      Part(
+        text="""Based on the problem description and the repository structure, here is a list of files that would likely need to be edited to fix the issue:
+
+```
+lib/matplotlib/colorbar.py
+lib/matplotlib/colors.py
+examples/color/colorbar_basics.py
+```
+
+### Rationale:
+
+1.  **`lib/matplotlib/colorbar.py`**: This is the most critical file to edit. It contains the `Colorbar` class, including the `update_normal` and `update_bruteforce` methods. The problem description indicates that `update_normal` is not functioning as expected. The fix would involve modifying `update_normal` to ensure that when the `mappable`'s `norm` object is changed, the `colorbar` not only adopts the new `norm` instance but also correctly initializes its limits (e.g., `vmin` and `vmax`). The current implementation likely fails to update the colorbar's state properly for the new `LogNorm`, leading to the subsequent error.
+
+2.  **`lib/matplotlib/colors.py`**: The traceback shows a `ZeroDivisionError` originating from the `LogNorm.inverse` method in this file. This happens because `LogNorm` is called with `vmin=0`, which is invalid. While the root cause is in `colorbar.py`, the `LogNorm` class could be made more robust. Instead of throwing an unhandled `ZeroDivisionError`, it could be modified to raise a more informative `ValueError` when `vmin` is not positive, which would help developers debug similar issues in the future.
+
+3.  **`examples/color/colorbar_basics.py`**: After fixing the bug, it would be good practice to add an example demonstrating how to dynamically update a colorbar's normalization. This would serve as both a test case and documentation for users, showing them the correct way to achieve the originally intended behavior. Modifying an existing, relevant example file like this one is a common part of a complete fix."""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 20, 52, 40, 999494, tzinfo=TzInfo(UTC)) response_id='mDSJaMaAPbuv3NoP4qik4AI' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=424,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=424
+    ),
+  ],
+  prompt_token_count=6944,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=6944
+    ),
+  ],
+  thoughts_token_count=6983,
+  total_token_count=14351,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 16:54:00,317 - INFO - Based on the problem description and the repository structure, here is a list of files that would likely need to be edited to fix the issue:
+
+```
+lib/matplotlib/colorbar.py
+lib/matplotlib/colors.py
+examples/color/colorbar_basics.py
+```
+
+### Rationale:
+
+1.  **`lib/matplotlib/colorbar.py`**: This is the most critical file to edit. It contains the `Colorbar` class, including the `update_normal` and `update_bruteforce` methods. The problem description indicates that `update_normal` is not functioning as expected. The fix would involve modifying `update_normal` to ensure that when the `mappable`'s `norm` object is changed, the `colorbar` not only adopts the new `norm` instance but also correctly initializes its limits (e.g., `vmin` and `vmax`). The current implementation likely fails to update the colorbar's state properly for the new `LogNorm`, leading to the subsequent error.
+
+2.  **`lib/matplotlib/colors.py`**: The traceback shows a `ZeroDivisionError` originating from the `LogNorm.inverse` method in this file. This happens because `LogNorm` is called with `vmin=0`, which is invalid. While the root cause is in `colorbar.py`, the `LogNorm` class could be made more robust. Instead of throwing an unhandled `ZeroDivisionError`, it could be modified to raise a more informative `ValueError` when `vmin` is not positive, which would help developers debug similar issues in the future.
+
+3.  **`examples/color/colorbar_basics.py`**: After fixing the bug, it would be good practice to add an example demonstrating how to dynamically update a colorbar's normalization. This would serve as both a test case and documentation for users, showing them the correct way to achieve the originally intended behavior. Modifying an existing, relevant example file like this one is a common part of a complete fix.

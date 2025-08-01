@@ -1,0 +1,308 @@
+2025-07-29 16:56:25,834 - INFO - Processing bug pytest-dev__pytest-7168
+2025-07-29 16:56:36,847 - INFO - ================ localize pytest-dev__pytest-7168 ================
+2025-07-29 16:56:36,896 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.
+
+### GitHub Problem Description ###
+INTERNALERROR when exception in __repr__
+Minimal code to reproduce the issue: 
+```python
+class SomeClass:
+    def __getattribute__(self, attr):
+        raise
+    def __repr__(self):
+        raise
+def test():
+    SomeClass().attr
+```
+Session traceback:
+```
+============================= test session starts ==============================
+platform darwin -- Python 3.8.1, pytest-5.4.1, py-1.8.1, pluggy-0.13.1 -- /usr/local/opt/python@3.8/bin/python3.8
+cachedir: .pytest_cache
+rootdir: ******
+plugins: asyncio-0.10.0, mock-3.0.0, cov-2.8.1
+collecting ... collected 1 item
+
+test_pytest.py::test 
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 191, in wrap_session
+INTERNALERROR>     session.exitstatus = doit(config, session) or 0
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 247, in _main
+INTERNALERROR>     config.hook.pytest_runtestloop(session=session)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__
+INTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>
+INTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 208, in _multicall
+INTERNALERROR>     return outcome.get_result()
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result
+INTERNALERROR>     raise ex[1].with_traceback(ex[2])
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 272, in pytest_runtestloop
+INTERNALERROR>     item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__
+INTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>
+INTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 208, in _multicall
+INTERNALERROR>     return outcome.get_result()
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result
+INTERNALERROR>     raise ex[1].with_traceback(ex[2])
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 85, in pytest_runtest_protocol
+INTERNALERROR>     runtestprotocol(item, nextitem=nextitem)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 100, in runtestprotocol
+INTERNALERROR>     reports.append(call_and_report(item, "call", log))
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 188, in call_and_report
+INTERNALERROR>     report = hook.pytest_runtest_makereport(item=item, call=call)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__
+INTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>
+INTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 203, in _multicall
+INTERNALERROR>     gen.send(outcome)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/skipping.py", line 129, in pytest_runtest_makereport
+INTERNALERROR>     rep = outcome.get_result()
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result
+INTERNALERROR>     raise ex[1].with_traceback(ex[2])
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 260, in pytest_runtest_makereport
+INTERNALERROR>     return TestReport.from_item_and_call(item, call)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/reports.py", line 294, in from_item_and_call
+INTERNALERROR>     longrepr = item.repr_failure(excinfo)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/python.py", line 1513, in repr_failure
+INTERNALERROR>     return self._repr_failure_py(excinfo, style=style)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/nodes.py", line 355, in _repr_failure_py
+INTERNALERROR>     return excinfo.getrepr(
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 634, in getrepr
+INTERNALERROR>     return fmt.repr_excinfo(self)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 879, in repr_excinfo
+INTERNALERROR>     reprtraceback = self.repr_traceback(excinfo_)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 823, in repr_traceback
+INTERNALERROR>     reprentry = self.repr_traceback_entry(entry, einfo)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 784, in repr_traceback_entry
+INTERNALERROR>     reprargs = self.repr_args(entry) if not short else None
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 693, in repr_args
+INTERNALERROR>     args.append((argname, saferepr(argvalue)))
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 82, in saferepr
+INTERNALERROR>     return SafeRepr(maxsize).repr(obj)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 51, in repr
+INTERNALERROR>     s = _format_repr_exception(exc, x)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 23, in _format_repr_exception
+INTERNALERROR>     exc_info, obj.__class__.__name__, id(obj)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 47, in repr
+INTERNALERROR>     s = super().repr(x)
+INTERNALERROR>   File "/usr/local/Cellar/python@3.8/3.8.1/Frameworks/Python.framework/Versions/3.8/lib/python3.8/reprlib.py", line 52, in repr
+INTERNALERROR>     return self.repr1(x, self.maxlevel)
+INTERNALERROR>   File "/usr/local/Cellar/python@3.8/3.8.1/Frameworks/Python.framework/Versions/3.8/lib/python3.8/reprlib.py", line 62, in repr1
+INTERNALERROR>     return self.repr_instance(x, level)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 60, in repr_instance
+INTERNALERROR>     s = _format_repr_exception(exc, x)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 23, in _format_repr_exception
+INTERNALERROR>     exc_info, obj.__class__.__name__, id(obj)
+INTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 56, in repr_instance
+INTERNALERROR>     s = repr(x)
+INTERNALERROR>   File "/Users/stiflou/Documents/projets/apischema/tests/test_pytest.py", line 6, in __repr__
+INTERNALERROR>     raise
+INTERNALERROR> RuntimeError: No active exception to reraise
+
+============================ no tests ran in 0.09s ============================
+```
+
+
+###
+
+### Repository Structure ###
+pytest/
+    setup.py
+src/
+    pytest/
+        __init__.py
+        collect.py
+        __main__.py
+    _pytest/
+        unittest.py
+        pastebin.py
+        compat.py
+        faulthandler.py
+        deprecated.py
+        freeze_support.py
+        warning_types.py
+        debugging.py
+        warnings.py
+        cacheprovider.py
+        capture.py
+        recwarn.py
+        setupplan.py
+        tmpdir.py
+        setuponly.py
+        python.py
+        runner.py
+        __init__.py
+        terminal.py
+        monkeypatch.py
+        fixtures.py
+        reports.py
+        doctest.py
+        _argcomplete.py
+        junitxml.py
+        pytester.py
+        nose.py
+        main.py
+        nodes.py
+        stepwise.py
+        logging.py
+        resultlog.py
+        hookspec.py
+        outcomes.py
+        store.py
+        skipping.py
+        helpconfig.py
+        pathlib.py
+        python_api.py
+        _io/
+            saferepr.py
+            __init__.py
+        assertion/
+            truncate.py
+            rewrite.py
+            __init__.py
+            util.py
+        _code/
+            code.py
+            __init__.py
+            source.py
+        mark/
+            legacy.py
+            __init__.py
+            evaluate.py
+            structures.py
+        config/
+            findpaths.py
+            __init__.py
+            exceptions.py
+            argparsing.py
+bench/
+    manyparam.py
+    empty.py
+    skip.py
+    bench_argcomplete.py
+    bench.py
+extra/
+    get_issues.py
+scripts/
+    append_codecov_token.py
+    release.py
+    release-on-comment.py
+    publish-gh-release-notes.py
+doc/
+    en/
+        conf.py
+        conftest.py
+        example/
+            xfail_demo.py
+            pythoncollection.py
+            conftest.py
+            multipython.py
+            assertion/
+                failure_demo.py
+                global_testmodule_config/
+                    conftest.py
+            fixtures/
+            nonpython/
+                __init__.py
+                conftest.py
+        _themes/
+            flask_theme_support.py
+
+###
+
+Please only provide the full path and return at most 5 files.
+The returned files should be separated by new lines ordered by most to least important and wrapped with ```
+For example:
+```
+file1.py
+file2.py
+```
+2025-07-29 16:56:36,896 - INFO - ================================================================================
+2025-07-29 16:56:36,896 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 16:56:36,896 - INFO - {'model': 'gemini-2.5-pro', 'contents': 'Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.\n\n### GitHub Problem Description ###\nINTERNALERROR when exception in __repr__\nMinimal code to reproduce the issue: \r\n```python\r\nclass SomeClass:\r\n    def __getattribute__(self, attr):\r\n        raise\r\n    def __repr__(self):\r\n        raise\r\ndef test():\r\n    SomeClass().attr\r\n```\r\nSession traceback:\r\n```\r\n============================= test session starts ==============================\r\nplatform darwin -- Python 3.8.1, pytest-5.4.1, py-1.8.1, pluggy-0.13.1 -- /usr/local/opt/python@3.8/bin/python3.8\r\ncachedir: .pytest_cache\r\nrootdir: ******\r\nplugins: asyncio-0.10.0, mock-3.0.0, cov-2.8.1\r\ncollecting ... collected 1 item\r\n\r\ntest_pytest.py::test \r\nINTERNALERROR> Traceback (most recent call last):\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 191, in wrap_session\r\nINTERNALERROR>     session.exitstatus = doit(config, session) or 0\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 247, in _main\r\nINTERNALERROR>     config.hook.pytest_runtestloop(session=session)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__\r\nINTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec\r\nINTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>\r\nINTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 208, in _multicall\r\nINTERNALERROR>     return outcome.get_result()\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result\r\nINTERNALERROR>     raise ex[1].with_traceback(ex[2])\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall\r\nINTERNALERROR>     res = hook_impl.function(*args)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/main.py", line 272, in pytest_runtestloop\r\nINTERNALERROR>     item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__\r\nINTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec\r\nINTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>\r\nINTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 208, in _multicall\r\nINTERNALERROR>     return outcome.get_result()\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result\r\nINTERNALERROR>     raise ex[1].with_traceback(ex[2])\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall\r\nINTERNALERROR>     res = hook_impl.function(*args)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 85, in pytest_runtest_protocol\r\nINTERNALERROR>     runtestprotocol(item, nextitem=nextitem)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 100, in runtestprotocol\r\nINTERNALERROR>     reports.append(call_and_report(item, "call", log))\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 188, in call_and_report\r\nINTERNALERROR>     report = hook.pytest_runtest_makereport(item=item, call=call)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/hooks.py", line 286, in __call__\r\nINTERNALERROR>     return self._hookexec(self, self.get_hookimpls(), kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 93, in _hookexec\r\nINTERNALERROR>     return self._inner_hookexec(hook, methods, kwargs)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/manager.py", line 84, in <lambda>\r\nINTERNALERROR>     self._inner_hookexec = lambda hook, methods, kwargs: hook.multicall(\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 203, in _multicall\r\nINTERNALERROR>     gen.send(outcome)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/skipping.py", line 129, in pytest_runtest_makereport\r\nINTERNALERROR>     rep = outcome.get_result()\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 80, in get_result\r\nINTERNALERROR>     raise ex[1].with_traceback(ex[2])\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/pluggy/callers.py", line 187, in _multicall\r\nINTERNALERROR>     res = hook_impl.function(*args)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/runner.py", line 260, in pytest_runtest_makereport\r\nINTERNALERROR>     return TestReport.from_item_and_call(item, call)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/reports.py", line 294, in from_item_and_call\r\nINTERNALERROR>     longrepr = item.repr_failure(excinfo)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/python.py", line 1513, in repr_failure\r\nINTERNALERROR>     return self._repr_failure_py(excinfo, style=style)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/nodes.py", line 355, in _repr_failure_py\r\nINTERNALERROR>     return excinfo.getrepr(\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 634, in getrepr\r\nINTERNALERROR>     return fmt.repr_excinfo(self)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 879, in repr_excinfo\r\nINTERNALERROR>     reprtraceback = self.repr_traceback(excinfo_)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 823, in repr_traceback\r\nINTERNALERROR>     reprentry = self.repr_traceback_entry(entry, einfo)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 784, in repr_traceback_entry\r\nINTERNALERROR>     reprargs = self.repr_args(entry) if not short else None\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_code/code.py", line 693, in repr_args\r\nINTERNALERROR>     args.append((argname, saferepr(argvalue)))\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 82, in saferepr\r\nINTERNALERROR>     return SafeRepr(maxsize).repr(obj)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 51, in repr\r\nINTERNALERROR>     s = _format_repr_exception(exc, x)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 23, in _format_repr_exception\r\nINTERNALERROR>     exc_info, obj.__class__.__name__, id(obj)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 47, in repr\r\nINTERNALERROR>     s = super().repr(x)\r\nINTERNALERROR>   File "/usr/local/Cellar/python@3.8/3.8.1/Frameworks/Python.framework/Versions/3.8/lib/python3.8/reprlib.py", line 52, in repr\r\nINTERNALERROR>     return self.repr1(x, self.maxlevel)\r\nINTERNALERROR>   File "/usr/local/Cellar/python@3.8/3.8.1/Frameworks/Python.framework/Versions/3.8/lib/python3.8/reprlib.py", line 62, in repr1\r\nINTERNALERROR>     return self.repr_instance(x, level)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 60, in repr_instance\r\nINTERNALERROR>     s = _format_repr_exception(exc, x)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 23, in _format_repr_exception\r\nINTERNALERROR>     exc_info, obj.__class__.__name__, id(obj)\r\nINTERNALERROR>   File "/usr/local/lib/python3.8/site-packages/_pytest/_io/saferepr.py", line 56, in repr_instance\r\nINTERNALERROR>     s = repr(x)\r\nINTERNALERROR>   File "/Users/stiflou/Documents/projets/apischema/tests/test_pytest.py", line 6, in __repr__\r\nINTERNALERROR>     raise\r\nINTERNALERROR> RuntimeError: No active exception to reraise\r\n\r\n============================ no tests ran in 0.09s ============================\r\n```\n\n\n###\n\n### Repository Structure ###\npytest/\n    setup.py\nsrc/\n    pytest/\n        __init__.py\n        collect.py\n        __main__.py\n    _pytest/\n        unittest.py\n        pastebin.py\n        compat.py\n        faulthandler.py\n        deprecated.py\n        freeze_support.py\n        warning_types.py\n        debugging.py\n        warnings.py\n        cacheprovider.py\n        capture.py\n        recwarn.py\n        setupplan.py\n        tmpdir.py\n        setuponly.py\n        python.py\n        runner.py\n        __init__.py\n        terminal.py\n        monkeypatch.py\n        fixtures.py\n        reports.py\n        doctest.py\n        _argcomplete.py\n        junitxml.py\n        pytester.py\n        nose.py\n        main.py\n        nodes.py\n        stepwise.py\n        logging.py\n        resultlog.py\n        hookspec.py\n        outcomes.py\n        store.py\n        skipping.py\n        helpconfig.py\n        pathlib.py\n        python_api.py\n        _io/\n            saferepr.py\n            __init__.py\n        assertion/\n            truncate.py\n            rewrite.py\n            __init__.py\n            util.py\n        _code/\n            code.py\n            __init__.py\n            source.py\n        mark/\n            legacy.py\n            __init__.py\n            evaluate.py\n            structures.py\n        config/\n            findpaths.py\n            __init__.py\n            exceptions.py\n            argparsing.py\nbench/\n    manyparam.py\n    empty.py\n    skip.py\n    bench_argcomplete.py\n    bench.py\nextra/\n    get_issues.py\nscripts/\n    append_codecov_token.py\n    release.py\n    release-on-comment.py\n    publish-gh-release-notes.py\ndoc/\n    en/\n        conf.py\n        conftest.py\n        example/\n            xfail_demo.py\n            pythoncollection.py\n            conftest.py\n            multipython.py\n            assertion/\n                failure_demo.py\n                global_testmodule_config/\n                    conftest.py\n            fixtures/\n            nonpython/\n                __init__.py\n                conftest.py\n        _themes/\n            flask_theme_support.py\n\n###\n\nPlease only provide the full path and return at most 5 files.\nThe returned files should be separated by new lines ordered by most to least important and wrapped with ```\nFor example:\n```\nfile1.py\nfile2.py\n```'}
+2025-07-29 16:56:36,896 - INFO - project_id=None, location=us-central1
+2025-07-29 16:56:36,991 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 16:58:10,647 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-4.605618190337724,
+  content=Content(
+    parts=[
+      Part(
+        text="""An analysis of the problem description and the traceback reveals that an `INTERNALERROR` occurs during the creation of a test failure report. Here's the sequence of events:
+
+1.  The test fails when `SomeClass().attr` is accessed, triggering the exception in `__getattribute__`.
+2.  Pytest catches this initial exception and starts building a failure report.
+3.  As part of the report, pytest tries to display the values of local variables from the failed test function's stack frame. This involves getting a string representation of the `SomeClass` instance.
+4.  Pytest's `saferepr` utility is used for this. It calls `repr()` on the `SomeClass` instance.
+5.  This triggers the exception in the `__repr__` method, as defined in the minimal example.
+6.  `saferepr` is designed to handle such exceptions. It catches the exception from `__repr__` and calls an internal formatting function, `_format_repr_exception`, to create a safe string like `<[repr(...) failed: ...]>`.
+7.  The crucial bug is inside this `_format_repr_exception` function. To get the class name of the problematic object, it accesses `obj.__class__.__name__`. Accessing `obj.__class__` invokes `__getattribute__` on the object.
+8.  Since `__getattribute__` is also designed to raise an exception in the provided example, a *new* exception is raised from within the `except` block of `saferepr`. This secondary, unhandled exception is what causes the `INTERNALERROR`.
+
+The fix is to modify the exception formatting utility so that it does not trigger `__getattribute__` on the object it's trying to represent. Using `type(obj)` instead of `obj.__class__` achieves this safely. This logic is located in `_pytest/_io/saferepr.py`.
+
+Based on this analysis, the following file needs to be edited:
+
+```
+src/_pytest/_io/saferepr.py
+```"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 20, 56, 37, 346416, tzinfo=TzInfo(UTC)) response_id='hTWJaLCSFbuv3NoP4qik4AI' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=446,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=446
+    ),
+  ],
+  prompt_token_count=3564,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=3564
+    ),
+  ],
+  thoughts_token_count=9052,
+  total_token_count=13062,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 16:58:10,652 - INFO - An analysis of the problem description and the traceback reveals that an `INTERNALERROR` occurs during the creation of a test failure report. Here's the sequence of events:
+
+1.  The test fails when `SomeClass().attr` is accessed, triggering the exception in `__getattribute__`.
+2.  Pytest catches this initial exception and starts building a failure report.
+3.  As part of the report, pytest tries to display the values of local variables from the failed test function's stack frame. This involves getting a string representation of the `SomeClass` instance.
+4.  Pytest's `saferepr` utility is used for this. It calls `repr()` on the `SomeClass` instance.
+5.  This triggers the exception in the `__repr__` method, as defined in the minimal example.
+6.  `saferepr` is designed to handle such exceptions. It catches the exception from `__repr__` and calls an internal formatting function, `_format_repr_exception`, to create a safe string like `<[repr(...) failed: ...]>`.
+7.  The crucial bug is inside this `_format_repr_exception` function. To get the class name of the problematic object, it accesses `obj.__class__.__name__`. Accessing `obj.__class__` invokes `__getattribute__` on the object.
+8.  Since `__getattribute__` is also designed to raise an exception in the provided example, a *new* exception is raised from within the `except` block of `saferepr`. This secondary, unhandled exception is what causes the `INTERNALERROR`.
+
+The fix is to modify the exception formatting utility so that it does not trigger `__getattribute__` on the object it's trying to represent. Using `type(obj)` instead of `obj.__class__` achieves this safely. This logic is located in `_pytest/_io/saferepr.py`.
+
+Based on this analysis, the following file needs to be edited:
+
+```
+src/_pytest/_io/saferepr.py
+```

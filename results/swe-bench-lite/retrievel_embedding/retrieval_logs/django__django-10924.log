@@ -1,0 +1,38 @@
+2025-07-29 20:20:11,862 - INFO - Processing bug django__django-10924
+2025-07-29 20:24:08,922 - INFO - Total number of considered files: 148
+2025-07-29 20:24:10,139 - INFO - Total number of documents: 148
+2025-07-30 13:57:59,576 - INFO - Processing bug django__django-10924
+2025-07-30 14:01:59,123 - INFO - Total number of considered files: 148
+2025-07-30 14:02:09,312 - INFO - Total number of documents: 148
+2025-07-31 16:30:31,759 - INFO - Processing bug django__django-10924
+2025-07-31 16:31:04,183 - INFO - Total number of considered files: 148
+2025-07-31 16:31:04,184 - INFO - Total number of documents: 0
+2025-07-31 16:31:04,308 - INFO - Retrieving with query:
+Allow FilePathField path to accept a callable.
+Description
+	
+I have a special case where I want to create a model containing the path to some local files on the server/dev machine. Seeing as the place where these files are stored is different on different machines I have the following:
+import os
+from django.conf import settings
+from django.db import models
+class LocalFiles(models.Model):
+	name = models.CharField(max_length=255)
+	file = models.FilePathField(path=os.path.join(settings.LOCAL_FILE_DIR, 'example_dir'))
+Now when running manage.py makemigrations it will resolve the path based on the machine it is being run on. Eg: /home/<username>/server_files/example_dir
+I had to manually change the migration to include the os.path.join() part to not break this when running the migration on production/other machine.
+
+2025-07-31 21:24:12,363 - INFO - Processing bug django__django-10924
+2025-07-31 21:40:01,575 - INFO - Retrieving with query:
+Allow FilePathField path to accept a callable.
+Description
+	
+I have a special case where I want to create a model containing the path to some local files on the server/dev machine. Seeing as the place where these files are stored is different on different machines I have the following:
+import os
+from django.conf import settings
+from django.db import models
+class LocalFiles(models.Model):
+	name = models.CharField(max_length=255)
+	file = models.FilePathField(path=os.path.join(settings.LOCAL_FILE_DIR, 'example_dir'))
+Now when running manage.py makemigrations it will resolve the path based on the machine it is being run on. Eg: /home/<username>/server_files/example_dir
+I had to manually change the migration to include the os.path.join() part to not break this when running the migration on production/other machine.
+

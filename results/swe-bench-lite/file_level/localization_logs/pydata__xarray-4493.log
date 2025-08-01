@@ -1,0 +1,288 @@
+2025-07-29 16:54:26,844 - INFO - Processing bug pydata__xarray-4493
+2025-07-29 16:54:35,466 - INFO - ================ localize pydata__xarray-4493 ================
+2025-07-29 16:54:35,484 - INFO - prompting with message:
+Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.
+
+### GitHub Problem Description ###
+DataSet.update causes chunked dask DataArray to evalute its values eagerly 
+**What happened**:
+Used `DataSet.update` to update a chunked dask DataArray, but the DataArray is no longer chunked after the update.
+
+**What you expected to happen**:
+The chunked DataArray should still be chunked after the update
+
+**Minimal Complete Verifiable Example**:
+
+```python
+foo = xr.DataArray(np.random.randn(3, 3), dims=("x", "y")).chunk()  # foo is chunked
+ds = xr.Dataset({"foo": foo, "bar": ("x", [1, 2, 3])})  # foo is still chunked here
+ds  # you can verify that foo is chunked
+```
+```python
+update_dict = {"foo": (("x", "y"), ds.foo[1:, :]), "bar": ("x", ds.bar[1:])}
+update_dict["foo"][1]  # foo is still chunked
+```
+```python
+ds.update(update_dict)
+ds  # now foo is no longer chunked
+```
+
+**Environment**:
+
+<details><summary>Output of <tt>xr.show_versions()</tt></summary>
+
+```
+commit: None
+python: 3.8.3 (default, Jul  2 2020, 11:26:31) 
+[Clang 10.0.0 ]
+python-bits: 64
+OS: Darwin
+OS-release: 19.6.0
+machine: x86_64
+processor: i386
+byteorder: little
+LC_ALL: None
+LANG: en_US.UTF-8
+LOCALE: en_US.UTF-8
+libhdf5: 1.10.6
+libnetcdf: None
+
+xarray: 0.16.0
+pandas: 1.0.5
+numpy: 1.18.5
+scipy: 1.5.0
+netCDF4: None
+pydap: None
+h5netcdf: None
+h5py: 2.10.0
+Nio: None
+zarr: None
+cftime: None
+nc_time_axis: None
+PseudoNetCDF: None
+rasterio: None
+cfgrib: None
+iris: None
+bottleneck: None
+dask: 2.20.0
+distributed: 2.20.0
+matplotlib: 3.2.2
+cartopy: None
+seaborn: None
+numbagg: None
+pint: None
+setuptools: 49.2.0.post20200714
+pip: 20.1.1
+conda: None
+pytest: 5.4.3
+IPython: 7.16.1
+sphinx: None
+```
+
+</details>
+Dataset constructor with DataArray triggers computation
+Is it intentional that creating a Dataset with a DataArray and dimension names for a single variable causes computation of that variable?  In other words, why does ```xr.Dataset(dict(a=('d0', xr.DataArray(da.random.random(10)))))``` cause the dask array to compute?
+
+A longer example:
+
+```python
+import dask.array as da
+import xarray as xr
+x = da.random.randint(1, 10, size=(100, 25))
+ds = xr.Dataset(dict(a=xr.DataArray(x, dims=('x', 'y'))))
+type(ds.a.data)
+dask.array.core.Array
+
+# Recreate the dataset with the same array, but also redefine the dimensions
+ds2 = xr.Dataset(dict(a=(('x', 'y'), ds.a))
+type(ds2.a.data)
+numpy.ndarray
+```
+
+
+
+
+###
+
+### Repository Structure ###
+xarray/
+    setup.py
+    conftest.py
+    tutorial.py
+    convert.py
+    __init__.py
+    conventions.py
+    ufuncs.py
+    util/
+        __init__.py
+        print_versions.py
+    coding/
+        strings.py
+        cftimeindex.py
+        cftime_offsets.py
+        variables.py
+        __init__.py
+        times.py
+        frequencies.py
+    core/
+        indexing.py
+        nanops.py
+        extensions.py
+        rolling_exp.py
+        common.py
+        indexes.py
+        dask_array_compat.py
+        alignment.py
+        accessor_dt.py
+        formatting.py
+        weighted.py
+        groupby.py
+        ops.py
+        dataarray.py
+        combine.py
+        options.py
+        __init__.py
+        arithmetic.py
+        concat.py
+        resample_cftime.py
+        npcompat.py
+        pycompat.py
+        nputils.py
+        formatting_html.py
+        accessor_str.py
+        dtypes.py
+        merge.py
+        rolling.py
+        parallel.py
+        resample.py
+        coordinates.py
+        utils.py
+        dataset.py
+        duck_array_ops.py
+        computation.py
+        dask_array_ops.py
+        pdcompat.py
+        missing.py
+        variable.py
+    backends/
+        file_manager.py
+        zarr.py
+        cfgrib_.py
+        common.py
+        memory.py
+        __init__.py
+        h5netcdf_.py
+        apiv2.py
+        pydap_.py
+        rasterio_.py
+        netCDF4_.py
+        locks.py
+        scipy_.py
+        pseudonetcdf_.py
+        pynio_.py
+        lru_cache.py
+        plugins.py
+        netcdf3.py
+        api.py
+        store.py
+    plot/
+        dataset_plot.py
+        plot.py
+        __init__.py
+        facetgrid.py
+        utils.py
+ci/
+    min_deps_check.py
+asv_bench/
+    benchmarks/
+        indexing.py
+        dataarray_missing.py
+        reindexing.py
+        combine.py
+        __init__.py
+        pandas.py
+        interp.py
+        rolling.py
+        repr.py
+        unstacking.py
+        dataset_io.py
+properties/
+    conftest.py
+doc/
+    conf.py
+    examples/
+        _code/
+            accessor_example.py
+    gallery/
+        plot_colorbar_center.py
+        plot_lines_from_2d.py
+        plot_control_colorbar.py
+        plot_rasterio_rgb.py
+        plot_cartopy_facetgrid.py
+        plot_rasterio.py
+
+###
+
+Please only provide the full path and return at most 5 files.
+The returned files should be separated by new lines ordered by most to least important and wrapped with ```
+For example:
+```
+file1.py
+file2.py
+```
+2025-07-29 16:54:35,484 - INFO - ================================================================================
+2025-07-29 16:54:35,484 - INFO - Initializing a decoder model: gemini-2.5-pro ...
+2025-07-29 16:54:35,484 - INFO - {'model': 'gemini-2.5-pro', 'contents': 'Please look through the following GitHub problem description and Repository structure and provide a list of files that one would need to edit to fix the problem.\n\n### GitHub Problem Description ###\nDataSet.update causes chunked dask DataArray to evalute its values eagerly \n**What happened**:\r\nUsed `DataSet.update` to update a chunked dask DataArray, but the DataArray is no longer chunked after the update.\r\n\r\n**What you expected to happen**:\r\nThe chunked DataArray should still be chunked after the update\r\n\r\n**Minimal Complete Verifiable Example**:\r\n\r\n```python\r\nfoo = xr.DataArray(np.random.randn(3, 3), dims=("x", "y")).chunk()  # foo is chunked\r\nds = xr.Dataset({"foo": foo, "bar": ("x", [1, 2, 3])})  # foo is still chunked here\r\nds  # you can verify that foo is chunked\r\n```\r\n```python\r\nupdate_dict = {"foo": (("x", "y"), ds.foo[1:, :]), "bar": ("x", ds.bar[1:])}\r\nupdate_dict["foo"][1]  # foo is still chunked\r\n```\r\n```python\r\nds.update(update_dict)\r\nds  # now foo is no longer chunked\r\n```\r\n\r\n**Environment**:\r\n\r\n<details><summary>Output of <tt>xr.show_versions()</tt></summary>\r\n\r\n```\r\ncommit: None\r\npython: 3.8.3 (default, Jul  2 2020, 11:26:31) \r\n[Clang 10.0.0 ]\r\npython-bits: 64\r\nOS: Darwin\r\nOS-release: 19.6.0\r\nmachine: x86_64\r\nprocessor: i386\r\nbyteorder: little\r\nLC_ALL: None\r\nLANG: en_US.UTF-8\r\nLOCALE: en_US.UTF-8\r\nlibhdf5: 1.10.6\r\nlibnetcdf: None\r\n\r\nxarray: 0.16.0\r\npandas: 1.0.5\r\nnumpy: 1.18.5\r\nscipy: 1.5.0\r\nnetCDF4: None\r\npydap: None\r\nh5netcdf: None\r\nh5py: 2.10.0\r\nNio: None\r\nzarr: None\r\ncftime: None\r\nnc_time_axis: None\r\nPseudoNetCDF: None\r\nrasterio: None\r\ncfgrib: None\r\niris: None\r\nbottleneck: None\r\ndask: 2.20.0\r\ndistributed: 2.20.0\r\nmatplotlib: 3.2.2\r\ncartopy: None\r\nseaborn: None\r\nnumbagg: None\r\npint: None\r\nsetuptools: 49.2.0.post20200714\r\npip: 20.1.1\r\nconda: None\r\npytest: 5.4.3\r\nIPython: 7.16.1\r\nsphinx: None\r\n```\r\n\r\n</details>\nDataset constructor with DataArray triggers computation\nIs it intentional that creating a Dataset with a DataArray and dimension names for a single variable causes computation of that variable?  In other words, why does ```xr.Dataset(dict(a=(\'d0\', xr.DataArray(da.random.random(10)))))``` cause the dask array to compute?\r\n\r\nA longer example:\r\n\r\n```python\r\nimport dask.array as da\r\nimport xarray as xr\r\nx = da.random.randint(1, 10, size=(100, 25))\r\nds = xr.Dataset(dict(a=xr.DataArray(x, dims=(\'x\', \'y\'))))\r\ntype(ds.a.data)\r\ndask.array.core.Array\r\n\r\n# Recreate the dataset with the same array, but also redefine the dimensions\r\nds2 = xr.Dataset(dict(a=((\'x\', \'y\'), ds.a))\r\ntype(ds2.a.data)\r\nnumpy.ndarray\r\n```\r\n\r\n\n\n\n###\n\n### Repository Structure ###\nxarray/\n    setup.py\n    conftest.py\n    tutorial.py\n    convert.py\n    __init__.py\n    conventions.py\n    ufuncs.py\n    util/\n        __init__.py\n        print_versions.py\n    coding/\n        strings.py\n        cftimeindex.py\n        cftime_offsets.py\n        variables.py\n        __init__.py\n        times.py\n        frequencies.py\n    core/\n        indexing.py\n        nanops.py\n        extensions.py\n        rolling_exp.py\n        common.py\n        indexes.py\n        dask_array_compat.py\n        alignment.py\n        accessor_dt.py\n        formatting.py\n        weighted.py\n        groupby.py\n        ops.py\n        dataarray.py\n        combine.py\n        options.py\n        __init__.py\n        arithmetic.py\n        concat.py\n        resample_cftime.py\n        npcompat.py\n        pycompat.py\n        nputils.py\n        formatting_html.py\n        accessor_str.py\n        dtypes.py\n        merge.py\n        rolling.py\n        parallel.py\n        resample.py\n        coordinates.py\n        utils.py\n        dataset.py\n        duck_array_ops.py\n        computation.py\n        dask_array_ops.py\n        pdcompat.py\n        missing.py\n        variable.py\n    backends/\n        file_manager.py\n        zarr.py\n        cfgrib_.py\n        common.py\n        memory.py\n        __init__.py\n        h5netcdf_.py\n        apiv2.py\n        pydap_.py\n        rasterio_.py\n        netCDF4_.py\n        locks.py\n        scipy_.py\n        pseudonetcdf_.py\n        pynio_.py\n        lru_cache.py\n        plugins.py\n        netcdf3.py\n        api.py\n        store.py\n    plot/\n        dataset_plot.py\n        plot.py\n        __init__.py\n        facetgrid.py\n        utils.py\nci/\n    min_deps_check.py\nasv_bench/\n    benchmarks/\n        indexing.py\n        dataarray_missing.py\n        reindexing.py\n        combine.py\n        __init__.py\n        pandas.py\n        interp.py\n        rolling.py\n        repr.py\n        unstacking.py\n        dataset_io.py\nproperties/\n    conftest.py\ndoc/\n    conf.py\n    examples/\n        _code/\n            accessor_example.py\n    gallery/\n        plot_colorbar_center.py\n        plot_lines_from_2d.py\n        plot_control_colorbar.py\n        plot_rasterio_rgb.py\n        plot_cartopy_facetgrid.py\n        plot_rasterio.py\n\n###\n\nPlease only provide the full path and return at most 5 files.\nThe returned files should be separated by new lines ordered by most to least important and wrapped with ```\nFor example:\n```\nfile1.py\nfile2.py\n```'}
+2025-07-29 16:54:35,484 - INFO - project_id=None, location=us-central1
+2025-07-29 16:54:35,532 - INFO - Sending request to Gemini via Vertex AI
+2025-07-29 16:55:39,122 - INFO - Gemini API response: sdk_http_response=HttpResponse(
+  headers=<dict len=10>
+) candidates=[Candidate(
+  avg_logprobs=-9.469917450975252,
+  content=Content(
+    parts=[
+      Part(
+        text="""Based on the problem description and the typical structure of the xarray library, the issue stems from how `Dataset.update()` and the `Dataset` constructor handle input data. Specifically, when a variable is provided as a tuple `(dims, data)`, and `data` is a `DataArray` object, it seems xarray is not correctly unpacking the underlying array from the `DataArray`, leading to its eager evaluation.
+
+This logic for constructing a `Dataset` from a dictionary-like object is centralized within the `Dataset` class implementation.
+
+Here are the files that would likely need to be edited to fix this issue:
+
+```
+xarray/core/dataset.py
+xarray/core/variable.py
+```"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>
+)] create_time=datetime.datetime(2025, 7, 29, 20, 54, 35, 857170, tzinfo=TzInfo(UTC)) response_id='CzWJaNKoNNeN3NoPqIaLuAc' model_version='gemini-2.5-pro' prompt_feedback=None usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=149,
+  candidates_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=149
+    ),
+  ],
+  prompt_token_count=1729,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1729
+    ),
+  ],
+  thoughts_token_count=5985,
+  total_token_count=7863,
+  traffic_type=<TrafficType.ON_DEMAND: 'ON_DEMAND'>
+) automatic_function_calling_history=[] parsed=None
+2025-07-29 16:55:39,128 - INFO - Based on the problem description and the typical structure of the xarray library, the issue stems from how `Dataset.update()` and the `Dataset` constructor handle input data. Specifically, when a variable is provided as a tuple `(dims, data)`, and `data` is a `DataArray` object, it seems xarray is not correctly unpacking the underlying array from the `DataArray`, leading to its eager evaluation.
+
+This logic for constructing a `Dataset` from a dictionary-like object is centralized within the `Dataset` class implementation.
+
+Here are the files that would likely need to be edited to fix this issue:
+
+```
+xarray/core/dataset.py
+xarray/core/variable.py
+```
