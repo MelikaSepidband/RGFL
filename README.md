@@ -137,7 +137,7 @@ python rgfl/fl/file_ranking.py \
 #### ✅ Evaluate File Ranking
 ```bash
 python rgfl/fl/file_evaluation.py \
-  --baseline_file results/swe-bench-lite/file_level/loc_outputs.jsonl \
+  --baseline_file results/swe-bench-lite/file_ranking_results.json \
   --ours_file results/swe-bench-lite/file_ranking_results.json \
   --dataset princeton-nlp/SWE-bench_Lite
 ```
