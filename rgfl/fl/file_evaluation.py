@@ -85,7 +85,7 @@ if __name__ == "__main__":
             raise ValueError(f"Target instance ID {args.target_id} not found.")
         swebench = [target_instance]
     elif args.max_instances:
-        swebench = swebench.select(range(args.max_instances))
+        swebench = swebench
 
 
     if args.baseline_file:
