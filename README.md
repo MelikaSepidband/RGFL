@@ -164,7 +164,7 @@ results/swe-bench-lite/related_elements/localization_logs
 
 ---
 
-### 4. Rerank Elements by Reasoning
+### 4. Rank Elements by Reasoning
 
 #### ✅ Generate Element-Level Reasoning
 ```bash
