@@ -162,36 +162,46 @@ def request_anthropic_engine(
 
 def create_gemini_config(
     message: str,
-    model: str = "gemini-2.5-pro-preview-05-06",
+    model: str = "gemini-2.5-pro",
 ) -> Dict:
     return {
         "model": model,
-        "contents": message
+        "contents": message,
     }
 
-def setup_vertex_client():
-    project_id = os.environ.get("VERTEXAI_PROJECT")
-    location = os.environ.get("VERTEXAI_LOCATION", "us-central1")
-    return genai.Client(vertexai=True, project=project_id, location=location)
+
+def setup_gemini_client():
+    """
+    Returns a Gemini client using either:
+    1. GOOGLE_API_KEY (API key mode), or
+    2. VERTEXAI_PROJECT + VERTEXAI_LOCATION (Vertex AI mode).
+    """
+    google_api_key = os.environ.get("GOOGLE_API_KEY")
+    if google_api_key:
+        return genai.Client(api_key=google_api_key)  # API key mode
+    else:
+        project_id = os.environ.get("VERTEXAI_PROJECT")
+        location = os.environ.get("VERTEXAI_LOCATION", "us-central1")
+        return genai.Client(vertexai=True, project=project_id, location=location)  # Vertex AI mode
+
 
 def request_gemini_engine(config, logger, max_retries=40, timeout=500):
     ret = None
     retries = 0
 
-    client = setup_vertex_client()
+    client = setup_gemini_client()
 
     while ret is None and retries < max_retries:
         try:
-            logger.info("Sending request to Gemini via Vertex AI")
+            logger.info("Sending request to Gemini")
             ret = client.models.generate_content(
                 model=config["model"],
-                contents=config["contents"]
-                )
+                contents=config["contents"],
+            )
         except Exception as e:
-            logger.warning(f"Vertex AI Gemini error: {e}. Retrying...")
+            logger.warning(f"Gemini API error: {e}. Retrying...")
             time.sleep(5 * retries)
         retries += 1
 
     logger.info(f"Gemini API response: {ret}")
     return ret
-
