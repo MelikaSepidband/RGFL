@@ -45,10 +45,22 @@ def get_similar_elements(file_elements_reasoning, bug_report):
 
     elif backend == "gemini":
         from google import genai
-        PROJECT_ID = os.environ.get("VERTEXAI_PROJECT", "")
-        LOCATION = os.environ.get("VERTEXAI_LOCATION", "us-central1")
-        client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
-        response = client.models.generate_content(model=MODEL_ID, contents=prompt)
+        import os
+
+        google_api_key = os.environ.get("GOOGLE_API_KEY")
+        if google_api_key:
+            # API key mode
+            client = genai.Client(api_key=google_api_key)
+        else:
+            # Vertex AI mode
+            PROJECT_ID = os.environ.get("VERTEXAI_PROJECT", "")
+            LOCATION = os.environ.get("VERTEXAI_LOCATION", "us-central1")
+            client = genai.Client(vertexai=True, project=PROJECT_ID, location=LOCATION)
+
+        response = client.models.generate_content(
+            model=MODEL_ID,
+            contents=prompt
+        )
         return response.text
 
     elif backend == "openai":
