@@ -170,8 +170,8 @@ def create_gemini_config(
     }
 
 def setup_vertex_client():
-    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    location = os.environ.get("GOOGLE_CLOUD_REGION", "us-central1")
+    project_id = os.environ.get("VERTEXAI_PROJECT")
+    location = os.environ.get("VERTEXAI_LOCATION", "us-central1")
     return genai.Client(vertexai=True, project=project_id, location=location)
 
 def request_gemini_engine(config, logger, max_retries=40, timeout=500):
