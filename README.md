@@ -25,6 +25,11 @@ export OPENAI_API_KEY=your_openai_key_here
 export ANTHROPIC_API_KEY=your_anthropic_key_here
 ```
 
+**Google Gemini (API KEY)**:
+```bash
+export GOOGLE_API_KEY=your_google_key_here
+```
+
 **Google Gemini (Vertex AI)**:
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="path_to_your_service_account_key.json"
